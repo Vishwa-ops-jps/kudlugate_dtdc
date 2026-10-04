@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staff Login — DTDC Kudlu Gate</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="/index.html" class="brand">
+      <span class="brand-mark">KG</span>
+      <span class="brand-text">DTDC Kudlu Gate<small>Staff Panel</small></span>
+    </a>
+    <div class="nav-links" style="display:flex;">
+      <a href="/index.html">← Back to site</a>
+    </div>
+  </div>
+</nav>
+
+<section class="wrap" style="padding-top:60px;padding-bottom:80px;display:flex;justify-content:center;">
+  <div class="card" style="max-width:400px;width:100%;">
+    <h2>Staff / Admin Log In</h2>
+    <p style="color:var(--grey);font-size:14px;margin-top:-6px;">For branch staff and franchise administrators.</p>
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" autocomplete="username">
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" autocomplete="current-password">
+    </div>
+    <button class="btn amber block" id="login-btn">Log In</button>
+    <div id="msg"></div>
+    <p style="text-align:center;font-size:13px;margin-top:14px;"><a href="/forgot-password.html">Forgot password?</a></p>
+  </div>
+</section>
+
+<script src="/js/api.js"></script>
+<script>
+document.getElementById('login-btn').addEventListener('click', async () => {
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const msgEl = document.getElementById('msg');
+  msgEl.innerHTML = '';
+  if (!email || !password) { msgEl.innerHTML = '<div class="msg err">Enter email and password.</div>'; return; }
+  try {
+    const { token, user } = await API.request('/auth/login', { method: 'POST', body: { email, password }, auth: false });
+    if (user.role === 'customer') {
+      msgEl.innerHTML = '<div class="msg err">This is a customer account — use the customer login page.</div>';
+      return;
+    }
+    Session.set(token, user);
+    window.location.href = '/admin/dashboard.html';
+  } catch (err) {
+    msgEl.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  }
+});
+document.getElementById('password').addEventListener('keydown', (e) => { if (e.key === 'Enter') document.getElementById('login-btn').click(); });
+</script>
+</body>
+</html>

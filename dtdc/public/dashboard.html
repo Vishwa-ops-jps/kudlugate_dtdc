@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Orders — DTDC Kudlu Gate</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<section class="wrap" style="padding-top:44px;">
+  <div class="section-head" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:14px;">
+    <div>
+      <span class="eyebrow">My Account</span>
+      <h2 id="welcome" style="margin-bottom:0;">Order History</h2>
+    </div>
+    <a href="/book.html" class="btn amber">+ Book a Parcel</a>
+  </div>
+  <div id="orders"><p style="color:var(--grey);"><span class="spinner"></span> Loading your orders…</p></div>
+</section>
+
+<div id="site-footer"></div>
+<script src="/js/api.js"></script>
+<script src="/js/chrome.js"></script>
+<script>
+(async () => {
+  const user = Session.getUser();
+  if (!user || user.role !== 'customer') { window.location.href = '/login.html'; return; }
+  document.getElementById('welcome').textContent = `Welcome back, ${user.name.split(' ')[0]}`;
+
+  try {
+    const { parcels } = await API.request('/parcels/mine');
+    const el = document.getElementById('orders');
+    if (!parcels.length) {
+      el.innerHTML = `<div class="empty-state card"><div class="icon">📭</div><p>No orders yet. Book your first parcel above, or ask counter staff to link your account with your next in-branch booking.</p></div>`;
+      return;
+    }
+    el.innerHTML = parcels.map(p => `
+      <div class="waybill" style="margin-bottom:20px;">
+        <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:center;">
+          <div><span class="tid-label">Tracking ID</span><div class="tid">${escapeHtml(p.trackingId)}</div></div>
+          <span class="status-pill ${statusClass(p.status)}">${escapeHtml(p.status)}</span>
+        </div>
+        <div class="perforation"></div>
+        <div class="grid-2">
+          <div><span class="tid-label">To</span><p style="margin:4px 0;">${escapeHtml(p.receiver.city)}, ${escapeHtml(p.receiver.state)}</p></div>
+          <div><span class="tid-label">Cost</span><p style="margin:4px 0;" class="mono">₹${p.cost}</p></div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
+          <a href="https://www.dtdc.com/track-your-shipment/" target="_blank" rel="noopener noreferrer" class="btn outline small">Track on DTDC →</a>
+          <button class="btn outline small" data-receipt="${escapeHtml(p.trackingId)}" type="button">Receipt</button>
+        </div>
+      </div>`).join('');
+    el.querySelectorAll('[data-receipt]').forEach(btn => btn.addEventListener('click', () => {
+      const tid = btn.dataset.receipt;
+      downloadFile(`/parcels/${encodeURIComponent(tid)}/receipt`, `${tid}-receipt.pdf`).catch(err => alert(err.message));
+    }));
+  } catch (err) {
+    document.getElementById('orders').innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  }
+})();
+</script>
+</body>
+</html>

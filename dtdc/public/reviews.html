@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reviews — DTDC Kudlu Gate</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<section class="wrap" style="padding-top:44px;">
+  <div class="section-head">
+    <span class="eyebrow">Customer reviews</span>
+    <h2>What people are saying.</h2>
+  </div>
+  <div class="grid-3" id="reviews-list">
+    <p style="color:var(--grey);">Loading reviews…</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="card" style="max-width:520px;">
+    <h3>Leave a Review</h3>
+    <div class="field">
+      <label for="r-name">Your Name</label>
+      <input type="text" id="r-name">
+    </div>
+    <div class="field">
+      <label for="r-rating">Rating</label>
+      <select id="r-rating">
+        <option value="5">★★★★★ Excellent</option>
+        <option value="4">★★★★☆ Good</option>
+        <option value="3">★★★☆☆ Okay</option>
+        <option value="2">★★☆☆☆ Poor</option>
+        <option value="1">★☆☆☆☆ Very poor</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="r-tid">Tracking ID (optional)</label>
+      <input type="text" id="r-tid" class="mono" placeholder="If this review is about a specific delivery">
+    </div>
+    <div class="field">
+      <label for="r-comment">Your Review</label>
+      <textarea id="r-comment" rows="4"></textarea>
+    </div>
+    <button class="btn amber block" id="r-submit">Submit Review</button>
+    <div id="r-msg"></div>
+    <div id="google-review-prompt" style="display:none;margin-top:14px;">
+      <p style="margin:0 0 10px;color:var(--grey);font-size:14px;">Would you also like to share your experience on Google Maps?</p>
+      <a class="btn outline" href="https://maps.app.goo.gl/uXeKRjDFh6hjU465A" target="_blank" rel="noopener noreferrer">Write a Google review</a>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script src="/js/api.js"></script>
+<script src="/js/chrome.js"></script>
+<script>
+API.request('/reviews', { auth: false }).then(({ reviews }) => {
+  const el = document.getElementById('reviews-list');
+  if (!reviews.length) { el.innerHTML = '<p style="color:var(--grey);">No reviews yet — be the first to leave one below.</p>'; return; }
+  el.innerHTML = reviews.map(r => `
+    <div class="card review-card">
+      <div class="stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+      <p>"${escapeHtml(r.comment)}"</p>
+      <div class="review-name">${escapeHtml(r.name)}</div>
+    </div>`).join('');
+}).catch(() => {
+  document.getElementById('reviews-list').innerHTML = '<p style="color:var(--grey);">Could not load reviews right now.</p>';
+});
+
+document.getElementById('r-submit').addEventListener('click', async () => {
+  const body = {
+    name: document.getElementById('r-name').value.trim(),
+    rating: Number(document.getElementById('r-rating').value),
+    trackingId: document.getElementById('r-tid').value.trim(),
+    comment: document.getElementById('r-comment').value.trim()
+  };
+  const msgEl = document.getElementById('r-msg');
+  msgEl.innerHTML = '';
+  if (!body.name || !body.comment) { msgEl.innerHTML = '<div class="msg err">Name and review text are required.</div>'; return; }
+  try {
+    const data = await API.request('/reviews', { method: 'POST', body, auth: false });
+    msgEl.innerHTML = `<div class="msg ok">${escapeHtml(data.message)}</div>`;
+    document.getElementById('google-review-prompt').style.display = 'block';
+    ['r-name','r-tid','r-comment'].forEach(id => document.getElementById(id).value = '');
+  } catch (err) {
+    msgEl.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  }
+});
+</script>
+</body>
+</html>

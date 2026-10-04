@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staff Panel — DTDC Kudlu Gate</title>
+<link rel="stylesheet" href="/css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="/index.html" class="brand">
+      <span class="brand-mark">KG</span>
+      <span class="brand-text">DTDC Kudlu Gate<small>Staff Panel</small></span>
+    </a>
+    <div class="nav-links" style="display:flex;align-items:center;gap:12px;">
+      <span id="who" class="mono" style="font-size:13px;color:#C6CCDA;"></span>
+      <a href="#" id="logout-link" class="cta">Log Out</a>
+    </div>
+  </div>
+</nav>
+
+<section class="wrap" style="padding-top:36px;">
+  <div class="tabs" id="tabs">
+    <button data-tab="parcels" class="active">Parcels</button>
+    <button data-tab="book">Book Parcel</button>
+    <button data-tab="reviews">Reviews</button>
+    <button data-tab="enquiries">Enquiries</button>
+    <button data-tab="branches" data-admin-only>Branches &amp; Staff</button>
+    <button data-tab="rates" data-admin-only>Rate Card</button>
+    <button data-tab="analytics" data-admin-only>Analytics</button>
+  </div>
+
+  <!-- ===== PARCELS TAB ===== -->
+  <div class="tab-panel" id="panel-parcels">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+      <h3 style="margin:0;">Parcels</h3>
+      <select id="status-filter" style="width:auto;">
+        <option value="">All statuses</option>
+        <option>Booked</option>
+        <option>Picked Up</option>
+        <option>In Transit</option>
+        <option>Out for Delivery</option>
+        <option>Delivered</option>
+        <option>Cancelled</option>
+      </select>
+    </div>
+    <div class="table-wrap card" id="parcels-table"><p style="color:var(--grey);">Loading…</p></div>
+  </div>
+
+  <!-- ===== BOOK PARCEL TAB ===== -->
+  <div class="tab-panel" id="panel-book" style="display:none;">
+    <h3>Book a New Parcel</h3>
+    <div class="card" style="max-width:700px;">
+      <fieldset>
+        <legend>Sender</legend>
+        <div class="field"><label>Name</label><input id="s-name"></div>
+        <div class="field-row">
+          <div class="field"><label>Phone</label><input id="s-phone"></div>
+          <div class="field"><label>Email (optional)</label><input id="s-email"></div>
+        </div>
+        <div class="field"><label>Address</label><input id="s-address"></div>
+        <div class="field-row">
+          <div class="field"><label>City</label><input id="s-city"></div>
+          <div class="field"><label>State</label><input id="s-state"></div>
+        </div>
+        <div class="field" style="margin-bottom:0;"><label>Pincode</label><input id="s-pincode"></div>
+      </fieldset>
+      <fieldset>
+        <legend>Receiver</legend>
+        <div class="field"><label>Name</label><input id="r-name"></div>
+        <div class="field-row">
+          <div class="field"><label>Phone</label><input id="r-phone"></div>
+          <div class="field"><label>Email (for notifications)</label><input id="r-email"></div>
+        </div>
+        <div class="field"><label>Address</label><input id="r-address"></div>
+        <div class="field-row">
+          <div class="field"><label>City</label><input id="r-city"></div>
+          <div class="field"><label>State</label><input id="r-state"></div>
+        </div>
+        <div class="field" style="margin-bottom:0;"><label>Pincode</label><input id="r-pincode"></div>
+      </fieldset>
+      <div class="field-row">
+        <div class="field"><label>Weight (kg)</label><input type="number" id="b-weight" min="0.1" step="0.1" value="1"></div>
+        <div class="field"><label>Service</label><select id="b-service"><option value="standard">Standard</option><option value="express">Express</option></select></div>
+      </div>
+      <div class="field" id="branch-select-field" style="display:none;">
+        <label>Branch (admin booking on behalf of a branch)</label>
+        <select id="b-branch"></select>
+      </div>
+      <div class="field">
+        <label>Link to a customer account (optional)</label>
+        <input id="b-customer-email" placeholder="Customer's account email, if they have one">
+      </div>
+      <button class="btn amber block" id="book-btn">Book Parcel</button>
+      <div id="book-msg"></div>
+    </div>
+  </div>
+
+  <!-- ===== REVIEWS TAB ===== -->
+  <div class="tab-panel" id="panel-reviews" style="display:none;">
+    <h3>Reviews</h3>
+    <div class="table-wrap card" id="reviews-table"><p style="color:var(--grey);">Loading…</p></div>
+  </div>
+
+  <!-- ===== ENQUIRIES TAB ===== -->
+  <div class="tab-panel" id="panel-enquiries" style="display:none;">
+    <h3>Contact Form Enquiries</h3>
+    <div class="table-wrap card" id="enquiries-table"><p style="color:var(--grey);">Loading…</p></div>
+  </div>
+
+  <!-- ===== BRANCHES & STAFF TAB (admin) ===== -->
+  <div class="tab-panel" id="panel-branches" style="display:none;">
+    <div class="grid-2" style="align-items:start;">
+      <div>
+        <h3>Branches</h3>
+        <div class="table-wrap card" id="branches-table" style="margin-bottom:20px;"><p style="color:var(--grey);">Loading…</p></div>
+        <div class="card">
+          <h4 style="margin-top:0;">Add Branch</h4>
+          <div class="field"><label>Name</label><input id="nb-name" placeholder="DTDC HSR Layout"></div>
+          <div class="field-row">
+            <div class="field"><label>Code</label><input id="nb-code" placeholder="HSR01"></div>
+            <div class="field"><label>Phone</label><input id="nb-phone"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>City</label><input id="nb-city"></div>
+            <div class="field"><label>State</label><input id="nb-state"></div>
+          </div>
+          <div class="field"><label>Address</label><input id="nb-address"></div>
+          <button class="btn amber block small" id="add-branch-btn">Add Branch</button>
+          <div id="branch-msg"></div>
+        </div>
+      </div>
+      <div>
+        <h3>Staff Accounts</h3>
+        <div class="table-wrap card" id="staff-table" style="margin-bottom:20px;"><p style="color:var(--grey);">Loading…</p></div>
+        <div class="card">
+          <h4 style="margin-top:0;">Add Staff</h4>
+          <div class="field"><label>Branch</label><select id="ns-branch"></select></div>
+          <div class="field"><label>Name</label><input id="ns-name"></div>
+          <div class="field"><label>Email</label><input id="ns-email"></div>
+          <div class="field"><label>Password</label><input id="ns-password" type="password"></div>
+          <button class="btn amber block small" id="add-staff-btn">Add Staff</button>
+          <div id="staff-msg"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== RATE CARD TAB (admin) ===== -->
+  <div class="tab-panel" id="panel-rates" style="display:none;">
+    <h3>Rate Card</h3>
+    <div class="card" style="max-width:520px;">
+      <div class="field-row">
+        <div class="field"><label>Base handling fee (₹)</label><input type="number" id="rc-base"></div>
+        <div class="field"><label>Minimum charge (₹)</label><input type="number" id="rc-min"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Per kg — Standard (₹)</label><input type="number" id="rc-std"></div>
+        <div class="field"><label>Per kg — Express (₹)</label><input type="number" id="rc-exp"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Zone multiplier — Local</label><input type="number" step="0.1" id="rc-local"></div>
+        <div class="field"><label>Zone multiplier — State</label><input type="number" step="0.1" id="rc-state"></div>
+      </div>
+      <div class="field"><label>Zone multiplier — National</label><input type="number" step="0.1" id="rc-national"></div>
+      <button class="btn amber block" id="save-rates-btn">Save Rate Card</button>
+      <div id="rates-msg"></div>
+    </div>
+  </div>
+
+  <!-- ===== ANALYTICS TAB (admin) ===== -->
+  <div class="tab-panel" id="panel-analytics" style="display:none;">
+    <h3>Analytics</h3>
+    <div class="grid-4" id="analytics-cards" style="margin-bottom:22px;">
+      <p style="color:var(--grey);">Loading…</p>
+    </div>
+    <div class="grid-2" style="align-items:start;">
+      <div class="card">
+        <h4 style="margin-top:0;">Bookings &amp; Revenue — last 14 days</h4>
+        <div style="position:relative;height:260px;"><canvas id="chart-daily"></canvas></div>
+      </div>
+      <div class="card">
+        <h4 style="margin-top:0;">Status Breakdown</h4>
+        <div style="position:relative;height:260px;"><canvas id="chart-status"></canvas></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:20px;">
+      <h4 style="margin-top:0;">Top Branches</h4>
+      <div id="analytics-branches"><p style="color:var(--grey);">Loading…</p></div>
+    </div>
+  </div>
+</section>
+
+<script src="/js/api.js"></script>
+<script>
+const user = Session.getUser();
+if (!user || (user.role !== 'staff' && user.role !== 'admin')) { window.location.href = '/admin/login.html'; }
+
+document.getElementById('who').textContent = `${user.name} · ${user.role.toUpperCase()}`;
+document.getElementById('logout-link').addEventListener('click', (e) => { e.preventDefault(); Session.logout('/admin/login.html'); });
+
+if (user.role !== 'admin') {
+  document.querySelectorAll('[data-admin-only]').forEach(el => el.remove());
+} else {
+  document.getElementById('branch-select-field').style.display = 'block';
+}
+
+// ---------- Tabs ----------
+document.querySelectorAll('#tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#tabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none');
+    document.getElementById('panel-' + btn.dataset.tab).style.display = 'block';
+    loadTab(btn.dataset.tab);
+  });
+});
+
+function loadTab(tab) {
+  if (tab === 'parcels') loadParcels();
+  if (tab === 'book') loadBranchesForBooking();
+  if (tab === 'reviews') loadReviews();
+  if (tab === 'enquiries') loadEnquiries();
+  if (tab === 'branches') { loadBranches(); loadStaff(); }
+  if (tab === 'rates') loadRates();
+  if (tab === 'analytics') loadAnalytics();
+}
+loadTab('parcels');
+
+// ---------- Parcels ----------
+document.getElementById('status-filter').addEventListener('change', loadParcels);
+
+async function loadParcels() {
+  const el = document.getElementById('parcels-table');
+  el.innerHTML = '<p style="color:var(--grey);">Loading…</p>';
+  try {
+    const status = document.getElementById('status-filter').value;
+    const { parcels } = await API.request('/parcels' + (status ? '?status=' + encodeURIComponent(status) : ''));
+    if (!parcels.length) { el.innerHTML = '<div class="empty-state"><div class="icon">📭</div><p>No parcels found.</p></div>'; return; }
+    el.innerHTML = `<table>
+      <thead><tr><th>Tracking ID</th><th>Route</th><th>Weight</th><th>Cost</th><th>Branch</th><th>Status</th><th>Update</th></tr></thead>
+      <tbody>${parcels.map(p => `
+        <tr>
+          <td class="mono">${escapeHtml(p.trackingId)}</td>
+          <td>${escapeHtml(p.sender.city)} → ${escapeHtml(p.receiver.city)}</td>
+          <td>${p.weightKg} kg</td>
+          <td>₹${p.cost}</td>
+          <td>${escapeHtml(p.branch?.name || '—')}</td>
+          <td><span class="status-pill ${statusClass(p.status)}">${escapeHtml(p.status)}</span></td>
+          <td>
+            <select data-status-select="${p._id}" style="width:auto;display:inline-block;padding:6px 8px;font-size:13px;">
+              ${['Booked','Picked Up','In Transit','Out for Delivery','Delivered','Cancelled'].map(s => `<option ${s===p.status?'selected':''}>${s}</option>`).join('')}
+            </select>
+            <button class="btn small outline" data-update="${p._id}">Update</button>
+            <button class="btn small outline" data-label="${p._id}" data-tid="${escapeHtml(p.trackingId)}" type="button">Label</button>
+          </td>
+        </tr>`).join('')}</tbody>
+    </table>`;
+    el.querySelectorAll('[data-update]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.dataset.update;
+        const status = el.querySelector(`[data-status-select="${id}"]`).value;
+        btn.disabled = true; btn.textContent = '…';
+        try {
+          await API.request(`/parcels/${id}/status`, { method: 'PATCH', body: { status } });
+          loadParcels();
+        } catch (err) {
+          alert(err.message);
+          btn.disabled = false; btn.textContent = 'Update';
+        }
+      });
+    });
+    el.querySelectorAll('[data-label]').forEach(btn => btn.addEventListener('click', () => {
+      downloadFile(`/parcels/${btn.dataset.label}/label`, `${btn.dataset.tid}-label.pdf`).catch(err => alert(err.message));
+    }));
+  } catch (err) {
+    el.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  }
+}
+
+// ---------- Book parcel ----------
+async function loadBranchesForBooking() {
+  if (user.role !== 'admin') return;
+  const sel = document.getElementById('b-branch');
+  if (sel.dataset.loaded) return;
+  try {
+    const { branches } = await API.request('/branches', { auth: false });
+    sel.innerHTML = branches.map(b => `<option value="${b._id}">${escapeHtml(b.name)} (${escapeHtml(b.city)})</option>`).join('');
+    sel.dataset.loaded = '1';
+  } catch {}
+}
+
+document.getElementById('book-btn').addEventListener('click', async () => {
+  const msgEl = document.getElementById('book-msg');
+  msgEl.innerHTML = '';
+  const sender = {
+    name: document.getElementById('s-name').value.trim(),
+    phone: document.getElementById('s-phone').value.trim(),
+    email: document.getElementById('s-email').value.trim(),
+    address: document.getElementById('s-address').value.trim(),
+    city: document.getElementById('s-city').value.trim(),
+    state: document.getElementById('s-state').value.trim(),
+    pincode: document.getElementById('s-pincode').value.trim()
+  };
+  const receiver = {
+    name: document.getElementById('r-name').value.trim(),
+    phone: document.getElementById('r-phone').value.trim(),
+    email: document.getElementById('r-email').value.trim(),
+    address: document.getElementById('r-address').value.trim(),
+    city: document.getElementById('r-city').value.trim(),
+    state: document.getElementById('r-state').value.trim(),
+    pincode: document.getElementById('r-pincode').value.trim()
+  };
+  const body = {
+    sender, receiver,
+    weightKg: document.getElementById('b-weight').value,
+    serviceType: document.getElementById('b-service').value,
+    branch: document.getElementById('b-branch').value || undefined,
+    customerEmail: document.getElementById('b-customer-email').value.trim() || undefined
+  };
+
+  if (!sender.name || !sender.phone || !sender.address || !sender.city || !sender.state) {
+    msgEl.innerHTML = '<div class="msg err">Fill in all required sender fields.</div>'; return;
+  }
+  if (!receiver.name || !receiver.phone || !receiver.address || !receiver.city || !receiver.state) {
+    msgEl.innerHTML = '<div class="msg err">Fill in all required receiver fields.</div>'; return;
+  }
+
+  try {
+    const { parcel } = await API.request('/parcels', { method: 'POST', body });
+    msgEl.innerHTML = `<div class="msg ok">Booked! Tracking ID: <strong class="mono">${escapeHtml(parcel.trackingId)}</strong></div>`;
+    document.querySelectorAll('#panel-book input').forEach(i => i.value = '');
+  } catch (err) {
+    msgEl.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  }
+});
+
+// ---------- Reviews ----------
+async function loadReviews() {
+  const el = document.getElementById('reviews-table');
+  el.innerHTML = '<p style="color:var(--grey);">Loading…</p>';
+  try {
+    const path = user.role === 'admin' ? '/reviews/all' : '/reviews';
+    const { reviews } = await API.request(path);
+    if (!reviews.length) { el.innerHTML = '<div class="empty-state"><div class="icon">💬</div><p>No reviews yet.</p></div>'; return; }
+    el.innerHTML = `<table>
+      <thead><tr><th>Name</th><th>Rating</th><th>Comment</th><th>Status</th>${user.role==='admin'?'<th>Action</th>':''}</tr></thead>
+      <tbody>${reviews.map(r => `
+        <tr>
+          <td>${escapeHtml(r.name)}</td>
+          <td>${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</td>
+          <td style="max-width:320px;">${escapeHtml(r.comment)}</td>
+          <td>${r.approved ? '<span class="badge" style="background:#E4EFE3;color:var(--green);">Live</span>' : '<span class="badge">Pending</span>'}</td>
+          ${user.role==='admin' ? `<td>
+            <button class="btn small outline" data-approve="${r._id}" data-val="${!r.approved}">${r.approved ? 'Unpublish' : 'Approve'}</button>
+            <button class="btn small danger" data-del-review="${r._id}">Delete</button>
+          </td>` : ''}
+        </tr>`).join('')}</tbody>
+    </table>`;
+    el.querySelectorAll('[data-approve]').forEach(btn => btn.addEventListener('click', async () => {
+      await API.request(`/reviews/${btn.dataset.approve}`, { method: 'PATCH', body: { approved: btn.dataset.val === 'true' } });
+      loadReviews();
+    }));
+    el.querySelectorAll('[data-del-review]').forEach(btn => btn.addEventListener('click', async () => {
+      if (!confirm('Delete this review?')) return;
+      await API.request(`/reviews/${btn.dataset.delReview}`, { method: 'DELETE' });
+      loadReviews();
+    }));
+  } catch (err) {
+    el.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  }
+}
+
+// ---------- Enquiries ----------
+async function loadEnquiries() {
+  const el = document.getElementById('enquiries-table');
+  el.innerHTML = '<p style="color:var(--grey);">Loading…</p>';
+  try {
+    const { enquiries } = await API.request('/enquiries');
+    if (!enquiries.length) { el.innerHTML = '<div class="empty-state"><div class="icon">📬</div><p>No enquiries yet.</p></div>'; return; }
+    el.innerHTML = `<table>
+      <thead><tr><th>Name</th><th>Phone</th><th>Subject</th><th>Message</th><th>Status</th><th></th></tr></thead>
+      <tbody>${enquiries.map(e => `
+        <tr>
+          <td>${escapeHtml(e.name)}</td>
+          <td>${escapeHtml(e.phone)}</td>
+          <td>${escapeHtml(e.subject || '—')}</td>
+          <td style="max-width:280px;">${escapeHtml(e.message)}</td>
+          <td>${e.resolved ? '<span class="badge" style="background:#E4EFE3;color:var(--green);">Resolved</span>' : '<span class="badge">Open</span>'}</td>
+          <td><button class="btn small outline" data-resolve="${e._id}" data-val="${!e.resolved}">${e.resolved ? 'Reopen' : 'Mark resolved'}</button></td>
+        </tr>`).join('')}</tbody>
+    </table>`;
+    el.querySelectorAll('[data-resolve]').forEach(btn => btn.addEventListener('click', async () => {
+      await API.request(`/enquiries/${btn.dataset.resolve}`, { method: 'PATCH', body: { resolved: btn.dataset.val === 'true' } });
+      loadEnquiries();
+    }));
+  } catch (err) {
+    el.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  }
+}
+
+// ---------- Branches (admin) ----------
+async function loadBranches() {
+  if (user.role !== 'admin') return;
+  const el = document.getElementById('branches-table');
+  el.innerHTML = '<p style="color:var(--grey);">Loading…</p>';
+  try {
+    const { branches } = await API.request('/branches', { auth: false });
+    el.innerHTML = `<table>
+      <thead><tr><th>Name</th><th>Code</th><th>City</th><th></th></tr></thead>
+      <tbody>${branches.map(b => `
+        <tr><td>${escapeHtml(b.name)}</td><td class="mono">${escapeHtml(b.code)}</td><td>${escapeHtml(b.city)}</td>
+        <td><button class="btn small danger" data-del-branch="${b._id}">Deactivate</button></td></tr>`).join('')}</tbody>
+    </table>`;
+    el.querySelectorAll('[data-del-branch]').forEach(btn => btn.addEventListener('click', async () => {
+      if (!confirm('Deactivate this branch?')) return;
+      await API.request(`/branches/${btn.dataset.delBranch}`, { method: 'DELETE' });
+      loadBranches(); loadBranchesForStaffForm();
+    }));
+    loadBranchesForStaffForm(branches);
+  } catch (err) {
+    el.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  }
+}
+
+function loadBranchesForStaffForm(branches) {
+  const sel = document.getElementById('ns-branch');
+  if (branches) sel.innerHTML = branches.map(b => `<option value="${b._id}">${escapeHtml(b.name)}</option>`).join('');
+}
+
+document.getElementById('add-branch-btn').addEventListener('click', async () => {
+  const msgEl = document.getElementById('branch-msg');
+  msgEl.innerHTML = '';
+  const body = {
+    name: document.getElementById('nb-name').value.trim(),
+    code: document.getElementById('nb-code').value.trim(),
+    city: document.getElementById('nb-city').value.trim(),
+    state: document.getElementById('nb-state').value.trim(),
+    address: document.getElementById('nb-address').value.trim(),
+    phone: document.getElementById('nb-phone').value.trim()
+  };
+  try {
+    await API.request('/branches', { method: 'POST', body });
+    msgEl.innerHTML = '<div class="msg ok">Branch added.</div>';
+    document.querySelectorAll('#panel-branches input#nb-name, #nb-code, #nb-city, #nb-state, #nb-address, #nb-phone').forEach(() => {});
+    ['nb-name','nb-code','nb-city','nb-state','nb-address','nb-phone'].forEach(id => document.getElementById(id).value = '');
+    loadBranches();
+  } catch (err) {
+    msgEl.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  }
+});
+
+// ---------- Staff (admin) ----------
+async function loadStaff() {
+  if (user.role !== 'admin') return;
+  const el = document.getElementById('staff-table');
+  el.innerHTML = '<p style="color:var(--grey);">Loading…</p>';
+  try {
+    const { staff } = await API.request('/branches/staff/all');
+    if (!staff.length) { el.innerHTML = '<div class="empty-state"><div class="icon">🧑‍💼</div><p>No staff accounts yet.</p></div>'; return; }
+    el.innerHTML = `<table>
+      <thead><tr><th>Name</th><th>Branch</th><th>Email</th><th></th></tr></thead>
+      <tbody>${staff.map(s => `
+        <tr><td>${escapeHtml(s.name)}</td><td>${escapeHtml(s.branch?.name || '—')}</td><td>${escapeHtml(s.email)}</td>
+        <td>${s.active ? `<button class="btn small danger" data-del-staff="${s._id}">Deactivate</button>` : '<span class="badge">Inactive</span>'}</td></tr>`).join('')}</tbody>
+    </table>`;
+    el.querySelectorAll('[data-del-staff]').forEach(btn => btn.addEventListener('click', async () => {
+      if (!confirm('Deactivate this staff account?')) return;
+      await API.request(`/branches/staff/${btn.dataset.delStaff}`, { method: 'DELETE' });
+      loadStaff();
+    }));
+  } catch (err) {
+    el.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  }
+}
+
+document.getElementById('add-staff-btn').addEventListener('click', async () => {
+  const msgEl = document.getElementById('staff-msg');
+  msgEl.innerHTML = '';
+  const branchId = document.getElementById('ns-branch').value;
+  const body = {
+    name: document.getElementById('ns-name').value.trim(),
+    email: document.getElementById('ns-email').value.trim(),
+    password: document.getElementById('ns-password').value
+  };
+  if (!branchId) { msgEl.innerHTML = '<div class="msg err">Add a branch first.</div>'; return; }
+  try {
+    await API.request(`/branches/${branchId}/staff`, { method: 'POST', body });
+    msgEl.innerHTML = '<div class="msg ok">Staff account created.</div>';
+    ['ns-name','ns-email','ns-password'].forEach(id => document.getElementById(id).value = '');
+    loadStaff();
+  } catch (err) {
+    msgEl.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  }
+});
+
+// ---------- Rates (admin) ----------
+async function loadRates() {
+  if (user.role !== 'admin') return;
+  try {
+    const { config } = await API.request('/calculator/rates');
+    document.getElementById('rc-base').value = config.baseRate;
+    document.getElementById('rc-min').value = config.minCharge;
+    document.getElementById('rc-std').value = config.perKgRate.standard;
+    document.getElementById('rc-exp').value = config.perKgRate.express;
+    document.getElementById('rc-local').value = config.zoneMultiplier.local;
+    document.getElementById('rc-state').value = config.zoneMultiplier.state;
+    document.getElementById('rc-national').value = config.zoneMultiplier.national;
+  } catch (err) {
+    document.getElementById('rates-msg').innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  }
+}
+
+document.getElementById('save-rates-btn').addEventListener('click', async () => {
+  const msgEl = document.getElementById('rates-msg');
+  msgEl.innerHTML = '';
+  const body = {
+    baseRate: Number(document.getElementById('rc-base').value),
+    minCharge: Number(document.getElementById('rc-min').value),
+    perKgRate: { standard: Number(document.getElementById('rc-std').value), express: Number(document.getElementById('rc-exp').value) },
+    zoneMultiplier: {
+      local: Number(document.getElementById('rc-local').value),
+      state: Number(document.getElementById('rc-state').value),
+      national: Number(document.getElementById('rc-national').value)
+    }
+  };
+  try {
+    await API.request('/calculator/rates', { method: 'PUT', body });
+    msgEl.innerHTML = '<div class="msg ok">Rate card saved.</div>';
+  } catch (err) {
+    msgEl.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  }
+});
+
+// ---------- Analytics (admin) ----------
+const STATUS_COLORS = {
+  'Booked': '#8892AB',
+  'Picked Up': '#E8A33D',
+  'In Transit': '#E31E24',
+  'Out for Delivery': '#2A5C9A',
+  'Delivered': '#4C7A50',
+  'Cancelled': '#C1443C'
+};
+let dailyChart, statusChart;
+
+async function loadAnalytics() {
+  if (user.role !== 'admin') return;
+  const cardsEl = document.getElementById('analytics-cards');
+  cardsEl.innerHTML = '<p style="color:var(--grey);">Loading…</p>';
+  try {
+    const stats = await API.request('/parcels/stats/summary');
+    const countFor = (status) => (stats.statusBreakdown.find(s => s.status === status) || {}).count || 0;
+    const delivered = countFor('Delivered');
+    const inProgress = stats.statusBreakdown.reduce((sum, s) => sum + (s.status !== 'Delivered' && s.status !== 'Cancelled' ? s.count : 0), 0);
+
+    cardsEl.innerHTML = `
+      <div class="card stat-card"><div class="stat-num">${stats.totalParcels}</div><div class="stat-label">Total Parcels</div></div>
+      <div class="card stat-card"><div class="stat-num">₹${stats.totalRevenue}</div><div class="stat-label">Total Revenue</div></div>
+      <div class="card stat-card"><div class="stat-num">${delivered}</div><div class="stat-label">Delivered</div></div>
+      <div class="card stat-card"><div class="stat-num">${inProgress}</div><div class="stat-label">In Progress</div></div>`;
+
+    const dailyLabels = stats.daily.map(d => d.date.slice(5));
+    if (dailyChart) dailyChart.destroy();
+    dailyChart = new Chart(document.getElementById('chart-daily'), {
+      type: 'line',
+      data: {
+        labels: dailyLabels,
+        datasets: [
+          { label: 'Bookings', data: stats.daily.map(d => d.bookings), borderColor: '#142B6E', backgroundColor: 'rgba(20,43,110,0.08)', tension: 0.3, yAxisID: 'y' },
+          { label: 'Revenue (₹)', data: stats.daily.map(d => d.revenue), borderColor: '#E31E24', backgroundColor: 'rgba(227,30,36,0.08)', tension: 0.3, yAxisID: 'y1' }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { position: 'left', beginAtZero: true, ticks: { precision: 0 } },
+          y1: { position: 'right', beginAtZero: true, grid: { drawOnChartArea: false } }
+        }
+      }
+    });
+
+    if (statusChart) statusChart.destroy();
+    statusChart = new Chart(document.getElementById('chart-status'), {
+      type: 'doughnut',
+      data: {
+        labels: stats.statusBreakdown.map(s => s.status),
+        datasets: [{
+          data: stats.statusBreakdown.map(s => s.count),
+          backgroundColor: stats.statusBreakdown.map(s => STATUS_COLORS[s.status] || '#C6CCDA')
+        }]
+      },
+      options: { responsive: true, maintainAspectRatio: false }
+    });
+
+    const branchesEl = document.getElementById('analytics-branches');
+    if (!stats.byBranch.length) {
+      branchesEl.innerHTML = '<p style="color:var(--grey);">No data yet.</p>';
+    } else {
+      branchesEl.innerHTML = `<table>
+        <thead><tr><th>Branch</th><th>City</th><th>Parcels</th><th>Revenue</th></tr></thead>
+        <tbody>${stats.byBranch.map(b => `
+          <tr><td>${escapeHtml(b.branch)}</td><td>${escapeHtml(b.city)}</td><td>${b.count}</td><td>₹${b.revenue}</td></tr>`).join('')}</tbody>
+      </table>`;
+    }
+  } catch (err) {
+    cardsEl.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  }
+}
+</script>
+</body>
+</html>

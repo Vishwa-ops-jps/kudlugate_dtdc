@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log In — DTDC Kudlu Gate</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<section class="wrap" style="padding-top:60px;padding-bottom:80px;display:flex;justify-content:center;">
+  <div class="card" style="max-width:400px;width:100%;">
+    <h2>Customer Log In</h2>
+    <p style="color:var(--grey);font-size:14px;margin-top:-6px;">To view your order history and leave reviews.</p>
+
+    <div id="google-btn" style="display:flex;justify-content:center;margin:18px 0;"></div>
+    <div style="display:flex;align-items:center;gap:10px;margin:18px 0;color:var(--grey);font-size:13px;">
+      <div style="flex:1;height:1px;background:#e2e2e2;"></div>OR<div style="flex:1;height:1px;background:#e2e2e2;"></div>
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" autocomplete="username">
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" autocomplete="current-password">
+    </div>
+    <button class="btn amber block" id="login-btn">Log In</button>
+    <div id="msg"></div>
+    <p style="text-align:center;font-size:13px;margin-top:14px;"><a href="/forgot-password.html">Forgot password?</a></p>
+    <p style="text-align:center;font-size:14px;margin-top:6px;">No account yet? <a href="/register.html">Sign up</a></p>
+    <p style="text-align:center;font-size:13px;color:var(--grey);">Staff or branch admin? <a href="/admin/login.html">Staff login →</a></p>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script src="/js/api.js"></script>
+<script src="/js/chrome.js"></script>
+<script>
+document.getElementById('login-btn').addEventListener('click', async () => {
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const msgEl = document.getElementById('msg');
+  msgEl.innerHTML = '';
+  if (!email || !password) { msgEl.innerHTML = '<div class="msg err">Enter email and password.</div>'; return; }
+  try {
+    const { token, user } = await API.request('/auth/login', { method: 'POST', body: { email, password }, auth: false });
+    if (user.role !== 'customer') {
+      msgEl.innerHTML = '<div class="msg err">This is a staff/admin account — use the staff login page.</div>';
+      return;
+    }
+    Session.set(token, user);
+    window.location.href = '/dashboard.html';
+  } catch (err) {
+    msgEl.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  }
+});
+document.getElementById('password').addEventListener('keydown', (e) => { if (e.key === 'Enter') document.getElementById('login-btn').click(); });
+
+renderGoogleButton('google-btn', async (credential) => {
+  const msgEl = document.getElementById('msg');
+  msgEl.innerHTML = '';
+  try {
+    const { token, user } = await API.request('/auth/google', { method: 'POST', body: { credential }, auth: false });
+    Session.set(token, user);
+    window.location.href = '/dashboard.html';
+  } catch (err) {
+    msgEl.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  }
+});
+</script>
+</body>
+</html>

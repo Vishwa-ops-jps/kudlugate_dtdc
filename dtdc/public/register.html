@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up — DTDC Kudlu Gate</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<section class="wrap" style="padding-top:60px;padding-bottom:80px;display:flex;justify-content:center;">
+  <div class="card" style="max-width:420px;width:100%;">
+    <h2>Create an Account</h2>
+    <p style="color:var(--grey);font-size:14px;margin-top:-6px;">Track your order history and leave reviews after delivery.</p>
+
+    <div id="google-btn" style="display:flex;justify-content:center;margin:18px 0;"></div>
+    <div style="display:flex;align-items:center;gap:10px;margin:18px 0;color:var(--grey);font-size:13px;">
+      <div style="flex:1;height:1px;background:#e2e2e2;"></div>OR<div style="flex:1;height:1px;background:#e2e2e2;"></div>
+    </div>
+
+    <div class="field">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" autocomplete="name">
+    </div>
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" autocomplete="username">
+    </div>
+    <div class="field">
+      <label for="phone">Phone</label>
+      <input type="tel" id="phone" autocomplete="tel">
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" autocomplete="new-password">
+    </div>
+    <button class="btn amber block" id="reg-btn">Create Account</button>
+    <div id="msg"></div>
+    <p style="text-align:center;font-size:14px;margin-top:18px;">Already have an account? <a href="/login.html">Log in</a></p>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script src="/js/api.js"></script>
+<script src="/js/chrome.js"></script>
+<script>
+document.getElementById('reg-btn').addEventListener('click', async () => {
+  const body = {
+    name: document.getElementById('name').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    password: document.getElementById('password').value
+  };
+  const msgEl = document.getElementById('msg');
+  msgEl.innerHTML = '';
+  if (!body.name || !body.email || !body.password) { msgEl.innerHTML = '<div class="msg err">Fill in all required fields.</div>'; return; }
+  if (body.password.length < 6) { msgEl.innerHTML = '<div class="msg err">Password should be at least 6 characters.</div>'; return; }
+  if (body.phone && !/^[6-9]\d{9}$/.test(body.phone.replace(/[\s-]/g, '').replace(/^(\+?91)/, ''))) {
+    msgEl.innerHTML = '<div class="msg err">Enter a valid 10-digit mobile number.</div>'; return;
+  }
+  try {
+    const { token, user } = await API.request('/auth/register', { method: 'POST', body, auth: false });
+    Session.set(token, user);
+    window.location.href = '/dashboard.html';
+  } catch (err) {
+    msgEl.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  }
+});
+
+renderGoogleButton('google-btn', async (credential) => {
+  const msgEl = document.getElementById('msg');
+  msgEl.innerHTML = '';
+  try {
+    const { token, user } = await API.request('/auth/google', { method: 'POST', body: { credential }, auth: false });
+    Session.set(token, user);
+    window.location.href = '/dashboard.html';
+  } catch (err) {
+    msgEl.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Parcel — DTDC Kudlu Gate</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<section class="wrap" style="padding-top:44px;padding-bottom:60px;">
+  <div class="section-head">
+    <span class="eyebrow">My Account</span>
+    <h2>Book a Parcel</h2>
+    <p style="color:var(--grey);">Enter pickup and delivery details below. Weight is confirmed at drop-off — this locks in your estimate.</p>
+  </div>
+
+  <div class="grid-2" style="align-items:start;">
+    <div class="card">
+      <div class="field">
+        <label for="b-branch">Drop-off / pickup branch</label>
+        <select id="b-branch"></select>
+      </div>
+
+      <fieldset>
+        <legend>Sender (you)</legend>
+        <div class="field"><label>Name</label><input id="s-name"></div>
+        <div class="field-row">
+          <div class="field"><label>Phone</label><input id="s-phone" placeholder="10-digit mobile"></div>
+          <div class="field"><label>Email</label><input id="s-email"></div>
+        </div>
+        <div class="field"><label>Address</label><input id="s-address" placeholder="House/flat, street, area"></div>
+        <div class="field-row">
+          <div class="field"><label>City</label><input id="s-city"></div>
+          <div class="field"><label>State</label><input id="s-state"></div>
+        </div>
+        <div class="field" style="margin-bottom:0;"><label>Pincode</label><input id="s-pincode" placeholder="6 digits"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Receiver</legend>
+        <div class="field"><label>Name</label><input id="r-name"></div>
+        <div class="field-row">
+          <div class="field"><label>Phone</label><input id="r-phone" placeholder="10-digit mobile"></div>
+          <div class="field"><label>Email (for delivery updates)</label><input id="r-email"></div>
+        </div>
+        <div class="field"><label>Address</label><input id="r-address" placeholder="House/flat, street, area"></div>
+        <div class="field-row">
+          <div class="field"><label>City</label><input id="r-city"></div>
+          <div class="field"><label>State</label><input id="r-state"></div>
+        </div>
+        <div class="field" style="margin-bottom:0;"><label>Pincode</label><input id="r-pincode" placeholder="6 digits"></div>
+      </fieldset>
+
+      <div class="field-row">
+        <div class="field"><label>Weight (kg)</label><input type="number" id="b-weight" min="0.1" step="0.1" value="1"></div>
+        <div class="field"><label>Service</label><select id="b-service"><option value="standard">Standard</option><option value="express">Express</option></select></div>
+      </div>
+
+      <button class="btn outline block" id="estimate-btn" type="button">Get Estimate</button>
+      <div style="height:12px;"></div>
+      <button class="btn amber block" id="book-btn" type="button">Confirm Booking</button>
+      <div id="book-msg"></div>
+    </div>
+
+    <div>
+      <div class="waybill" id="estimate-card" style="display:none;margin-bottom:20px;">
+        <span class="tid-label">Estimated Cost</span>
+        <div class="tid" id="estimate-cost" style="font-size:30px;">Rs 0</div>
+        <div class="perforation"></div>
+        <div class="grid-2">
+          <div><span class="tid-label">Zone</span><p id="estimate-zone" style="margin:4px 0;text-transform:capitalize;"></p></div>
+          <div><span class="tid-label">Service</span><p id="estimate-service" style="margin:4px 0;text-transform:capitalize;"></p></div>
+        </div>
+      </div>
+
+      <div class="waybill" id="success-card" style="display:none;">
+        <span class="tid-label">Booked! Tracking ID</span>
+        <div class="tid" id="success-tid" style="font-size:24px;"></div>
+        <div class="perforation"></div>
+        <p style="font-size:14px;color:var(--grey);">Drop the parcel at your chosen branch with this tracking ID. We'll email/SMS you as its status updates.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="https://www.dtdc.com/track-your-shipment/" target="_blank" rel="noopener noreferrer" id="success-track-link" class="btn outline small">Track this parcel</a>
+          <button class="btn outline small" id="success-receipt-btn" type="button">Download Receipt</button>
+        </div>
+      </div>
+
+      <div class="card" style="color:var(--grey);font-size:14px;">
+        <strong style="color:var(--ink);display:block;margin-bottom:6px;">How it works</strong>
+        1. Fill in sender/receiver details and get an estimate.<br>
+        2. Confirm the booking to get your tracking ID.<br>
+        3. Drop the parcel at your chosen branch (or ask about pickup) — staff will confirm the exact weight and move it to "Picked Up".
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script src="/js/api.js"></script>
+<script src="/js/chrome.js"></script>
+<script>
+const user = Session.getUser();
+if (!user || user.role !== 'customer') { window.location.href = '/login.html'; }
+
+(async () => {
+  try {
+    const { branches } = await API.request('/branches', { auth: false });
+    document.getElementById('b-branch').innerHTML = branches.map(b => `<option value="${b._id}">${escapeHtml(b.name)} (${escapeHtml(b.city)})</option>`).join('');
+  } catch {}
+
+  try {
+    const { user: me } = await API.request('/auth/me');
+    document.getElementById('s-name').value = me.name || '';
+    document.getElementById('s-email').value = me.email || '';
+    document.getElementById('s-phone').value = me.phone || '';
+  } catch {}
+})();
+
+function readParty(prefix) {
+  return {
+    name: document.getElementById(`${prefix}-name`).value.trim(),
+    phone: document.getElementById(`${prefix}-phone`).value.trim(),
+    email: document.getElementById(`${prefix}-email`).value.trim(),
+    address: document.getElementById(`${prefix}-address`).value.trim(),
+    city: document.getElementById(`${prefix}-city`).value.trim(),
+    state: document.getElementById(`${prefix}-state`).value.trim(),
+    pincode: document.getElementById(`${prefix}-pincode`).value.trim()
+  };
+}
+
+document.getElementById('estimate-btn').addEventListener('click', async () => {
+  const sender = readParty('s');
+  const receiver = readParty('r');
+  const msgEl = document.getElementById('book-msg');
+  msgEl.innerHTML = '';
+  if (!sender.city || !sender.state || !receiver.city || !receiver.state) {
+    msgEl.innerHTML = '<div class="msg err">Fill in sender and receiver city/state first.</div>';
+    return;
+  }
+  try {
+    const data = await API.request('/calculator/estimate', {
+      method: 'POST',
+      auth: false,
+      body: {
+        weightKg: document.getElementById('b-weight').value,
+        serviceType: document.getElementById('b-service').value,
+        senderCity: sender.city, senderState: sender.state,
+        receiverCity: receiver.city, receiverState: receiver.state
+      }
+    });
+    document.getElementById('estimate-cost').textContent = 'Rs ' + data.cost;
+    document.getElementById('estimate-zone').textContent = data.zone;
+    document.getElementById('estimate-service').textContent = data.serviceType;
+    document.getElementById('estimate-card').style.display = 'block';
+  } catch (err) {
+    msgEl.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  }
+});
+
+document.getElementById('book-btn').addEventListener('click', async () => {
+  const msgEl = document.getElementById('book-msg');
+  msgEl.innerHTML = '';
+  const sender = readParty('s');
+  const receiver = readParty('r');
+  const branch = document.getElementById('b-branch').value;
+
+  if (!sender.name || !sender.phone || !sender.address || !sender.city || !sender.state) {
+    msgEl.innerHTML = '<div class="msg err">Fill in all required sender fields.</div>'; return;
+  }
+  if (!receiver.name || !receiver.phone || !receiver.address || !receiver.city || !receiver.state) {
+    msgEl.innerHTML = '<div class="msg err">Fill in all required receiver fields.</div>'; return;
+  }
+  if (!branch) { msgEl.innerHTML = '<div class="msg err">Choose a branch.</div>'; return; }
+
+  const body = {
+    sender, receiver, branch,
+    weightKg: document.getElementById('b-weight').value,
+    serviceType: document.getElementById('b-service').value
+  };
+
+  const btn = document.getElementById('book-btn');
+  btn.disabled = true; btn.textContent = 'Booking…';
+  try {
+    const { parcel } = await API.request('/parcels', { method: 'POST', body });
+    document.getElementById('success-tid').textContent = parcel.trackingId;
+    document.getElementById('success-receipt-btn').onclick = () => {
+      downloadFile(`/parcels/${encodeURIComponent(parcel.trackingId)}/receipt`, `${parcel.trackingId}-receipt.pdf`).catch(err => alert(err.message));
+    };
+    document.getElementById('success-card').style.display = 'block';
+    document.getElementById('estimate-card').style.display = 'none';
+  } catch (err) {
+    msgEl.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  } finally {
+    btn.disabled = false; btn.textContent = 'Confirm Booking';
+  }
+});
+</script>
+</body>
+</html>

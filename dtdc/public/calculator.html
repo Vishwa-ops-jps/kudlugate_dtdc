@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rate Calculator — DTDC Kudlu Gate</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<section class="wrap" style="padding-top:44px;">
+  <div class="section-head">
+    <span class="eyebrow">Estimate</span>
+    <h2>What will it cost to ship?</h2>
+    <p style="color:var(--grey);">A quick estimate based on weight, service speed, and distance. Final cost is confirmed at the counter.</p>
+  </div>
+
+  <div class="grid-2" style="align-items:start;">
+    <div class="card">
+      <fieldset>
+        <legend>Origin</legend>
+        <div class="field">
+          <label for="s-city">City</label>
+          <input type="text" id="s-city" placeholder="Bengaluru">
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label for="s-state">State</label>
+          <input type="text" id="s-state" placeholder="Karnataka">
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Destination</legend>
+        <div class="field">
+          <label for="r-city">City</label>
+          <input type="text" id="r-city" placeholder="Chennai">
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label for="r-state">State</label>
+          <input type="text" id="r-state" placeholder="Tamil Nadu">
+        </div>
+      </fieldset>
+      <div class="field-row">
+        <div class="field">
+          <label for="weight">Weight (kg)</label>
+          <input type="number" id="weight" min="0.1" step="0.1" value="1">
+        </div>
+        <div class="field">
+          <label for="service">Service</label>
+          <select id="service">
+            <option value="standard">Standard</option>
+            <option value="express">Express</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn amber block" id="calc-btn">Calculate Estimate</button>
+      <div id="calc-msg"></div>
+    </div>
+
+    <div class="waybill" id="calc-result" style="display:none;">
+      <span class="tid-label">Estimated Cost</span>
+      <div class="tid" id="calc-cost" style="font-size:34px;">₹0</div>
+      <div class="perforation"></div>
+      <div class="grid-2">
+        <div><span class="tid-label">Zone</span><p id="calc-zone" style="margin:4px 0;text-transform:capitalize;"></p></div>
+        <div><span class="tid-label">Service</span><p id="calc-service" style="margin:4px 0;text-transform:capitalize;"></p></div>
+      </div>
+      <p style="font-size:12.5px;color:var(--grey);margin-bottom:0;">Estimate only — actual cost may vary slightly based on packaging and volumetric weight.</p>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+
+<script src="/js/api.js"></script>
+<script src="/js/chrome.js"></script>
+<script>
+document.getElementById('calc-btn').addEventListener('click', async () => {
+  const body = {
+    senderCity: document.getElementById('s-city').value.trim(),
+    senderState: document.getElementById('s-state').value.trim(),
+    receiverCity: document.getElementById('r-city').value.trim(),
+    receiverState: document.getElementById('r-state').value.trim(),
+    weightKg: document.getElementById('weight').value,
+    serviceType: document.getElementById('service').value
+  };
+  const msgEl = document.getElementById('calc-msg');
+  const resultEl = document.getElementById('calc-result');
+  msgEl.innerHTML = '';
+  resultEl.style.display = 'none';
+  try {
+    const data = await API.request('/calculator/estimate', { method: 'POST', body, auth: false });
+    document.getElementById('calc-cost').textContent = '₹' + data.cost;
+    document.getElementById('calc-zone').textContent = data.zone;
+    document.getElementById('calc-service').textContent = data.serviceType;
+    resultEl.style.display = 'block';
+  } catch (err) {
+    msgEl.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+  }
+});
+</script>
+</body>
+</html>
