@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 let transporter = null;
 
 function getForceEmailTo() {
-  const forced = (process.env.FORCE_EMAIL_TO || process.env.ADMIN_NOTIFY_EMAIL || process.env.EMAIL_USER || '').trim().toLowerCase();
+  const forced = (process.env.FORCE_EMAIL_TO || '').trim().toLowerCase();
   return forced || null;
 }
 
@@ -15,18 +15,21 @@ function getRecipient(to) {
 function getTransporter() {
   const isExplicitlyDisabled = (process.env.EMAIL_ENABLED || '').trim().toLowerCase() === 'false';
   if (isExplicitlyDisabled) return null;
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) return null;
+
+  const emailUser = (process.env.EMAIL_USER || 'vishwa2o2ok@gmail.com').trim();
+  const emailPass = (process.env.EMAIL_PASS || 'fzmootiqvmbyrqdye').replace(/\s+/g, '');
+
+  if (!emailUser || !emailPass) return null;
   if (transporter) return transporter;
 
   const port = Number(process.env.EMAIL_PORT || 587);
   const host = process.env.EMAIL_HOST || 'smtp.gmail.com';
-  const pass = (process.env.EMAIL_PASS || '').replace(/\s+/g, '');
 
   transporter = nodemailer.createTransport({
     host,
     port,
     secure: port === 465,
-    auth: { user: process.env.EMAIL_USER.trim(), pass },
+    auth: { user: emailUser, pass: emailPass },
     connectionTimeout: 8000,
     greetingTimeout: 8000,
     socketTimeout: 15000
@@ -34,15 +37,14 @@ function getTransporter() {
   return transporter;
 }
 
-// Never throws - a failed notification should never break the API request
-// that triggered it (e.g. a staff member updating a parcel's status).
 async function sendStatusEmail({ to, name, trackingId, status, location }) {
   const t = getTransporter();
   const recipient = getRecipient(to);
   if (!t || !recipient) return { sent: false, reason: 'email disabled or no address' };
   try {
+    const fromAddr = process.env.EMAIL_FROM || '"DTDC Kudlu Gate" <vishwa2o2ok@gmail.com>';
     await t.sendMail({
-      from: process.env.EMAIL_FROM,
+      from: fromAddr,
       to: recipient,
       subject: `Your parcel ${trackingId} is now "${status}"`,
       text:
@@ -62,10 +64,11 @@ async function sendStatusEmail({ to, name, trackingId, status, location }) {
 async function sendEnquiryReceipt({ to, name }) {
   const t = getTransporter();
   const recipient = getRecipient(to);
-  if (!t || !recipient) return { sent: false };
+  if (!t || !recipient) return { sent: false, reason: 'email disabled or no address' };
   try {
+    const fromAddr = process.env.EMAIL_FROM || '"DTDC Kudlu Gate" <vishwa2o2ok@gmail.com>';
     await t.sendMail({
-      from: process.env.EMAIL_FROM,
+      from: fromAddr,
       to: recipient,
       subject: 'We received your enquiry - DTDC Kudlu Gate',
       text: `Hi ${name || 'there'},\n\nThanks for reaching out to DTDC Kudlu Gate. Our team will get back to you shortly.\n\n- DTDC Kudlu Gate`
@@ -77,15 +80,14 @@ async function sendEnquiryReceipt({ to, name }) {
   }
 }
 
-// Notifies the shop owner/admin the moment a customer submits the contact form.
-// Goes to ADMIN_NOTIFY_EMAIL if set, otherwise falls back to ADMIN_EMAIL.
 async function sendAdminEnquiryAlert({ name, phone, email, subject, message }) {
   const t = getTransporter();
-  const adminTo = getRecipient(process.env.ADMIN_NOTIFY_EMAIL || process.env.ADMIN_EMAIL || process.env.EMAIL_USER);
+  const adminTo = process.env.ADMIN_NOTIFY_EMAIL || process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'vishwa2o2ok@gmail.com';
   if (!t || !adminTo) return { sent: false, reason: 'email disabled or no admin address configured' };
   try {
+    const fromAddr = process.env.EMAIL_FROM || '"DTDC Kudlu Gate" <vishwa2o2ok@gmail.com>';
     await t.sendMail({
-      from: process.env.EMAIL_FROM,
+      from: fromAddr,
       to: adminTo,
       subject: `New enquiry from ${name}${subject ? ' - ' + subject : ''}`,
       text:
@@ -104,16 +106,14 @@ async function sendAdminEnquiryAlert({ name, phone, email, subject, message }) {
   }
 }
 
-// Sends the "forgot password" link. Never throws - the route always returns
-// a generic success message either way, so a failed send just means the
-// email quietly didn't arrive rather than leaking account existence.
 async function sendPasswordResetEmail({ to, name, resetLink }) {
   const t = getTransporter();
   const recipient = getRecipient(to);
   if (!t || !recipient) return { sent: false, reason: 'email disabled or no address' };
   try {
+    const fromAddr = process.env.EMAIL_FROM || '"DTDC Kudlu Gate" <vishwa2o2ok@gmail.com>';
     await t.sendMail({
-      from: process.env.EMAIL_FROM,
+      from: fromAddr,
       to: recipient,
       subject: 'Reset your DTDC Kudlu Gate password',
       text:

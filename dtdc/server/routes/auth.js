@@ -152,9 +152,18 @@ router.post('/forgot-password', async (req, res) => {
     if (!email) return res.status(400).json({ error: 'Email is required.' });
 
     const user = await User.findOne({ email });
-    // No account, account disabled, or a Google-only account with no password
-    // to reset - stay silent and return the same message either way.
-    if (!user || !user.active || !user.passwordHash) return res.json(generic);
+    if (!user) {
+      console.log(`Password reset requested for ${email}, but account does not exist in database.`);
+      return res.json(generic);
+    }
+    if (!user.active) {
+      console.log(`Password reset requested for ${email}, but account is disabled.`);
+      return res.json(generic);
+    }
+    if (!user.passwordHash) {
+      console.log(`Password reset requested for ${email}, but account uses Google Sign-In (no passwordHash).`);
+      return res.json(generic);
+    }
 
     const rawToken = crypto.randomBytes(32).toString('hex');
     user.resetTokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
@@ -171,13 +180,12 @@ router.post('/forgot-password', async (req, res) => {
 
     const resetLink = `${baseUrl}/reset-password.html?token=${rawToken}&email=${encodeURIComponent(email)}`;
     
-    // Dispatch email asynchronously so the UI updates immediately
     sendPasswordResetEmail({ to: email, name: user.name, resetLink })
       .then(result => {
         if (result && !result.sent) {
           console.error('Password reset email failed to send:', result.reason);
         } else {
-          console.log(`Password reset email successfully queued for ${email}`);
+          console.log(`Password reset email successfully dispatched to ${email}`);
         }
       })
       .catch(err => console.error('Password reset email error:', err.message));
