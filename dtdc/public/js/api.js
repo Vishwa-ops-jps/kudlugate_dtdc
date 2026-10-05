@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (authSlot) {
     const user = Session.getUser();
     if (user && user.role === 'customer') {
-      authSlot.innerHTML = `<a href="/dashboard.html">My Orders</a><a href="/book.html">Book a Parcel</a><a href="#" data-logout class="cta">Log Out</a>`;
+      authSlot.innerHTML = `<a href="/dashboard.html">My Orders</a><a href="#" data-logout class="cta">Log Out</a>`;
     } else if (user) {
       authSlot.innerHTML = `<a href="/admin/dashboard.html">Staff Panel</a>`;
     } else {
