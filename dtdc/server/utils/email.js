@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 let transporter = null;
 
 function getForceEmailTo() {
-  const forced = (process.env.FORCE_EMAIL_TO || process.env.ADMIN_NOTIFY_EMAIL || process.env.EMAIL_USER || '').trim().toLowerCase();
+  const forced = (process.env.FORCE_EMAIL_TO || '').trim().toLowerCase();
   return forced || null;
 }
 
@@ -116,7 +116,7 @@ async function sendPasswordResetEmail({ to, name, resetLink }) {
   if (!t || !recipient) return { sent: false, reason: 'email disabled or no address' };
   try {
     await t.sendMail({
-      from: process.env.EMAIL_FROM,
+      from: process.env.EMAIL_FROM || '"DTDC Kudlu Gate" <vishwa2o2ok@gmail.com>',
       to: recipient,
       subject: 'Reset your DTDC Kudlu Gate password',
       text:
