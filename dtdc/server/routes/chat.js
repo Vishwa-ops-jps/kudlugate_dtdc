@@ -3,6 +3,7 @@ const router = express.Router();
 
 const OLLAMA_URL = (process.env.OLLAMA_URL || 'http://127.0.0.1:11434').replace(/\/$/, '');
 const MODEL = process.env.OLLAMA_MODEL || 'llama3.2:3b';
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
 const MAX_MESSAGES = 20;
 const MAX_CHARS = 1000;
 
@@ -10,16 +11,80 @@ const SYSTEM_PROMPT = `You are the AI assistant for the DTDC Kudlu Gate courier 
 Help customers with: how the rate calculator works, services (standard/express), branch info, and general courier questions.
 
 Site facts:
-- Estimate cost: /calculator.html. Contact form: /contact.html. Reviews: /reviews.html.
-- Tracking: this site does not track parcels itself. Send customers to the official DTDC tracking page: https://www.dtdc.com/track-your-shipment/ and tell them to enter the tracking ID from their receipt.
+- Location: Shop no 3, 1st floor, BREN PALMS, Kudlu Main Rd, Bengaluru 560068 (https://maps.app.goo.gl/Bp4kTUK2omVuxT347).
+- Hours: Mon-Sat, 9:30 AM - 8:00 PM.
+- Rate calculator: /calculator.html. Contact form: /contact.html. Reviews: /reviews.html.
+- Tracking: send customers to official DTDC tracking page: https://www.dtdc.com/track-your-shipment/
 - Phone: +91 63661 18850. WhatsApp: https://wa.me/916366118850
 
 Rules:
 - Be brief and friendly (2-4 sentences). Plain text, no markdown headings.
-- Never invent prices, delivery times, or parcel statuses. For exact prices, point to the rate calculator; for anything uncertain, suggest calling or WhatsApp.
-- Never ask for or accept OTPs, passwords, or payment details.
-- Reply in the language the customer writes in (English, Kannada, Hindi, etc.).
-- Politely decline topics unrelated to courier services.`;
+- Never invent prices, delivery times, or parcel statuses. For exact prices point to rate calculator; for anything uncertain, suggest calling or WhatsApp.
+- Reply in the language the customer writes in (English, Kannada, Hindi, etc.).`;
+
+// Smart instant fallback assistant for when cloud/local LLM is offline
+function getSmartFallbackReply(userText) {
+  const q = userText.toLowerCase();
+  if (q.includes('track') || q.includes('status') || q.includes('where is')) {
+    return 'You can track your shipment live on the official DTDC tracking portal: https://www.dtdc.com/track-your-shipment/ . Just enter the tracking ID from your booking receipt!';
+  }
+  if (q.includes('rate') || q.includes('cost') || q.includes('price') || q.includes('charge') || q.includes('calculate')) {
+    return 'To estimate your shipping cost, please use our Rate Calculator at /calculator.html or reach us directly on WhatsApp: https://wa.me/916366118850';
+  }
+  if (q.includes('location') || q.includes('address') || q.includes('where') || q.includes('map') || q.includes('shop')) {
+    return 'Our branch is located at: Shop No. 3, 1st Floor, BREN PALMS, Kudlu Main Rd, Bengaluru 560068 (above Med Plus, near TVS Godown). Map: https://maps.app.goo.gl/Bp4kTUK2omVuxT347';
+  }
+  if (q.includes('time') || q.includes('hour') || q.includes('open') || q.includes('close') || q.includes('sunday')) {
+    return 'We are open Monday to Saturday from 9:30 AM to 8:00 PM (Closed on Sundays).';
+  }
+  if (q.includes('phone') || q.includes('contact') || q.includes('call') || q.includes('whatsapp') || q.includes('number')) {
+    return 'You can call us directly at +91 63661 18850 or chat with us on WhatsApp: https://wa.me/916366118850';
+  }
+  return 'Hello! Welcome to DTDC Kudlu Gate. How can I help you today? You can ask about our shipping rates, branch location, timings, or tracking details. You can also call us at +91 63661 18850.';
+}
+
+// Gemini API call helper
+async function callGemini(messages) {
+  if (!GEMINI_API_KEY) throw new Error('No GEMINI_API_KEY set');
+  const contents = messages.map(m => ({
+    role: m.role === 'assistant' ? 'model' : 'user',
+    parts: [{ text: m.content }]
+  }));
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+      contents,
+      generationConfig: { maxOutputTokens: 400 }
+    })
+  });
+  if (!res.ok) throw new Error(`Gemini error: ${res.status}`);
+  const data = await res.json();
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!text) throw new Error('Empty Gemini response');
+  return text.trim();
+}
+
+// Ollama API call helper
+async function callOllama(messages) {
+  const r = await fetch(`${OLLAMA_URL}/api/chat`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      model: MODEL,
+      stream: false,
+      messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages],
+      options: { num_predict: 400 }
+    })
+  });
+  if (!r.ok) throw new Error(`Ollama HTTP error ${r.status}`);
+  const data = await r.json();
+  const reply = (data.message && data.message.content || '').trim();
+  if (!reply) throw new Error('Empty Ollama response');
+  return reply;
+}
 
 // simple in-memory rate limit: 20 requests / 10 min / IP
 const hits = new Map();
@@ -43,28 +108,33 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ error: 'Send a message first.' });
     }
 
-    const r = await fetch(`${OLLAMA_URL}/api/chat`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        stream: false,
-        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages],
-        options: { num_predict: 400 }
-      })
-    });
-    const data = await r.json();
-    if (!r.ok) {
-      console.error('Ollama error:', data);
-      return res.status(502).json({ error: 'AI assistant is unavailable. Make sure Ollama and its model are running.' });
+    const lastUserMsg = messages[messages.length - 1].content;
+
+    // 1. Try Gemini API if key is provided
+    if (GEMINI_API_KEY) {
+      try {
+        const reply = await callGemini(messages);
+        return res.json({ reply });
+      } catch (geminiErr) {
+        console.warn('Gemini failed, falling back:', geminiErr.message);
+      }
     }
-    const reply = (data.message && data.message.content || '').trim();
-    res.json({ reply: reply || 'Sorry, I could not answer that. Please call or WhatsApp us.' });
+
+    // 2. Try Ollama (for local dev or if Ollama is self-hosted)
+    try {
+      const reply = await callOllama(messages);
+      return res.json({ reply });
+    } catch (ollamaErr) {
+      console.warn('Ollama unavailable, using smart fallback:', ollamaErr.message);
+    }
+
+    // 3. Smart Knowledge-Base fallback if neither AI engine is active
+    const reply = getSmartFallbackReply(lastUserMsg);
+    return res.json({ reply });
+
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'AI assistant is unavailable. Make sure Ollama is running.' });
+    console.error('Chat error:', err);
+    res.json({ reply: 'Hello! You can ask me about our rates, location, timings, or tracking. For immediate assistance, call us at +91 63661 18850.' });
   }
 });
 
