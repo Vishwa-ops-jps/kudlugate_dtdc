@@ -152,43 +152,18 @@ router.post('/forgot-password', async (req, res) => {
     if (!email) return res.status(400).json({ error: 'Email is required.' });
 
     const user = await User.findOne({ email });
-    if (!user) {
-      console.log(`Password reset requested for ${email}, but account does not exist in database.`);
-      return res.json(generic);
-    }
-    if (!user.active) {
-      console.log(`Password reset requested for ${email}, but account is disabled.`);
-      return res.json(generic);
-    }
-    if (!user.passwordHash) {
-      console.log(`Password reset requested for ${email}, but account uses Google Sign-In (no passwordHash).`);
-      return res.json(generic);
-    }
+    // No account, account disabled, or a Google-only account with no password
+    // to reset - stay silent and return the same message either way.
+    if (!user || !user.active || !user.passwordHash) return res.json(generic);
 
     const rawToken = crypto.randomBytes(32).toString('hex');
     user.resetTokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
     user.resetTokenExpires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
     await user.save();
 
-    let baseUrl = process.env.APP_BASE_URL;
-    if (!baseUrl || baseUrl.includes('localhost')) {
-      const host = req.get('x-forwarded-host') || req.get('host');
-      const protocol = req.get('x-forwarded-proto') || req.protocol || 'https';
-      baseUrl = `${protocol}://${host}`;
-    }
-    baseUrl = baseUrl.replace(/\/$/, '');
-
+    const baseUrl = (process.env.APP_BASE_URL || 'http://localhost:3000').replace(/\/$/, '');
     const resetLink = `${baseUrl}/reset-password.html?token=${rawToken}&email=${encodeURIComponent(email)}`;
-    
-    sendPasswordResetEmail({ to: email, name: user.name, resetLink })
-      .then(result => {
-        if (result && !result.sent) {
-          console.error('Password reset email failed to send:', result.reason);
-        } else {
-          console.log(`Password reset email successfully dispatched to ${email}`);
-        }
-      })
-      .catch(err => console.error('Password reset email error:', err.message));
+    sendPasswordResetEmail({ to: email, name: user.name, resetLink }).catch(() => {});
 
     res.json(generic);
   } catch (err) {
