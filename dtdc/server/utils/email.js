@@ -17,9 +17,11 @@ function getTransporter() {
   if (isExplicitlyDisabled) return null;
 
   const emailUser = (process.env.EMAIL_USER || 'vishwa2o2ok@gmail.com').trim();
-  const emailPass = (process.env.EMAIL_PASS || 'qdtffzfdbxejelnt').replace(/\s+/g, '');
+  let emailPass = (process.env.EMAIL_PASS || 'qdtffzfdbxejelnt').replace(/\s+/g, '');
+  if (!emailPass || emailPass === 'fzmootiqvmbyrqdye' || emailPass.includes('fzmoo')) {
+    emailPass = 'qdtffzfdbxejelnt';
+  }
 
-  if (!emailUser || !emailPass) return null;
   if (transporter) return transporter;
 
   const port = Number(process.env.EMAIL_PORT || 587);
