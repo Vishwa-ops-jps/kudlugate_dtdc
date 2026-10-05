@@ -28,8 +28,12 @@ app.use('/api/chat', chatRoutes);
 
 app.get('/api/health', (req, res) => res.json({ ok: true, time: new Date().toISOString() }));
 
-// Static frontend
-app.use(express.static(path.join(__dirname, '..', 'public')));
+// Static frontend (disable caching for development/updates)
+app.use(express.static(path.join(__dirname, '..', 'public'), {
+  setHeaders: (res) => {
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  }
+}));
 
 // Fallback 404 for unknown API routes (keeps JSON errors instead of the SPA falling through)
 app.use('/api', (req, res) => res.status(404).json({ error: 'Not found.' }));
