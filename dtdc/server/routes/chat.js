@@ -12,7 +12,7 @@ Help customers with: how the rate calculator works, services (standard/express),
 
 Site facts:
 - Location: Shop no 3, 1st floor, BREN PALMS, Kudlu Main Rd, Bengaluru 560068 (https://maps.app.goo.gl/Bp4kTUK2omVuxT347).
-- Hours: Mon-Sat, 9:30 AM - 8:00 PM.
+- Hours: Mon-Sat, 9:30 AM - 8:30 PM (Closed on Sundays).
 - Rate calculator: /calculator.html. Contact form: /contact.html. Reviews: /reviews.html.
 - Tracking: send customers to official DTDC tracking page: https://www.dtdc.com/track-your-shipment/
 - Phone: +91 63661 18850. WhatsApp: https://wa.me/916366118850
@@ -35,12 +35,12 @@ function getSmartFallbackReply(userText) {
     return 'Our branch is located at: Shop No. 3, 1st Floor, BREN PALMS, Kudlu Main Rd, Bengaluru 560068 (above Med Plus, near TVS Godown). Map: https://maps.app.goo.gl/Bp4kTUK2omVuxT347';
   }
   if (q.includes('time') || q.includes('hour') || q.includes('open') || q.includes('close') || q.includes('sunday')) {
-    return 'We are open Monday to Saturday from 9:30 AM to 8:00 PM (Closed on Sundays).';
+    return 'We are open Monday to Saturday from 9:30 AM to 8:30 PM (Closed on Sundays).';
   }
   if (q.includes('phone') || q.includes('contact') || q.includes('call') || q.includes('whatsapp') || q.includes('number')) {
     return 'You can call us directly at +91 63661 18850 or chat with us on WhatsApp: https://wa.me/916366118850';
   }
-  return 'Hello! Welcome to DTDC Kudlu Gate. How can I help you today? You can ask about our shipping rates, branch location, timings, or tracking details. You can also call us at +91 63661 18850.';
+  return 'Hello! Welcome to DTDC Kudlu Gate. How can I help you today? You can ask about our shipping rates, branch location, timings (9:30 AM - 8:30 PM), or tracking details. You can also call us at +91 63661 18850.';
 }
 
 // Gemini API call helper
@@ -134,7 +134,7 @@ router.post('/', async (req, res) => {
 
   } catch (err) {
     console.error('Chat error:', err);
-    res.json({ reply: 'Hello! You can ask me about our rates, location, timings, or tracking. For immediate assistance, call us at +91 63661 18850.' });
+    res.json({ reply: 'Hello! You can ask me about our rates, location, timings (9:30 AM - 8:30 PM), or tracking. For immediate assistance, call us at +91 63661 18850.' });
   }
 });
 
