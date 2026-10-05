@@ -26,7 +26,10 @@ function getTransporter() {
     host,
     port,
     secure: port === 465,
-    auth: { user: process.env.EMAIL_USER.trim(), pass }
+    auth: { user: process.env.EMAIL_USER.trim(), pass },
+    connectionTimeout: 8000,
+    greetingTimeout: 8000,
+    socketTimeout: 15000
   });
   return transporter;
 }

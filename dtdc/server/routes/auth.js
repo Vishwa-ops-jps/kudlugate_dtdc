@@ -170,10 +170,17 @@ router.post('/forgot-password', async (req, res) => {
     baseUrl = baseUrl.replace(/\/$/, '');
 
     const resetLink = `${baseUrl}/reset-password.html?token=${rawToken}&email=${encodeURIComponent(email)}`;
-    const resetResult = await sendPasswordResetEmail({ to: email, name: user.name, resetLink });
-    if (!resetResult.sent) {
-      console.error('Password reset email failed to send:', resetResult.reason);
-    }
+    
+    // Dispatch email asynchronously so the UI updates immediately
+    sendPasswordResetEmail({ to: email, name: user.name, resetLink })
+      .then(result => {
+        if (result && !result.sent) {
+          console.error('Password reset email failed to send:', result.reason);
+        } else {
+          console.log(`Password reset email successfully queued for ${email}`);
+        }
+      })
+      .catch(err => console.error('Password reset email error:', err.message));
 
     res.json(generic);
   } catch (err) {
