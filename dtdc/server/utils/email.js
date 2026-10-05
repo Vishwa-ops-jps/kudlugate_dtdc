@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 let transporter = null;
 
 function getForceEmailTo() {
-  const forced = (process.env.FORCE_EMAIL_TO || '').trim().toLowerCase();
+  const forced = (process.env.FORCE_EMAIL_TO || process.env.ADMIN_NOTIFY_EMAIL || process.env.EMAIL_USER || '').trim().toLowerCase();
   return forced || null;
 }
 
@@ -13,15 +13,20 @@ function getRecipient(to) {
 }
 
 function getTransporter() {
-  if (process.env.EMAIL_ENABLED !== 'true') return null;
+  const isExplicitlyDisabled = (process.env.EMAIL_ENABLED || '').trim().toLowerCase() === 'false';
+  if (isExplicitlyDisabled) return null;
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) return null;
   if (transporter) return transporter;
+
   const port = Number(process.env.EMAIL_PORT || 587);
   const host = process.env.EMAIL_HOST || 'smtp.gmail.com';
+  const pass = (process.env.EMAIL_PASS || '').replace(/\s+/g, '');
+
   transporter = nodemailer.createTransport({
     host,
     port,
     secure: port === 465,
-    auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
+    auth: { user: process.env.EMAIL_USER.trim(), pass }
   });
   return transporter;
 }
@@ -34,7 +39,7 @@ async function sendStatusEmail({ to, name, trackingId, status, location }) {
   if (!t || !recipient) return { sent: false, reason: 'email disabled or no address' };
   try {
     await t.sendMail({
-      from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
+      from: process.env.EMAIL_FROM,
       to: recipient,
       subject: `Your parcel ${trackingId} is now "${status}"`,
       text:
@@ -57,7 +62,7 @@ async function sendEnquiryReceipt({ to, name }) {
   if (!t || !recipient) return { sent: false };
   try {
     await t.sendMail({
-      from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
+      from: process.env.EMAIL_FROM,
       to: recipient,
       subject: 'We received your enquiry - DTDC Kudlu Gate',
       text: `Hi ${name || 'there'},\n\nThanks for reaching out to DTDC Kudlu Gate. Our team will get back to you shortly.\n\n- DTDC Kudlu Gate`
@@ -77,7 +82,7 @@ async function sendAdminEnquiryAlert({ name, phone, email, subject, message }) {
   if (!t || !adminTo) return { sent: false, reason: 'email disabled or no admin address configured' };
   try {
     await t.sendMail({
-      from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
+      from: process.env.EMAIL_FROM,
       to: adminTo,
       subject: `New enquiry from ${name}${subject ? ' - ' + subject : ''}`,
       text:
@@ -105,7 +110,7 @@ async function sendPasswordResetEmail({ to, name, resetLink }) {
   if (!t || !recipient) return { sent: false, reason: 'email disabled or no address' };
   try {
     await t.sendMail({
-      from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
+      from: process.env.EMAIL_FROM,
       to: recipient,
       subject: 'Reset your DTDC Kudlu Gate password',
       text:
