@@ -17,10 +17,11 @@ function getTransporter() {
   if (isExplicitlyDisabled) return null;
 
   const emailUser = (process.env.EMAIL_USER || 'vishwa2o2ok@gmail.com').trim();
-  let emailPass = (process.env.EMAIL_PASS || 'qdtffzfdbxejelnt').replace(/\s+/g, '');
-  if (!emailPass || emailPass === 'fzmootiqvmbyrqdye' || emailPass.includes('fzmoo')) {
-    emailPass = 'qdtffzfdbxejelnt';
+  let passInput = (process.env.EMAIL_PASS || 'qdtffzfdbxejelnt').replace(/\s+/g, '');
+  if (!passInput || passInput === 'fzmootiqvmbyrqdye' || passInput.includes('fzmoo')) {
+    passInput = 'qdtffzfdbxejelnt';
   }
+  const emailPass = passInput;
 
   if (transporter) return transporter;
 
