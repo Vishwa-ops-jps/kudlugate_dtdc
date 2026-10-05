@@ -252,98 +252,10 @@ footer .fine { border-top: 1px solid #313C5C; margin-top: 28px; padding-top: 18p
 .trust-badges .badge-item { display: flex; align-items: center; gap: 8px; color: #E5E9F5; font-size: 13.5px; font-weight: 500; }
 .trust-badges .badge-item .ic { font-size: 17px; margin-right: 2px; }
 
-/* ---------- Services grid (Enhanced Modern Cards with Orange Border) ---------- */
-.service-card {
-  text-align: left;
-  padding: 24px 22px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 14px;
-  border: 2px solid #f47920;
-  background: #ffffff;
-  box-shadow: 0 4px 14px rgba(244, 121, 32, 0.08);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.service-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #d71920 0%, #f47920 100%);
-  opacity: 0.85;
-}
-
-.service-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 14px 28px rgba(244, 121, 32, 0.2);
-  border-color: #d71920;
-}
-
-.service-card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.service-card .icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: rgba(244, 121, 32, 0.12);
-  color: #d71920;
-  font-size: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: inset 0 0 0 1px rgba(244, 121, 32, 0.2);
-  transition: transform 0.3s ease, background 0.3s ease;
-  margin-bottom: 0;
-}
-
-.service-card:hover .icon {
-  transform: scale(1.08) rotate(3deg);
-  background: linear-gradient(135deg, #d71920 0%, #f47920 100%);
-}
-
-.service-badge {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 20px;
-  background: rgba(244, 121, 32, 0.12);
-  color: #d71920;
-  border: 1px solid rgba(244, 121, 32, 0.25);
-  transition: all 0.3s ease;
-}
-
-.service-card:hover .service-badge {
-  background: #f47920;
-  color: #ffffff;
-  border-color: #f47920;
-}
-
-.service-card h3 {
-  font-size: 18px;
-  font-weight: 700;
-  color: #142b6e;
-  margin: 0 0 8px 0;
-  line-height: 1.3;
-}
-
-.service-card p {
-  color: #556987;
-  font-size: 14px;
-  line-height: 1.5;
-  margin: 0;
-}
-
-.grid-6 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+/* ---------- Services grid (icon + title + desc) ---------- */
+.service-card { text-align: left; padding: 22px 20px; }
+.service-card .icon { width: 46px; height: 46px; border-radius: 10px; background: rgba(227,30,36,0.08); color: var(--amber); font-size: 21px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+.grid-6 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 @media (max-width: 900px) { .grid-6 { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .grid-6 { grid-template-columns: 1fr; } }
 
@@ -359,8 +271,55 @@ footer .fine { border-top: 1px solid #313C5C; margin-top: 28px; padding-top: 18p
 .why-list { list-style: none; margin: 0 0 20px; padding: 0; display: flex; flex-direction: column; gap: 12px; }
 .why-list li { display: flex; gap: 10px; align-items: center; font-size: 14.5px; color: var(--ink-soft); font-weight: 500; }
 .why-list .ic { color: var(--green); font-size: 16px; }
-.social-row { display: flex; gap: 10px; }
-.social-row a { width: 36px; height: 36px; border-radius: 50%; background: #fff; border: 1px solid var(--grey-line); display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 16px; box-shadow: var(--shadow); }
+/* ---------- Social icons & Admin link (Vibrant brand colors + Touch grow) ---------- */
+.social-row { display: flex; gap: 14px; margin-top: 12px; align-items: center; }
+.social-row a {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.social-row a svg {
+  width: 22px;
+  height: 22px;
+  fill: #ffffff;
+  transition: transform 0.28s ease;
+}
+
+/* Permanent vibrant brand colors */
+.social-row a.social-whatsapp {
+  background: #25D366;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4);
+}
+.social-row a.social-facebook {
+  background: #1877F2;
+  box-shadow: 0 4px 14px rgba(24, 119, 242, 0.4);
+}
+.social-row a.social-instagram {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  box-shadow: 0 4px 14px rgba(220, 39, 67, 0.4);
+}
+.social-row a.social-admin {
+  background: #142B6E;
+  box-shadow: 0 4px 14px rgba(20, 43, 110, 0.4);
+}
+
+/* Elastic Touch & Hover Grow Effect */
+.social-row a:hover, .social-row a:active {
+  transform: scale(1.22) translateY(-4px);
+}
+.social-row a.social-whatsapp:hover { box-shadow: 0 8px 22px rgba(37, 211, 102, 0.6); }
+.social-row a.social-facebook:hover { box-shadow: 0 8px 22px rgba(24, 119, 242, 0.6); }
+.social-row a.social-instagram:hover { box-shadow: 0 8px 22px rgba(220, 39, 67, 0.6); }
+.social-row a.social-admin:hover { box-shadow: 0 8px 22px rgba(20, 43, 110, 0.6); }
 
 .spinner { width: 18px; height: 18px; border: 2.5px solid rgba(255,255,255,.35); border-top-color: #fff; border-radius: 50%; display: inline-block; animation: spin .7s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
