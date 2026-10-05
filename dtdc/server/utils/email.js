@@ -2,23 +2,19 @@ const nodemailer = require('nodemailer');
 
 let transporter = null;
 
-function getForceEmailTo() {
-  const forced = (process.env.FORCE_EMAIL_TO || process.env.ADMIN_NOTIFY_EMAIL || process.env.EMAIL_USER || '').trim().toLowerCase();
-  return forced || null;
-}
-
 function getRecipient(to) {
-  const forced = getForceEmailTo();
+  const forced = (process.env.FORCE_EMAIL_TO || '').trim().toLowerCase();
   return forced || to;
 }
 
 function getTransporter() {
   if (process.env.EMAIL_ENABLED !== 'true') return null;
   if (transporter) return transporter;
+  const port = Number(process.env.EMAIL_PORT || 587);
   transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: Number(process.env.EMAIL_PORT || 587),
-    secure: false,
+    host: process.env.EMAIL_HOST || 'smtp.gmail.com',
+    port,
+    secure: port === 465,
     auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
   });
   return transporter;
@@ -32,7 +28,7 @@ async function sendStatusEmail({ to, name, trackingId, status, location }) {
   if (!t || !recipient) return { sent: false, reason: 'email disabled or no address' };
   try {
     await t.sendMail({
-      from: process.env.EMAIL_FROM,
+      from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
       to: recipient,
       subject: `Your parcel ${trackingId} is now "${status}"`,
       text:
@@ -52,10 +48,10 @@ async function sendStatusEmail({ to, name, trackingId, status, location }) {
 async function sendEnquiryReceipt({ to, name }) {
   const t = getTransporter();
   const recipient = getRecipient(to);
-  if (!t || !recipient) return { sent: false };
+  if (!t || !recipient) return { sent: false, reason: 'email disabled or no address' };
   try {
     await t.sendMail({
-      from: process.env.EMAIL_FROM,
+      from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
       to: recipient,
       subject: 'We received your enquiry - DTDC Kudlu Gate',
       text: `Hi ${name || 'there'},\n\nThanks for reaching out to DTDC Kudlu Gate. Our team will get back to you shortly.\n\n- DTDC Kudlu Gate`
@@ -68,14 +64,14 @@ async function sendEnquiryReceipt({ to, name }) {
 }
 
 // Notifies the shop owner/admin the moment a customer submits the contact form.
-// Goes to ADMIN_NOTIFY_EMAIL if set, otherwise falls back to ADMIN_EMAIL.
+// Goes to ADMIN_NOTIFY_EMAIL if set, otherwise falls back to ADMIN_EMAIL or EMAIL_USER.
 async function sendAdminEnquiryAlert({ name, phone, email, subject, message }) {
   const t = getTransporter();
-  const adminTo = getRecipient(process.env.ADMIN_NOTIFY_EMAIL || process.env.ADMIN_EMAIL || process.env.EMAIL_USER);
+  const adminTo = process.env.ADMIN_NOTIFY_EMAIL || process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
   if (!t || !adminTo) return { sent: false, reason: 'email disabled or no admin address configured' };
   try {
     await t.sendMail({
-      from: process.env.EMAIL_FROM,
+      from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
       to: adminTo,
       subject: `New enquiry from ${name}${subject ? ' - ' + subject : ''}`,
       text:
@@ -94,16 +90,14 @@ async function sendAdminEnquiryAlert({ name, phone, email, subject, message }) {
   }
 }
 
-// Sends the "forgot password" link. Never throws - the route always returns
-// a generic success message either way, so a failed send just means the
-// email quietly didn't arrive rather than leaking account existence.
+// Sends the "forgot password" link to the customer's actual email address.
 async function sendPasswordResetEmail({ to, name, resetLink }) {
   const t = getTransporter();
   const recipient = getRecipient(to);
-  if (!t || !recipient) return { sent: false, reason: 'email disabled or no address' };
+  if (!t || !recipient) return { sent: false, reason: 'email disabled (EMAIL_ENABLED=true required) or missing recipient' };
   try {
     await t.sendMail({
-      from: process.env.EMAIL_FROM,
+      from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
       to: recipient,
       subject: 'Reset your DTDC Kudlu Gate password',
       text:
