@@ -161,18 +161,19 @@ router.post('/forgot-password', async (req, res) => {
     user.resetTokenExpires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
     await user.save();
 
-    const hostUrl = `${req.protocol}://${req.get('host')}`;
-    const baseUrl = (process.env.APP_BASE_URL && !process.env.APP_BASE_URL.includes('localhost')) 
-      ? process.env.APP_BASE_URL.replace(/\/$/, '') 
-      : hostUrl;
-    const resetLink = `${baseUrl}/reset-password.html?token=${rawToken}&email=${encodeURIComponent(email)}`;
+    let baseUrl = process.env.APP_BASE_URL;
+    if (!baseUrl || baseUrl.includes('localhost')) {
+      const host = req.get('x-forwarded-host') || req.get('host');
+      const protocol = req.get('x-forwarded-proto') || req.protocol || 'https';
+      baseUrl = `${protocol}://${host}`;
+    }
+    baseUrl = baseUrl.replace(/\/$/, '');
 
-    sendPasswordResetEmail({ to: email, name: user.name, resetLink })
-      .then(result => {
-        if (result && !result.sent) console.error('Password reset email failed to send:', result.reason);
-        else console.log(`Password reset email sent successfully to ${email}`);
-      })
-      .catch(err => console.error('Password reset email error:', err.message));
+    const resetLink = `${baseUrl}/reset-password.html?token=${rawToken}&email=${encodeURIComponent(email)}`;
+    const resetResult = await sendPasswordResetEmail({ to: email, name: user.name, resetLink });
+    if (!resetResult.sent) {
+      console.error('Password reset email failed to send:', resetResult.reason);
+    }
 
     res.json(generic);
   } catch (err) {

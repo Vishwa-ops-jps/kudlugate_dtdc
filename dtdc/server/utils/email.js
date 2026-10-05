@@ -2,8 +2,13 @@ const nodemailer = require('nodemailer');
 
 let transporter = null;
 
-function getRecipient(to) {
+function getForceEmailTo() {
   const forced = (process.env.FORCE_EMAIL_TO || '').trim().toLowerCase();
+  return forced || null;
+}
+
+function getRecipient(to) {
+  const forced = getForceEmailTo();
   return forced || to;
 }
 
@@ -11,8 +16,9 @@ function getTransporter() {
   if (process.env.EMAIL_ENABLED !== 'true') return null;
   if (transporter) return transporter;
   const port = Number(process.env.EMAIL_PORT || 587);
+  const host = process.env.EMAIL_HOST || 'smtp.gmail.com';
   transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST || 'smtp.gmail.com',
+    host,
     port,
     secure: port === 465,
     auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
@@ -48,7 +54,7 @@ async function sendStatusEmail({ to, name, trackingId, status, location }) {
 async function sendEnquiryReceipt({ to, name }) {
   const t = getTransporter();
   const recipient = getRecipient(to);
-  if (!t || !recipient) return { sent: false, reason: 'email disabled or no address' };
+  if (!t || !recipient) return { sent: false };
   try {
     await t.sendMail({
       from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
@@ -64,10 +70,10 @@ async function sendEnquiryReceipt({ to, name }) {
 }
 
 // Notifies the shop owner/admin the moment a customer submits the contact form.
-// Goes to ADMIN_NOTIFY_EMAIL if set, otherwise falls back to ADMIN_EMAIL or EMAIL_USER.
+// Goes to ADMIN_NOTIFY_EMAIL if set, otherwise falls back to ADMIN_EMAIL.
 async function sendAdminEnquiryAlert({ name, phone, email, subject, message }) {
   const t = getTransporter();
-  const adminTo = process.env.ADMIN_NOTIFY_EMAIL || process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
+  const adminTo = getRecipient(process.env.ADMIN_NOTIFY_EMAIL || process.env.ADMIN_EMAIL || process.env.EMAIL_USER);
   if (!t || !adminTo) return { sent: false, reason: 'email disabled or no admin address configured' };
   try {
     await t.sendMail({
@@ -90,11 +96,13 @@ async function sendAdminEnquiryAlert({ name, phone, email, subject, message }) {
   }
 }
 
-// Sends the "forgot password" link to the customer's actual email address.
+// Sends the "forgot password" link. Never throws - the route always returns
+// a generic success message either way, so a failed send just means the
+// email quietly didn't arrive rather than leaking account existence.
 async function sendPasswordResetEmail({ to, name, resetLink }) {
   const t = getTransporter();
   const recipient = getRecipient(to);
-  if (!t || !recipient) return { sent: false, reason: 'email disabled (EMAIL_ENABLED=true required) or missing recipient' };
+  if (!t || !recipient) return { sent: false, reason: 'email disabled or no address' };
   try {
     await t.sendMail({
       from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
