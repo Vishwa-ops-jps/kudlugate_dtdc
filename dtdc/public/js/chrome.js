@@ -60,6 +60,7 @@ function renderChrome() {
               <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;">
                 <a href="/login.html">Customer login</a>
                 <a href="/register.html">Create account</a>
+                ${currentUser && currentUser.role === 'customer' ? '' : '<a href="/admin/login.html">Staff / Admin login</a>'}
               </div>
             </div>
             <div>
