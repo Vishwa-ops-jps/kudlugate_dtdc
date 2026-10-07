@@ -247,10 +247,60 @@ footer .fine { border-top: 1px solid #313C5C; margin-top: 28px; padding-top: 18p
   .nav-links a.whatsapp-contact { font-size: 13px; }
 }
 
-/* ---------- Trust badges row under hero heading ---------- */
-.trust-badges { display: flex; gap: 26px; flex-wrap: wrap; margin-top: 22px; margin-bottom: 34px; }
-.trust-badges .badge-item { display: flex; align-items: center; gap: 8px; color: #E5E9F5; font-size: 13.5px; font-weight: 500; }
-.trust-badges .badge-item .ic { font-size: 17px; margin-right: 2px; }
+/* ---------- Trust badges row under hero heading (Premium Icons) ---------- */
+.trust-badges {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+  margin-bottom: 34px;
+}
+
+.trust-badges .badge-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #FFFFFF;
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.badge-icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.trust-badges .badge-item:hover .badge-icon-box {
+  transform: scale(1.15);
+}
+
+.badge-icon-box.shield-icon {
+  background: rgba(45, 156, 219, 0.2);
+  color: #41B6FF;
+  border: 1.5px solid rgba(65, 182, 255, 0.5);
+  box-shadow: 0 0 10px rgba(65, 182, 255, 0.25);
+}
+
+.badge-icon-box.clock-icon {
+  background: rgba(235, 87, 87, 0.2);
+  color: #FF5A5F;
+  border: 1.5px solid rgba(255, 90, 95, 0.5);
+  box-shadow: 0 0 10px rgba(255, 90, 95, 0.25);
+}
+
+.badge-icon-box.support-icon {
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
 
 /* ---------- Services grid (Enhanced Modern Cards with Dark Blue Border) ---------- */
 .service-card {
