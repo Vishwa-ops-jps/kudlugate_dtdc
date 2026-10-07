@@ -70,13 +70,23 @@ document.addEventListener('DOMContentLoaded', () => {
     toggle.addEventListener('click', () => links.classList.toggle('open'));
   }
 
-  const current = window.location.pathname.split('/').pop();
+  const path = window.location.pathname;
+  const current = path.split('/').filter(Boolean).pop() || 'index.html';
+
   document.querySelectorAll('.nav-links a').forEach((a) => {
+    a.classList.remove('active');
     const href = a.getAttribute('href');
-    if (href === '/' && (!current || current === 'index.html')) {
-      a.classList.add('active');
-    } else if (href && href !== '/' && href.split('/').pop() === current) {
-      a.classList.add('active');
+    if (!href || href.startsWith('http') || href.startsWith('#')) return;
+
+    if (href === '/' || href === '/index.html') {
+      if (path === '/' || path === '/index.html' || !current || current === 'index.html') {
+        a.classList.add('active');
+      }
+    } else {
+      const page = href.split('/').filter(Boolean).pop();
+      if (page && page === current) {
+        a.classList.add('active');
+      }
     }
   });
 
