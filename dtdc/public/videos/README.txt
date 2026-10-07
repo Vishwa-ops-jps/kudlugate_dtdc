@@ -4,3 +4,4 @@ Place your 9:16 vertical MP4 video files here:
 - scene3.mp4 (or video3.mp4) -> All-Weather Doorstep Delivery
 
 The index.html slider will automatically detect and play MP4 videos if present!
+

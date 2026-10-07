@@ -449,33 +449,40 @@ footer .fine { border-top: 1px solid #313C5C; margin-top: 28px; padding-top: 18p
   background: #E8A33D;
 }
 
-/* Distinct Camera Motion Keyframes for Each Slide */
-@keyframes kenBurnsSlide1 {
-  0% { transform: scale(1) translate(0%, 0%); }
-  50% { transform: scale(1.15) translate(-3%, -2%); }
-  100% { transform: scale(1.08) translate(1%, 2%); }
+/* 2-Shot Animated Subpanel Image Layers */
+.subpanel-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 0.8s ease-in-out, transform 8s ease-in-out;
+  z-index: 0;
 }
 
-@keyframes kenBurnsSlide2 {
-  0% { transform: scale(1.05) translate(2%, 2%); }
-  50% { transform: scale(1.18) translate(-4%, -1%); }
-  100% { transform: scale(1.02) translate(0%, -2%); }
+.subpanel-layer.sub-a {
+  opacity: 1;
 }
 
-@keyframes kenBurnsSlide3 {
-  0% { transform: scale(1) translate(-2%, 0%); }
-  50% { transform: scale(1.16) translate(2%, -3%); }
-  100% { transform: scale(1.06) translate(-1%, 1%); }
+.subpanel-layer.sub-b {
+  opacity: 0;
 }
 
-.video-slide[data-slide="0"].active .services-video-box {
-  animation: kenBurnsSlide1 10s ease-in-out infinite alternate;
+.video-slide.phase-b .subpanel-layer.sub-a {
+  opacity: 0;
 }
-.video-slide[data-slide="1"].active .services-video-box {
-  animation: kenBurnsSlide2 10s ease-in-out infinite alternate;
+
+.video-slide.phase-b .subpanel-layer.sub-b {
+  opacity: 1;
 }
-.video-slide[data-slide="2"].active .services-video-box {
-  animation: kenBurnsSlide3 10s ease-in-out infinite alternate;
+
+.video-slide.active .subpanel-layer.sub-a {
+  transform: scale(1.1) translate(-2%, -1%);
+}
+
+.video-slide.active.phase-b .subpanel-layer.sub-b {
+  transform: scale(1.12) translate(1%, 2%);
 }
 
 .story-subtitle {
