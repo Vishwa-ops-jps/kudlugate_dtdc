@@ -564,21 +564,21 @@ footer .fine { border-top: 1px solid #313C5C; margin-top: 28px; padding-top: 18p
 .services-list {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 13px;
 }
 
 .service-bullet-item {
   display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 16px 18px;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
   background: #ffffff;
-  border: 2px solid #142B6E;
-  border-radius: 14px;
-  box-shadow: 0 4px 14px rgba(20, 43, 110, 0.08);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1.5px solid #142B6E;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(20, 43, 110, 0.06);
   position: relative;
   overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .service-bullet-item::before {
@@ -587,27 +587,81 @@ footer .fine { border-top: 1px solid #313C5C; margin-top: 28px; padding-top: 18p
   top: 0;
   left: 0;
   bottom: 0;
-  width: 4px;
+  width: 5px;
   background: linear-gradient(180deg, #d71920 0%, #142B6E 100%);
+  border-radius: 4px 0 0 4px;
 }
 
 .service-bullet-item:hover {
   border-color: #d71920;
   transform: translateX(6px);
-  box-shadow: 0 8px 20px rgba(20, 43, 110, 0.16);
+  box-shadow: 0 8px 24px rgba(20, 43, 110, 0.14);
 }
 
 .service-bullet-item .bullet-icon {
-  width: 42px;
-  height: 42px;
-  min-width: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 12px;
-  background: rgba(20, 43, 110, 0.08);
-  font-size: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.service-bullet-item:hover .bullet-icon {
+  transform: scale(1.1);
+}
+
+.bullet-icon.icon-domestic {
+  background: rgba(20, 43, 110, 0.08);
+  color: #142B6E;
+  border: 1px solid rgba(20, 43, 110, 0.2);
+}
+
+.bullet-icon.icon-ecommerce {
+  background: rgba(5, 150, 105, 0.09);
+  color: #059669;
+  border: 1px solid rgba(5, 150, 105, 0.22);
+}
+
+.bullet-icon.icon-document {
+  background: rgba(217, 119, 6, 0.09);
+  color: #D97706;
+  border: 1px solid rgba(217, 119, 6, 0.22);
+}
+
+.bullet-icon.icon-cargo {
+  background: rgba(220, 38, 38, 0.09);
+  color: #DC2626;
+  border: 1px solid rgba(220, 38, 38, 0.22);
+}
+
+.bullet-icon.icon-ledger {
+  background: rgba(37, 99, 235, 0.09);
+  color: #2563EB;
+  border: 1px solid rgba(37, 99, 235, 0.22);
+}
+
+.bullet-icon.icon-alerts {
+  background: rgba(124, 58, 237, 0.09);
+  color: #7C3AED;
+  border: 1px solid rgba(124, 58, 237, 0.22);
+}
+
+.service-bullet-item h4 {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #142B6E;
+  margin: 0 0 3px 0;
+  letter-spacing: 0.15px;
+}
+
+.service-bullet-item p {
+  font-size: 13.5px;
+  color: #4B5563;
+  margin: 0;
+  line-height: 1.4;
 }
 
 .service-bullet-item:hover .bullet-icon {
