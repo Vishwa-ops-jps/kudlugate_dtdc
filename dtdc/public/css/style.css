@@ -417,30 +417,151 @@ footer .fine { border-top: 1px solid #313C5C; margin-top: 28px; padding-top: 18p
   backdrop-filter: blur(4px);
 }
 
-/* Animated Camera Motion & Subtitles for Video Showcase */
-@keyframes kenBurnsAnimation {
-  0% { transform: scale(1) translate(0, 0); }
-  50% { transform: scale(1.14) translate(-2%, -2%); }
-  100% { transform: scale(1.05) translate(2%, 1%); }
+/* Story Top Progress Bar (Instagram / TikTok style 10s story bar) */
+.story-progress-container {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  gap: 6px;
+  z-index: 30;
 }
 
-.video-slide.active .services-video-box {
-  animation: kenBurnsAnimation 10s ease-in-out infinite alternate;
+.story-progress-segment {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 2px;
+  overflow: hidden;
+  backdrop-filter: blur(2px);
+}
+
+.story-progress-fill {
+  width: 0%;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 2px;
+  transition: width 0.1s linear;
+}
+
+.video-slide.active .story-progress-fill {
+  background: #E8A33D;
+}
+
+/* Distinct Camera Motion Keyframes for Each Slide */
+@keyframes kenBurnsSlide1 {
+  0% { transform: scale(1) translate(0%, 0%); }
+  50% { transform: scale(1.15) translate(-3%, -2%); }
+  100% { transform: scale(1.08) translate(1%, 2%); }
+}
+
+@keyframes kenBurnsSlide2 {
+  0% { transform: scale(1.05) translate(2%, 2%); }
+  50% { transform: scale(1.18) translate(-4%, -1%); }
+  100% { transform: scale(1.02) translate(0%, -2%); }
+}
+
+@keyframes kenBurnsSlide3 {
+  0% { transform: scale(1) translate(-2%, 0%); }
+  50% { transform: scale(1.16) translate(2%, -3%); }
+  100% { transform: scale(1.06) translate(-1%, 1%); }
+}
+
+.video-slide[data-slide="0"].active .services-video-box {
+  animation: kenBurnsSlide1 10s ease-in-out infinite alternate;
+}
+.video-slide[data-slide="1"].active .services-video-box {
+  animation: kenBurnsSlide2 10s ease-in-out infinite alternate;
+}
+.video-slide[data-slide="2"].active .services-video-box {
+  animation: kenBurnsSlide3 10s ease-in-out infinite alternate;
 }
 
 .story-subtitle {
   font-size: 13px;
   font-weight: 500;
   color: #FFF3D6;
-  background: rgba(11, 26, 70, 0.82);
-  padding: 6px 14px;
+  background: rgba(11, 26, 70, 0.85);
+  padding: 8px 14px;
   border-radius: 20px;
   border: 1px solid rgba(232, 163, 61, 0.5);
   margin-top: 8px;
   backdrop-filter: blur(6px);
-  max-width: 90%;
+  max-width: 92%;
   line-height: 1.35;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Realistic Video Speech Bubble Overlay & Dialogue Cards */
+.speech-bubble-container {
+  position: absolute;
+  top: 22%;
+  left: 14px;
+  right: 14px;
+  z-index: 25;
+  pointer-events: none;
+}
+
+.speech-bubble-card {
+  background: rgba(255, 255, 255, 0.96);
+  color: #142B6E;
+  padding: 12px 16px;
+  border-radius: 18px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+  border: 2px solid #d71920;
+  margin-bottom: 10px;
+  opacity: 0;
+  transform: translateY(12px) scale(0.95);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.speech-bubble-card.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.speech-bubble-card.speaker-customer {
+  border-color: #d71920;
+  background: #ffffff;
+}
+
+.speech-bubble-card.speaker-owner {
+  border-color: #142B6E;
+  background: #F4F7FF;
+}
+
+.speech-bubble-card.speaker-system {
+  border-color: #E8A33D;
+  background: #FFFBF2;
+}
+
+.speaker-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #142B6E;
+  margin-bottom: 4px;
+}
+
+.speaker-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  background: rgba(20, 43, 110, 0.1);
+}
+
+.speaker-text {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #222222;
 }
 
 .services-video-box:hover {
