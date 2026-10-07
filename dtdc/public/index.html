@@ -41,8 +41,11 @@
     <h2>Our Services</h2>
   </div>
   <div class="services-split">
-    <!-- Video Carousel Slider (Auto-changes every 10 seconds, autoplays interactive scenes) -->
+    <!-- Video Carousel Slider (Auto-changes every 10 seconds, autoplays unmuted interactive scenes) -->
     <div class="video-slider-wrapper" id="video-slider-wrapper">
+      <!-- Sound Unmute Toggle Control Button -->
+      <button class="sound-toggle-btn unmuted" id="sound-toggle-btn" aria-label="Toggle Sound">🔊 Sound: ON</button>
+
       <!-- Story Top 10-Second Progress Bars -->
       <div class="story-progress-container">
         <div class="story-progress-segment"><div class="story-progress-fill" id="story-progress-0"></div></div>
@@ -54,7 +57,7 @@
         <!-- Video Slide 1: Customer Storefront Booking Conversation -->
         <div class="video-slide active" data-slide="0">
           <div class="services-video-box" style="background: url('/images/anime-slide1.jpg') center/cover no-repeat;">
-            <video src="/videos/scene1.mp4" autoplay loop muted playsinline onerror="this.style.display='none'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"></video>
+            <video src="/videos/scene1.mp4" autoplay loop playsinline onerror="this.style.display='none'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"></video>
             <!-- Realistic Animated Speech Dialogue Bubbles -->
             <div class="speech-bubble-container" id="speech-box-0">
               <div class="speech-bubble-card speaker-customer" id="bubble-0-0">
@@ -82,7 +85,7 @@
         <!-- Video Slide 2: Warehouse Sorting & Express Transit -->
         <div class="video-slide" data-slide="1">
           <div class="services-video-box" style="background: url('/images/anime-slide2.jpg') center/cover no-repeat;">
-            <video src="/videos/scene2.mp4" autoplay loop muted playsinline onerror="this.style.display='none'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"></video>
+            <video src="/videos/scene2.mp4" autoplay loop playsinline onerror="this.style.display='none'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"></video>
             <div class="speech-bubble-container" id="speech-box-1">
               <div class="speech-bubble-card speaker-owner" id="bubble-1-0">
                 <div class="speaker-header"><span class="speaker-avatar">🏭</span> Warehouse Sorting Desk</div>
@@ -109,7 +112,7 @@
         <!-- Video Slide 3: All-Weather Doorstep Delivery -->
         <div class="video-slide" data-slide="2">
           <div class="services-video-box" style="background: url('/images/anime-slide3.jpg') center/cover no-repeat;">
-            <video src="/videos/scene3.mp4" autoplay loop muted playsinline onerror="this.style.display='none'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"></video>
+            <video src="/videos/scene3.mp4" autoplay loop playsinline onerror="this.style.display='none'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"></video>
             <div class="speech-bubble-container" id="speech-box-2">
               <div class="speech-bubble-card speaker-system" id="bubble-2-0">
                 <div class="speaker-header"><span class="speaker-avatar">🌧️</span> Weather &amp; Traffic Guard</div>
@@ -266,13 +269,14 @@
 <script src="/js/chrome.js"></script>
 <script src="/js/story-canvas.js"></script>
 <script>
-// ---------- Video Carousel Slider (Auto-changes every 10 seconds & Autoplays) ----------
+// ---------- Video Carousel Slider (Auto-changes every 10 seconds & Autoplays Unmuted) ----------
 (function() {
   const slides = document.querySelectorAll('.video-slide');
   const dots = document.querySelectorAll('.slider-dots .dot');
   const prevBtn = document.getElementById('slider-prev-btn');
   const nextBtn = document.getElementById('slider-next-btn');
   const wrapper = document.getElementById('video-slider-wrapper');
+  const soundBtn = document.getElementById('sound-toggle-btn');
   
   if (!slides.length) return;
   
@@ -281,7 +285,68 @@
   let progressInterval = null;
   let dialogueTimeouts = [];
   let startTime = 0;
+  let isAudioEnabled = true;
   const DURATION = 10000; // 10 seconds per scene
+
+  // Web Audio API Sound Synthesizer for Speech Bubble Pop Chimes
+  let audioCtx = null;
+  function getAudioContext() {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    return audioCtx;
+  }
+
+  function playTone(freq, type, duration) {
+    if (!isAudioEnabled) return;
+    try {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = type || 'sine';
+      osc.frequency.setValueAtTime(freq, ctx.currentTime);
+      gain.gain.setValueAtTime(0.12, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + duration);
+    } catch(e) {}
+  }
+
+  function playBubbleSound(step) {
+    if (step === 0) playTone(523.25, 'sine', 0.2); // C5
+    else if (step === 1) playTone(659.25, 'triangle', 0.25); // E5
+    else playTone(783.99, 'sine', 0.3); // G5
+  }
+
+  function updateSoundButton() {
+    if (!soundBtn) return;
+    if (isAudioEnabled) {
+      soundBtn.textContent = '🔊 Sound: ON';
+      soundBtn.classList.add('unmuted');
+    } else {
+      soundBtn.textContent = '🔇 Sound: OFF';
+      soundBtn.classList.remove('unmuted');
+    }
+  }
+
+  if (soundBtn) {
+    soundBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      isAudioEnabled = !isAudioEnabled;
+      updateSoundButton();
+      const activeVid = slides[currentIndex]?.querySelector('video');
+      if (activeVid) {
+        activeVid.muted = !isAudioEnabled;
+        if (isAudioEnabled) activeVid.play().catch(() => {});
+      }
+    });
+  }
 
   function clearDialogueTimeouts() {
     dialogueTimeouts.forEach(t => clearTimeout(t));
@@ -326,27 +391,32 @@
   function animateDialogues(slideIdx) {
     clearDialogueTimeouts();
 
-    // Reset all speech bubbles
     document.querySelectorAll('.speech-bubble-card').forEach(card => {
       card.classList.remove('visible');
     });
 
-    // Step 0: Show first bubble immediately
     const b0 = document.getElementById(`bubble-${slideIdx}-0`);
     if (b0) {
-      dialogueTimeouts.push(setTimeout(() => b0.classList.add('visible'), 300));
+      dialogueTimeouts.push(setTimeout(() => {
+        b0.classList.add('visible');
+        playBubbleSound(0);
+      }, 300));
     }
 
-    // Step 1: Show second bubble at 3.3s
     const b1 = document.getElementById(`bubble-${slideIdx}-1`);
     if (b1) {
-      dialogueTimeouts.push(setTimeout(() => b1.classList.add('visible'), 3300));
+      dialogueTimeouts.push(setTimeout(() => {
+        b1.classList.add('visible');
+        playBubbleSound(1);
+      }, 3300));
     }
 
-    // Step 2: Show third bubble at 6.6s
     const b2 = document.getElementById(`bubble-${slideIdx}-2`);
     if (b2) {
-      dialogueTimeouts.push(setTimeout(() => b2.classList.add('visible'), 6600));
+      dialogueTimeouts.push(setTimeout(() => {
+        b2.classList.add('visible');
+        playBubbleSound(2);
+      }, 6600));
     }
   }
 
@@ -359,7 +429,12 @@
       if (vid) {
         if (isActive) {
           vid.currentTime = 0;
-          vid.play().catch(() => {});
+          vid.muted = !isAudioEnabled;
+          vid.volume = 1.0;
+          vid.play().catch(() => {
+            vid.muted = true;
+            vid.play().catch(() => {});
+          });
         } else {
           vid.pause();
         }
@@ -409,6 +484,13 @@
   });
 
   if (wrapper) {
+    wrapper.addEventListener('click', () => {
+      getAudioContext();
+      if (!isAudioEnabled) {
+        isAudioEnabled = true;
+        updateSoundButton();
+      }
+    });
     wrapper.addEventListener('mouseenter', () => {
       stopAutoSlide();
     });

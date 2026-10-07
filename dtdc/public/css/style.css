@@ -608,6 +608,39 @@ footer .fine { border-top: 1px solid #313C5C; margin-top: 28px; padding-top: 18p
   border-radius: 20px;
 }
 
+/* Sound Unmute Control Button */
+.sound-toggle-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 35;
+  background: rgba(20, 43, 110, 0.85);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.sound-toggle-btn:hover {
+  background: #d71920;
+  border-color: #ffffff;
+  transform: scale(1.05);
+}
+
+.sound-toggle-btn.unmuted {
+  background: #d71920;
+  border-color: #E8A33D;
+}
+
 /* ---------- Video Slider / Carousel Styling (9:16 Vertical) ---------- */
 .video-slider-wrapper {
   position: relative;
