@@ -41,10 +41,45 @@
     <h2>Our Services</h2>
   </div>
   <div class="services-split">
-    <div class="services-video-box" id="service-video-container">
-      <div class="play-btn-wrapper">▶</div>
-      <p>Video Showcase Placeholder</p>
-      <small>Drop your video tag or embed here</small>
+    <!-- Video Carousel Slider (Auto-changes every 4 seconds) -->
+    <div class="video-slider-wrapper" id="video-slider-wrapper">
+      <div class="video-slides-container">
+        <!-- Video Slide 1 -->
+        <div class="video-slide active" data-slide="0">
+          <div class="services-video-box">
+            <div class="play-btn-wrapper">▶</div>
+            <p>Video Showcase 1</p>
+            <small>Drop Video 1 tag or embed here</small>
+          </div>
+        </div>
+        <!-- Video Slide 2 -->
+        <div class="video-slide" data-slide="1">
+          <div class="services-video-box">
+            <div class="play-btn-wrapper">▶</div>
+            <p>Video Showcase 2</p>
+            <small>Drop Video 2 tag or embed here</small>
+          </div>
+        </div>
+        <!-- Video Slide 3 -->
+        <div class="video-slide" data-slide="2">
+          <div class="services-video-box">
+            <div class="play-btn-wrapper">▶</div>
+            <p>Video Showcase 3</p>
+            <small>Drop Video 3 tag or embed here</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Controls -->
+      <button class="slider-btn prev-btn" id="slider-prev-btn" aria-label="Previous Slide">‹</button>
+      <button class="slider-btn next-btn" id="slider-next-btn" aria-label="Next Slide">›</button>
+
+      <!-- Slide Indicator Dots -->
+      <div class="slider-dots" id="slider-dots">
+        <span class="dot active" data-index="0"></span>
+        <span class="dot" data-index="1"></span>
+        <span class="dot" data-index="2"></span>
+      </div>
     </div>
     <div class="services-list">
       <div class="service-bullet-item">
@@ -166,6 +201,69 @@
 <script src="/js/api.js"></script>
 <script src="/js/chrome.js"></script>
 <script>
+// ---------- Video Carousel Slider (Auto-changes every 4 seconds) ----------
+(function() {
+  const slides = document.querySelectorAll('.video-slide');
+  const dots = document.querySelectorAll('.slider-dots .dot');
+  const prevBtn = document.getElementById('slider-prev-btn');
+  const nextBtn = document.getElementById('slider-next-btn');
+  const wrapper = document.getElementById('video-slider-wrapper');
+  
+  if (!slides.length) return;
+  
+  let currentIndex = 0;
+  let autoTimer = null;
+
+  function showSlide(index) {
+    currentIndex = (index + slides.length) % slides.length;
+    slides.forEach((slide, idx) => {
+      slide.classList.toggle('active', idx === currentIndex);
+    });
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === currentIndex);
+    });
+  }
+
+  function startAutoSlide() {
+    stopAutoSlide();
+    autoTimer = setInterval(() => {
+      showSlide(currentIndex + 1);
+    }, 4000); // 4 seconds interval
+  }
+
+  function stopAutoSlide() {
+    if (autoTimer) clearInterval(autoTimer);
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      showSlide(currentIndex - 1);
+      startAutoSlide();
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      showSlide(currentIndex + 1);
+      startAutoSlide();
+    });
+  }
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const idx = parseInt(dot.getAttribute('data-index'), 10);
+      showSlide(idx);
+      startAutoSlide();
+    });
+  });
+
+  if (wrapper) {
+    wrapper.addEventListener('mouseenter', stopAutoSlide);
+    wrapper.addEventListener('mouseleave', startAutoSlide);
+  }
+
+  startAutoSlide();
+})();
 
 API.request('/reviews', { auth: false }).then(({ reviews }) => {
   const el = document.getElementById('reviews-list');
