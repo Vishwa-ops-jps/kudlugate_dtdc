@@ -48,8 +48,14 @@ img { max-width: 100%; }
   color: var(--paper);
   position: sticky; top: 0; z-index: 50;
 }
-.site-nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-.brand { display: flex; align-items: center; gap: 10px; color: var(--paper); text-decoration: none; }
+.site-nav .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  max-width: 1320px;
+}
+.brand { display: flex; align-items: center; gap: 10px; color: var(--paper); text-decoration: none; flex-shrink: 0; }
 .brand-mark {
   width: 34px; height: 34px; border-radius: 50%;
   background: var(--amber); color: var(--ink);
@@ -58,7 +64,7 @@ img { max-width: 100%; }
 }
 .brand-text { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 16px; line-height: 1.1; }
 .brand-text small { display: block; font-family: 'Inter'; font-weight: 400; font-size: 11px; color: #C6CCDA; letter-spacing: .06em; text-transform: uppercase; }
-.nav-links { display: flex; align-items: center; gap: 4px; flex-wrap: nowrap; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; margin-left: auto; }
 .nav-links a {
   color: #D9DEEA; text-decoration: none; font-size: 14.5px; font-weight: 500;
   padding: 8px 14px; border-radius: 20px; white-space: nowrap;
@@ -251,7 +257,7 @@ footer .fine { border-top: 1px solid #313C5C; margin-top: 28px; padding-top: 18p
 
 /* ---------- Top info bar + call CTA (DTDC-style header) ---------- */
 .topbar { background: var(--amber); color: #fff; font-size: 12.5px; padding: 6px 0; }
-.topbar .wrap { display: flex; justify-content: flex-end; align-items: center; gap: 20px; }
+.topbar .wrap { display: flex; justify-content: flex-end; align-items: center; gap: 20px; max-width: 1320px; }
 .topbar a { color: #fff; text-decoration: none; font-weight: 600; }
 .call-cta { display: flex; align-items: center; gap: 10px; }
 .call-cta .phone-icon { width: 34px; height: 34px; border-radius: 50%; background: var(--ink); display: flex; align-items: center; justify-content: center; font-size: 15px; }
