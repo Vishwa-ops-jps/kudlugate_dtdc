@@ -18,7 +18,7 @@ function renderChrome() {
       <nav class="site-nav">
         <div class="wrap">
           <a href="/" class="brand">
-            <span class="brand-mark">KG</span>
+            <img src="/images/brand-logo.png" alt="DTDC Kudlu Gate Logo" class="brand-logo-img">
             <span class="brand-text">DTDC Kudlu Gate Franchise<small>Courier &amp; Cargo · Bengaluru</small></span>
           </a>
           <button class="nav-toggle" aria-label="Menu">&#9776;</button>
@@ -41,7 +41,7 @@ function renderChrome() {
         <div class="wrap">
           <div>
             <div class="brand" style="margin-bottom:10px;">
-              <span class="brand-mark">KG</span>
+              <img src="/images/brand-logo.png" alt="DTDC Kudlu Gate Logo" class="brand-logo-img">
               <span class="brand-text" style="color:#fff;">DTDC Kudlu Gate<small>Courier &amp; Cargo</small></span>
             </div>
             <p style="max-width:280px;font-size:13.5px;">Kudlu Gate, Bengaluru, Karnataka. Booking, tracking and delivery for local, state and national shipments.</p>
