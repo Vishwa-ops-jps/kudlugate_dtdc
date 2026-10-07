@@ -56,7 +56,7 @@ const Session = {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
   },
-  logout(redirect = '/index.html') {
+  logout(redirect = '/') {
     this.clear();
     window.location.href = redirect;
   }
@@ -70,9 +70,14 @@ document.addEventListener('DOMContentLoaded', () => {
     toggle.addEventListener('click', () => links.classList.toggle('open'));
   }
 
-  const current = window.location.pathname.split('/').pop() || 'index.html';
+  const current = window.location.pathname.split('/').pop();
   document.querySelectorAll('.nav-links a').forEach((a) => {
-    if (a.getAttribute('href') === current) a.classList.add('active');
+    const href = a.getAttribute('href');
+    if (href === '/' && (!current || current === 'index.html')) {
+      a.classList.add('active');
+    } else if (href && href !== '/' && href.split('/').pop() === current) {
+      a.classList.add('active');
+    }
   });
 
   const authSlot = document.querySelector('[data-auth-slot]');

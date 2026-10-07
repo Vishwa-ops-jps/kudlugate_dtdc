@@ -17,13 +17,13 @@ function renderChrome() {
       </div>
       <nav class="site-nav">
         <div class="wrap">
-          <a href="/index.html" class="brand">
+          <a href="/" class="brand">
             <span class="brand-mark">KG</span>
             <span class="brand-text">DTDC Kudlu Gate Franchise<small>Courier &amp; Cargo · Bengaluru</small></span>
           </a>
           <button class="nav-toggle" aria-label="Menu">&#9776;</button>
           <div class="nav-links" data-nav-links>
-            <a href="/index.html">Home</a>
+            <a href="/">Home</a>
             <a href="https://www.dtdc.com/track-your-shipment/" target="_blank" rel="noopener noreferrer">Track</a>
             <a href="https://efrbooking.dtdc.in" target="_blank" rel="noopener noreferrer">Rate Calculator</a>
             <a href="/reviews.html">Reviews</a>
