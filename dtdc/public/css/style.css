@@ -404,6 +404,19 @@ footer .fine { border-top: 1px solid #313C5C; margin-top: 28px; padding-top: 18p
   border-radius: 14px;
 }
 
+.live-badge {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(215, 25, 32, 0.85);
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  backdrop-filter: blur(4px);
+}
+
 .services-video-box:hover {
   box-shadow: 0 12px 32px rgba(20, 43, 110, 0.25);
   border-color: #d71920;

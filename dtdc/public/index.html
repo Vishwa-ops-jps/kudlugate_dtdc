@@ -41,14 +41,14 @@
     <h2>Our Services</h2>
   </div>
   <div class="services-split">
-    <!-- Video Carousel Slider (Auto-changes every 4 seconds) -->
+    <!-- Video Carousel Slider (Auto-changes every 10 seconds, plays automatically) -->
     <div class="video-slider-wrapper" id="video-slider-wrapper">
       <div class="video-slides-container">
         <!-- Video Slide 1: Sunrise & Booking -->
         <div class="video-slide active" data-slide="0">
           <div class="services-video-box" style="background: url('/images/anime-slide1.jpg') center/cover no-repeat;">
             <div class="video-overlay-gradient">
-              <div class="play-btn-wrapper">▶</div>
+              <span class="live-badge">🔴 Autoplay</span>
               <p>1. Storefront &amp; Booking</p>
               <small>Sunrise in Bengaluru · Door Opening</small>
             </div>
@@ -58,7 +58,7 @@
         <div class="video-slide" data-slide="1">
           <div class="services-video-box" style="background: url('/images/anime-slide2.jpg') center/cover no-repeat;">
             <div class="video-overlay-gradient">
-              <div class="play-btn-wrapper">▶</div>
+              <span class="live-badge">🔴 Autoplay</span>
               <p>2. Sorting &amp; Express Rider</p>
               <small>Warehouse Conveyor · Neon City</small>
             </div>
@@ -68,7 +68,7 @@
         <div class="video-slide" data-slide="2">
           <div class="services-video-box" style="background: url('/images/anime-slide3.jpg') center/cover no-repeat;">
             <div class="video-overlay-gradient">
-              <div class="play-btn-wrapper">▶</div>
+              <span class="live-badge">🔴 Autoplay</span>
               <p>3. Doorstep Delivery &amp; Team</p>
               <small>Golden Hour Delivery · Sunset Team</small>
             </div>
@@ -207,7 +207,7 @@
 <script src="/js/api.js"></script>
 <script src="/js/chrome.js"></script>
 <script>
-// ---------- Video Carousel Slider (Auto-changes every 4 seconds) ----------
+// ---------- Video Carousel Slider (Auto-changes every 10 seconds & Autoplays) ----------
 (function() {
   const slides = document.querySelectorAll('.video-slide');
   const dots = document.querySelectorAll('.slider-dots .dot');
@@ -223,7 +223,18 @@
   function showSlide(index) {
     currentIndex = (index + slides.length) % slides.length;
     slides.forEach((slide, idx) => {
-      slide.classList.toggle('active', idx === currentIndex);
+      const isActive = idx === currentIndex;
+      slide.classList.toggle('active', isActive);
+      // Autoplay embedded HTML5 videos on active slide automatically
+      const vid = slide.querySelector('video');
+      if (vid) {
+        if (isActive) {
+          vid.currentTime = 0;
+          vid.play().catch(() => {});
+        } else {
+          vid.pause();
+        }
+      }
     });
     dots.forEach((dot, idx) => {
       dot.classList.toggle('active', idx === currentIndex);
@@ -234,7 +245,7 @@
     stopAutoSlide();
     autoTimer = setInterval(() => {
       showSlide(currentIndex + 1);
-    }, 4000); // 4 seconds interval
+    }, 10000); // 10 seconds duration per video slide
   }
 
   function stopAutoSlide() {
@@ -268,6 +279,7 @@
     wrapper.addEventListener('mouseleave', startAutoSlide);
   }
 
+  showSlide(0);
   startAutoSlide();
 })();
 
