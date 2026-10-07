@@ -347,325 +347,34 @@ footer .fine { border-top: 1px solid #313C5C; margin-top: 28px; padding-top: 18p
 @media (max-width: 900px) { .grid-6 { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .grid-6 { grid-template-columns: 1fr; } }
 
-/* ---------- 2-Column Split for Our Services (9:16 Vertical Video Left, Bullet Points Right) ---------- */
+/* ---------- 2-Column Split for Our Services (Matching Screenshot Design) ---------- */
 .services-split {
   display: grid;
-  grid-template-columns: 340px 1fr;
-  gap: 36px;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 32px;
   align-items: center;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 950px) {
   .services-split {
     grid-template-columns: 1fr;
-    justify-items: center;
   }
 }
 
-.services-video-box {
-  width: 100%;
-  height: 100%;
-  aspect-ratio: 9 / 16;
-  background: linear-gradient(135deg, #0b1a46 0%, #142B6E 100%);
-  border: 2.5px solid #142B6E;
-  border-radius: 16px;
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  box-shadow: 0 8px 24px rgba(20, 43, 110, 0.15);
-  transition: all 0.3s ease;
-  text-align: center;
-  padding: 20px;
-}
-
-.services-video-box video,
-.services-video-box iframe {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 14px;
-}
-
-.video-overlay-gradient {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(11, 26, 70, 0.15) 0%, rgba(11, 26, 70, 0.88) 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 28px 18px;
-  color: #ffffff;
-  text-align: center;
-  border-radius: 14px;
-}
-
-.live-badge {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  background: rgba(215, 25, 32, 0.85);
-  color: #ffffff;
-  padding: 4px 10px;
-  border-radius: 20px;
-  margin-bottom: 10px;
-  backdrop-filter: blur(4px);
-}
-
-/* Story Top Progress Bar (Instagram / TikTok style 10s story bar) */
-.story-progress-container {
-  position: absolute;
-  top: 12px;
-  left: 14px;
-  right: 14px;
-  display: flex;
-  gap: 6px;
-  z-index: 30;
-}
-
-.story-progress-segment {
-  flex: 1;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.35);
-  border-radius: 2px;
-  overflow: hidden;
-  backdrop-filter: blur(2px);
-}
-
-.story-progress-fill {
-  width: 0%;
-  height: 100%;
-  background: #ffffff;
-  border-radius: 2px;
-  transition: width 0.1s linear;
-}
-
-.video-slide.active .story-progress-fill {
-  background: #E8A33D;
-}
-
-/* 2-Shot Animated Subpanel Image Layers */
-.subpanel-layer {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  transition: opacity 0.8s ease-in-out, transform 8s ease-in-out;
-  z-index: 0;
-}
-
-.subpanel-layer.sub-a {
-  opacity: 1;
-}
-
-.subpanel-layer.sub-b {
-  opacity: 0;
-}
-
-.video-slide.phase-b .subpanel-layer.sub-a {
-  opacity: 0;
-}
-
-.video-slide.phase-b .subpanel-layer.sub-b {
-  opacity: 1;
-}
-
-.video-slide.active .subpanel-layer.sub-a {
-  transform: scale(1.1) translate(-2%, -1%);
-}
-
-.video-slide.active.phase-b .subpanel-layer.sub-b {
-  transform: scale(1.12) translate(1%, 2%);
-}
-
-.story-subtitle {
-  font-size: 13px;
-  font-weight: 500;
-  color: #FFF3D6;
-  background: rgba(11, 26, 70, 0.85);
-  padding: 8px 14px;
-  border-radius: 20px;
-  border: 1px solid rgba(232, 163, 61, 0.5);
-  margin-top: 8px;
-  backdrop-filter: blur(6px);
-  max-width: 92%;
-  line-height: 1.35;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-/* Realistic Video Speech Bubble Overlay & Dialogue Cards */
-.speech-bubble-container {
-  position: absolute;
-  top: 22%;
-  left: 14px;
-  right: 14px;
-  z-index: 25;
-  pointer-events: none;
-}
-
-.speech-bubble-card {
-  background: rgba(255, 255, 255, 0.96);
-  color: #142B6E;
-  padding: 12px 16px;
-  border-radius: 18px;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
-  border: 2px solid #d71920;
-  margin-bottom: 10px;
-  opacity: 0;
-  transform: translateY(12px) scale(0.95);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.speech-bubble-card.visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-.speech-bubble-card.speaker-customer {
-  border-color: #d71920;
-  background: #ffffff;
-}
-
-.speech-bubble-card.speaker-owner {
-  border-color: #142B6E;
-  background: #F4F7FF;
-}
-
-.speech-bubble-card.speaker-system {
-  border-color: #E8A33D;
-  background: #FFFBF2;
-}
-
-.speaker-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 700;
-  color: #142B6E;
-  margin-bottom: 4px;
-}
-
-.speaker-avatar {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  background: rgba(20, 43, 110, 0.1);
-}
-
-.speaker-text {
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1.35;
-  color: #222222;
-}
-
-.services-video-box:hover {
-  box-shadow: 0 12px 32px rgba(20, 43, 110, 0.25);
-  border-color: #d71920;
-}
-
-.services-video-box .play-btn-wrapper {
-  width: 68px;
-  height: 68px;
-  border-radius: 50%;
-  background: #d71920;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  margin-bottom: 14px;
-  padding-left: 4px;
-  box-shadow: 0 6px 20px rgba(215, 25, 32, 0.45);
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.services-video-box:hover .play-btn-wrapper {
-  transform: scale(1.12);
-  background: #f01d24;
-}
-
-.services-video-box p {
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
-  font-size: 17px;
-  color: #ffffff;
-  margin: 0;
-  letter-spacing: 0.3px;
-}
-
-.services-video-box small {
-  font-size: 13px;
-  color: #E8A33D;
-  margin-top: 6px;
-  background: rgba(255, 255, 255, 0.08);
-  padding: 4px 12px;
-  border-radius: 20px;
-}
-
-/* Sound Unmute Control Button */
-.sound-toggle-btn {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  z-index: 35;
-  background: rgba(20, 43, 110, 0.85);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  font-size: 11.5px;
-  font-weight: 700;
-  padding: 5px 12px;
-  border-radius: 20px;
-  cursor: pointer;
-  backdrop-filter: blur(6px);
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  transition: all 0.25s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.sound-toggle-btn:hover {
-  background: #d71920;
-  border-color: #ffffff;
-  transform: scale(1.05);
-}
-
-.sound-toggle-btn.unmuted {
-  background: #d71920;
-  border-color: #E8A33D;
-}
-
-/* ---------- Video Slider / Carousel Styling (9:16 Vertical) ---------- */
 .video-slider-wrapper {
   position: relative;
   width: 100%;
-  max-width: 340px;
-  aspect-ratio: 9 / 16;
-  min-height: 540px;
-  border-radius: 16px;
+  aspect-ratio: 16 / 10.5;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(20, 43, 110, 0.15);
-  margin: 0 auto;
+  box-shadow: 0 12px 36px rgba(11, 26, 70, 0.2);
+  background: linear-gradient(135deg, #09153a 0%, #122867 100%);
 }
 
 .video-slides-container {
   position: relative;
   width: 100%;
   height: 100%;
-  aspect-ratio: 9 / 16;
 }
 
 .video-slide {
@@ -676,7 +385,7 @@ footer .fine { border-top: 1px solid #313C5C; margin-top: 28px; padding-top: 18p
   height: 100%;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
   z-index: 1;
 }
 
@@ -686,45 +395,102 @@ footer .fine { border-top: 1px solid #313C5C; margin-top: 28px; padding-top: 18p
   z-index: 2;
 }
 
+.services-video-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+  background: linear-gradient(135deg, #0b1a46 0%, #142B6E 100%);
+  color: #ffffff;
+  position: relative;
+}
+
+.services-video-box video,
+.services-video-box iframe {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.services-video-box h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 16px 0 8px;
+}
+
+.services-video-box .play-btn-wrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e52d27 0%, #b31217 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  padding-left: 4px;
+  box-shadow: 0 0 24px rgba(229, 45, 39, 0.65);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.services-video-box:hover .play-btn-wrapper {
+  transform: scale(1.1);
+  box-shadow: 0 0 32px rgba(229, 45, 39, 0.9);
+}
+
+.video-embed-tag {
+  font-size: 13px;
+  font-weight: 500;
+  color: #E8A33D;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(232, 163, 61, 0.35);
+  padding: 6px 18px;
+  border-radius: 20px;
+}
+
 .slider-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: rgba(20, 43, 110, 0.8);
+  background: rgba(255, 255, 255, 0.12);
   color: #ffffff;
-  border: 1.5px solid rgba(255, 255, 255, 0.4);
-  font-size: 20px;
-  line-height: 1;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(6px);
   transition: all 0.25s ease;
 }
 
 .slider-btn:hover {
   background: #d71920;
   border-color: #ffffff;
-  transform: translateY(-50%) scale(1.1);
 }
 
-.slider-btn.prev-btn { left: 14px; }
-.slider-btn.next-btn { right: 14px; }
+.slider-btn.prev-btn { left: 16px; }
+.slider-btn.next-btn { right: 16px; }
 
 .slider-dots {
   position: absolute;
-  bottom: 14px;
+  bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
   display: flex;
   gap: 8px;
-  background: rgba(11, 26, 70, 0.65);
+  background: rgba(11, 26, 70, 0.6);
   padding: 6px 14px;
   border-radius: 20px;
   backdrop-filter: blur(4px);
