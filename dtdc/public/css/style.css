@@ -417,6 +417,32 @@ footer .fine { border-top: 1px solid #313C5C; margin-top: 28px; padding-top: 18p
   backdrop-filter: blur(4px);
 }
 
+/* Animated Camera Motion & Subtitles for Video Showcase */
+@keyframes kenBurnsAnimation {
+  0% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.14) translate(-2%, -2%); }
+  100% { transform: scale(1.05) translate(2%, 1%); }
+}
+
+.video-slide.active .services-video-box {
+  animation: kenBurnsAnimation 10s ease-in-out infinite alternate;
+}
+
+.story-subtitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: #FFF3D6;
+  background: rgba(11, 26, 70, 0.82);
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(232, 163, 61, 0.5);
+  margin-top: 8px;
+  backdrop-filter: blur(6px);
+  max-width: 90%;
+  line-height: 1.35;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
 .services-video-box:hover {
   box-shadow: 0 12px 32px rgba(20, 43, 110, 0.25);
   border-color: #d71920;

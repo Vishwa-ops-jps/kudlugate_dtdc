@@ -44,13 +44,13 @@
     <!-- Video Carousel Slider (Auto-changes every 10 seconds, plays automatically) -->
     <div class="video-slider-wrapper" id="video-slider-wrapper">
       <div class="video-slides-container">
-        <!-- Video Slide 1: Sunrise & Booking -->
+        <!-- Video Slide 1: Sunrise & Booking Conversation -->
         <div class="video-slide active" data-slide="0">
           <div class="services-video-box" style="background: url('/images/anime-slide1.jpg') center/cover no-repeat;">
             <div class="video-overlay-gradient">
-              <span class="live-badge">🔴 Autoplay</span>
-              <p>1. Storefront &amp; Booking</p>
-              <small>Sunrise in Bengaluru · Door Opening</small>
+              <span class="live-badge">🎬 Scene 1 · Booking</span>
+              <p style="font-size:18px;font-weight:700;">1. Storefront &amp; Booking</p>
+              <div class="story-subtitle" id="story-sub-0">💬 "Girl: Can I send this urgently?" · "Owner: Express booked with live tracking!"</div>
             </div>
           </div>
         </div>
@@ -58,19 +58,19 @@
         <div class="video-slide" data-slide="1">
           <div class="services-video-box" style="background: url('/images/anime-slide2.jpg') center/cover no-repeat;">
             <div class="video-overlay-gradient">
-              <span class="live-badge">🔴 Autoplay</span>
-              <p>2. Sorting &amp; Express Rider</p>
-              <small>Warehouse Conveyor · Neon City</small>
+              <span class="live-badge">🎬 Scene 2 · Transit</span>
+              <p style="font-size:18px;font-weight:700;">2. Sorting &amp; Express Rider</p>
+              <div class="story-subtitle" id="story-sub-1">⚡ Team scanning barcode boxes · Rider speeding through city traffic.</div>
             </div>
           </div>
         </div>
-        <!-- Video Slide 3: Doorstep Delivery & Team Sunset -->
+        <!-- Video Slide 3: All-Weather Doorstep Delivery -->
         <div class="video-slide" data-slide="2">
           <div class="services-video-box" style="background: url('/images/anime-slide3.jpg') center/cover no-repeat;">
             <div class="video-overlay-gradient">
-              <span class="live-badge">🔴 Autoplay</span>
-              <p>3. Doorstep Delivery &amp; Team</p>
-              <small>Golden Hour Delivery · Sunset Team</small>
+              <span class="live-badge">🎬 Scene 3 · Delivery</span>
+              <p style="font-size:18px;font-weight:700;">3. All-Weather Doorstep Delivery</p>
+              <div class="story-subtitle" id="story-sub-2">🌧️ Rain or shine, whatever the climate — parcel delivered safely on time!</div>
             </div>
           </div>
         </div>
@@ -219,13 +219,50 @@
   
   let currentIndex = 0;
   let autoTimer = null;
+  let dialogueTimer = null;
+
+  const storyDialogues = {
+    0: [
+      '🌅 Sunrise in Bengaluru · DTDC Kudlu Gate shutters opening',
+      '💬 Customer: "Hi, I need this parcel delivered urgently!"',
+      '💬 Store Owner: "Don\'t worry, express dispatch with live tracking!"'
+    ],
+    1: [
+      '🏭 High-speed automated sorting in DTDC warehouse',
+      '📦 Hardworking staff scanning & tagging every box',
+      '🏍️ Express rider navigating city traffic at full speed'
+    ],
+    2: [
+      '🌧️ Heavy rain or bad weather — no problem!',
+      '🏡 Delivery rider reaches customer doorstep right on schedule',
+      '✨ DTDC Kudlu Gate — Delivered with care, safety & smile!'
+    ]
+  };
+
+  function animateStory(index) {
+    if (dialogueTimer) clearInterval(dialogueTimer);
+    const subEl = document.getElementById(`story-sub-${index}`);
+    if (!subEl || !storyDialogues[index]) return;
+
+    const lines = storyDialogues[index];
+    let lineIdx = 0;
+    subEl.textContent = lines[0];
+
+    dialogueTimer = setInterval(() => {
+      lineIdx = (lineIdx + 1) % lines.length;
+      subEl.style.opacity = '0';
+      setTimeout(() => {
+        subEl.textContent = lines[lineIdx];
+        subEl.style.opacity = '1';
+      }, 300);
+    }, 3200);
+  }
 
   function showSlide(index) {
     currentIndex = (index + slides.length) % slides.length;
     slides.forEach((slide, idx) => {
       const isActive = idx === currentIndex;
       slide.classList.toggle('active', isActive);
-      // Autoplay embedded HTML5 videos on active slide automatically
       const vid = slide.querySelector('video');
       if (vid) {
         if (isActive) {
@@ -239,17 +276,19 @@
     dots.forEach((dot, idx) => {
       dot.classList.toggle('active', idx === currentIndex);
     });
+    animateStory(currentIndex);
   }
 
   function startAutoSlide() {
     stopAutoSlide();
     autoTimer = setInterval(() => {
       showSlide(currentIndex + 1);
-    }, 10000); // 10 seconds duration per video slide
+    }, 10000);
   }
 
   function stopAutoSlide() {
     if (autoTimer) clearInterval(autoTimer);
+    if (dialogueTimer) clearInterval(dialogueTimer);
   }
 
   if (prevBtn) {
