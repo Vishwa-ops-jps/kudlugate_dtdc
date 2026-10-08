@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DTDC Kudlu Gate — Courier &amp; Cargo, Bengaluru</title>
-<link rel="stylesheet" href="/css/style.css?v=23">
+<link rel="stylesheet" href="/css/style.css?v=24">
 </head>
 <body>
 <div id="site-header"></div>
@@ -410,44 +410,63 @@ API.request('/reviews', { auth: false }).then(({ reviews }) => {
 // ---------- Sound / Unmute Controller ----------
 (function() {
   const soundBtn = document.getElementById('sound-toggle-btn');
+  const wrapper = document.getElementById('video-slider-wrapper');
   const videos = document.querySelectorAll('.services-video-box video');
 
-  function updateBtn(muted) {
-    if (!soundBtn) return;
-    if (muted) {
-      soundBtn.innerHTML = '🔇 Muted (Click to Unmute)';
-      soundBtn.style.background = 'rgba(215,25,32,0.92)';
-    } else {
+  let userUnmuted = false;
+
+  function enableAudio() {
+    userUnmuted = true;
+    videos.forEach(v => {
+      v.muted = false;
+      v.volume = 1.0;
+      const p = v.play();
+      if (p !== undefined) p.catch(() => {});
+    });
+    if (soundBtn) {
       soundBtn.innerHTML = '🔊 Sound On';
-      soundBtn.style.background = 'rgba(22,163,74,0.92)';
+      soundBtn.style.background = 'rgba(22,163,74,0.95)';
     }
   }
 
-  function toggleSound() {
-    let muted = false;
+  function disableAudio() {
+    userUnmuted = false;
     videos.forEach(v => {
-      v.muted = !v.muted;
-      muted = v.muted;
-      v.play().catch(() => {});
+      v.muted = true;
     });
-    updateBtn(muted);
+    if (soundBtn) {
+      soundBtn.innerHTML = '🔇 Muted (Click to Unmute)';
+      soundBtn.style.background = 'rgba(215,25,32,0.95)';
+    }
+  }
+
+  function toggleAudio() {
+    if (userUnmuted) {
+      disableAudio();
+    } else {
+      enableAudio();
+    }
   }
 
   if (soundBtn) {
     soundBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      toggleSound();
+      e.preventDefault();
+      toggleAudio();
     });
   }
 
-  // Attempt auto-unmute on first user interaction anywhere on page
-  document.addEventListener('click', function firstClick() {
-    videos.forEach(v => {
-      v.muted = false;
-      v.play().catch(() => {});
+  if (wrapper) {
+    wrapper.addEventListener('click', () => {
+      enableAudio();
     });
-    updateBtn(false);
-  }, { once: true });
+  }
+
+  ['click', 'touchstart', 'keydown'].forEach(evt => {
+    document.addEventListener(evt, function userActivated() {
+      enableAudio();
+    }, { once: true });
+  });
 })();
 </script>
 </body>
