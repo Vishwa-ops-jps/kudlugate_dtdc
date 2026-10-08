@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DTDC Kudlu Gate — Courier &amp; Cargo, Bengaluru</title>
-<link rel="stylesheet" href="/css/style.css?v=22">
+<link rel="stylesheet" href="/css/style.css?v=23">
 </head>
 <body>
 <div id="site-header"></div>
@@ -105,6 +105,9 @@
       <!-- Navigation Controls -->
       <button class="slider-btn prev-btn" id="slider-prev-btn" aria-label="Previous Slide">‹</button>
       <button class="slider-btn next-btn" id="slider-next-btn" aria-label="Next Slide">›</button>
+
+      <!-- Sound Unmute Toggle Button -->
+      <button type="button" class="sound-toggle-btn" id="sound-toggle-btn" aria-label="Toggle Sound" style="position:absolute;top:14px;right:14px;z-index:12;background:rgba(215,25,32,0.92);color:#fff;border:none;border-radius:20px;padding:6px 14px;font-size:12.5px;font-weight:700;cursor:pointer;backdrop-filter:blur(6px);display:flex;align-items:center;gap:6px;box-shadow:0 4px 14px rgba(0,0,0,0.35);transition:all 0.2s ease;">🔊 Unmute Sound</button>
 
       <!-- Slide Indicator Dots -->
       <div class="slider-dots" id="slider-dots">
@@ -404,9 +407,48 @@ API.request('/reviews', { auth: false }).then(({ reviews }) => {
       <p>"${escapeHtml(r.comment)}"</p>
       <div class="review-name">${escapeHtml(r.name)}</div>
     </div>`).join('');
-}).catch(() => {
-  document.getElementById('reviews-list').innerHTML = '<p style="color:var(--grey);">Could not load reviews right now.</p>';
-});
+// ---------- Sound / Unmute Controller ----------
+(function() {
+  const soundBtn = document.getElementById('sound-toggle-btn');
+  const videos = document.querySelectorAll('.services-video-box video');
+
+  function updateBtn(muted) {
+    if (!soundBtn) return;
+    if (muted) {
+      soundBtn.innerHTML = '🔇 Muted (Click to Unmute)';
+      soundBtn.style.background = 'rgba(215,25,32,0.92)';
+    } else {
+      soundBtn.innerHTML = '🔊 Sound On';
+      soundBtn.style.background = 'rgba(22,163,74,0.92)';
+    }
+  }
+
+  function toggleSound() {
+    let muted = false;
+    videos.forEach(v => {
+      v.muted = !v.muted;
+      muted = v.muted;
+      v.play().catch(() => {});
+    });
+    updateBtn(muted);
+  }
+
+  if (soundBtn) {
+    soundBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleSound();
+    });
+  }
+
+  // Attempt auto-unmute on first user interaction anywhere on page
+  document.addEventListener('click', function firstClick() {
+    videos.forEach(v => {
+      v.muted = false;
+      v.play().catch(() => {});
+    });
+    updateBtn(false);
+  }, { once: true });
+})();
 </script>
 </body>
 </html>
