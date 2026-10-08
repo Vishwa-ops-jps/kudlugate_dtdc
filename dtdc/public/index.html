@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DTDC Kudlu Gate — Courier &amp; Cargo, Bengaluru</title>
-<link rel="stylesheet" href="/css/style.css?v=24">
+<link rel="stylesheet" href="/css/style.css?v=25">
 </head>
 <body>
 <div id="site-header"></div>
@@ -407,24 +407,50 @@ API.request('/reviews', { auth: false }).then(({ reviews }) => {
       <p>"${escapeHtml(r.comment)}"</p>
       <div class="review-name">${escapeHtml(r.name)}</div>
     </div>`).join('');
-// ---------- Sound / Unmute Controller ----------
+// ---------- Sound / Unmute Controller + 350% Volume Booster ----------
 (function() {
   const soundBtn = document.getElementById('sound-toggle-btn');
   const wrapper = document.getElementById('video-slider-wrapper');
   const videos = document.querySelectorAll('.services-video-box video');
 
   let userUnmuted = false;
+  let audioCtx = null;
+
+  function boostVolume(videoElement) {
+    try {
+      if (!audioCtx) {
+        const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtxClass) {
+          audioCtx = new AudioCtxClass();
+        }
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      if (audioCtx && !videoElement._gainConnected) {
+        const source = audioCtx.createMediaElementSource(videoElement);
+        const gainNode = audioCtx.createGain();
+        gainNode.gain.value = 3.5; // Boost volume 3.5x (350% loudness)
+        source.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        videoElement._gainConnected = true;
+      }
+    } catch (err) {
+      // Gain node already attached or blocked
+    }
+  }
 
   function enableAudio() {
     userUnmuted = true;
     videos.forEach(v => {
       v.muted = false;
       v.volume = 1.0;
+      boostVolume(v);
       const p = v.play();
       if (p !== undefined) p.catch(() => {});
     });
     if (soundBtn) {
-      soundBtn.innerHTML = '🔊 Sound On';
+      soundBtn.innerHTML = '🔊 Sound On (Boosted Loud)';
       soundBtn.style.background = 'rgba(22,163,74,0.95)';
     }
   }
