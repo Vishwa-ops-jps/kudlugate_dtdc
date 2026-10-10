@@ -130,7 +130,8 @@ async function renderGoogleButton(elementId, onToken) {
     window.google.accounts.id.initialize({
       client_id: clientId,
       callback: (response) => onToken(response.credential),
-      auto_select: false
+      auto_select: false,
+      itp_support: true
     });
     window.google.accounts.id.renderButton(el, { theme: 'outline', size: 'large', width: 320, text: 'continue_with' });
   } catch (err) {

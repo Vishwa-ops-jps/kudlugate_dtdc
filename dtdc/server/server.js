@@ -23,9 +23,12 @@ app.set('trust proxy', 1);
 app.disable('x-powered-by');
 
 // 1. Helmet HTTP Security Headers (Protects against XSS, clickjacking, MIME sniffing)
+// Configured to allow Google Identity Services popups and referrer verification
 app.use(helmet({
   contentSecurityPolicy: false,
-  crossOriginResourcePolicy: { policy: 'cross-origin' }
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+  crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' },
+  referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
 }));
 
 // 2. CORS Method & Header Control
