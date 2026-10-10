@@ -76,13 +76,28 @@ function renderChrome() {
     const btn = document.createElement('button');
     btn.id = 'ai-float';
     btn.type = 'button';
-    btn.setAttribute('aria-label', 'Chat with AI assistant');
-    btn.style.cssText = 'position:fixed;left:18px;bottom:18px;z-index:9999;display:flex;align-items:center;gap:8px;background:#d71920;color:#fff;border:0;cursor:pointer;padding:12px 18px;border-radius:999px;font-weight:600;font-size:15px;box-shadow:0 4px 14px rgba(0,0,0,.25);';
-    btn.innerHTML = '<span style="font-size:18px">&#129302;</span><span>AI Assistant</span>';
+    btn.className = 'robot-ai-btn';
+    btn.setAttribute('aria-label', 'Chat with AI Assistant');
+    btn.innerHTML = `
+      <svg class="robot-svg" viewBox="0 0 40 40" aria-hidden="true">
+        <line x1="20" y1="9" x2="20" y2="4" stroke="#C6CCDA" stroke-width="2" stroke-linecap="round"/>
+        <circle class="robot-antenna-light" cx="20" cy="3" r="2.5"/>
+        <rect x="4" y="15" width="3" height="8" rx="1.5" fill="#E31E24"/>
+        <rect x="33" y="15" width="3" height="8" rx="1.5" fill="#E31E24"/>
+        <g class="robot-head">
+          <rect x="7" y="9" width="26" height="20" rx="7" fill="#ffffff" stroke="#E2E6EE" stroke-width="1.2"/>
+          <rect x="10" y="12" width="20" height="13" rx="4" fill="#0F172A"/>
+          <ellipse class="robot-eye" cx="15" cy="18" rx="2.2" ry="2.6" fill="#00F0FF"/>
+          <ellipse class="robot-eye" cx="25" cy="18" rx="2.2" ry="2.6" fill="#00F0FF"/>
+          <path d="M17 22 Q20 24 23 22" stroke="#00F0FF" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+        </g>
+        <rect x="16" y="29" width="8" height="3" rx="1.5" fill="#C6CCDA"/>
+        <path d="M12 32 C12 30, 28 30, 28 32 L31 37 C31 38, 9 38, 9 37 Z" fill="#E31E24"/>
+      </svg>`;
 
     const panel = document.createElement('div');
     panel.id = 'ai-panel';
-    panel.style.cssText = 'position:fixed;left:18px;bottom:76px;z-index:9999;width:340px;max-width:calc(100vw - 36px);height:440px;max-height:calc(100vh - 110px);background:#fff;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.3);display:none;flex-direction:column;overflow:hidden;font-family:inherit;';
+    panel.style.cssText = 'position:fixed;left:20px;bottom:86px;z-index:9999;width:340px;max-width:calc(100vw - 36px);height:440px;max-height:calc(100vh - 110px);background:#fff;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.3);display:none;flex-direction:column;overflow:hidden;font-family:inherit;';
     panel.innerHTML = '<div style="background:#d71920;color:#fff;padding:12px 14px;font-weight:600;display:flex;justify-content:space-between;align-items:center;"><span>DK Enterprise Assistant</span><button type="button" id="ai-close" aria-label="Close" style="background:none;border:0;color:#fff;font-size:20px;cursor:pointer;">&times;</button></div>'
       + '<div id="ai-msgs" style="flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:#f6f6f6;"></div>'
       + '<div style="display:flex;gap:6px;padding:10px;border-top:1px solid #e5e5e5;background:#fff;"><input id="ai-input" type="text" maxlength="1000" placeholder="Ask about booking, rates..." style="flex:1;padding:9px 10px;border:1px solid #ccc;border-radius:8px;font-size:14px;"><button type="button" id="ai-send" style="background:#d71920;color:#fff;border:0;border-radius:8px;padding:0 14px;cursor:pointer;font-weight:600;">Send</button></div>';
