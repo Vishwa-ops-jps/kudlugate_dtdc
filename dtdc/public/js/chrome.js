@@ -18,8 +18,8 @@ function renderChrome() {
       <nav class="site-nav">
         <div class="wrap">
           <a href="/" class="brand">
-            <span class="brand-mark">KG</span>
-            <span class="brand-text">DTDC Kudlu Gate Franchise<small>Courier &amp; Cargo · Bengaluru</small></span>
+            <span class="brand-mark">DK</span>
+            <span class="brand-text">DK Enterprise Kudlu New Franchise<small>Courier &amp; Cargo · Bengaluru</small></span>
           </a>
           <button class="nav-toggle" aria-label="Menu">&#9776;</button>
           <div class="nav-links" data-nav-links>
@@ -40,8 +40,8 @@ function renderChrome() {
         <div class="wrap">
           <div>
             <div class="brand" style="margin-bottom:10px;">
-              <span class="brand-mark">KG</span>
-              <span class="brand-text" style="color:#fff;">DTDC Kudlu Gate<small>Courier &amp; Cargo</small></span>
+              <span class="brand-mark">DK</span>
+              <span class="brand-text" style="color:#fff;">DK Enterprise Kudlu New Franchise<small>Courier &amp; Cargo</small></span>
             </div>
             <p style="max-width:280px;font-size:13.5px;">Kudlu Gate, Bengaluru, Karnataka. Booking, tracking and delivery for local, state and national shipments.</p>
           </div>
