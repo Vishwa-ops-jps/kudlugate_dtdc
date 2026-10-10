@@ -27,7 +27,7 @@ function renderChrome() {
             <a href="https://www.dtdc.com/track-your-shipment/" target="_blank" rel="noopener noreferrer">Track</a>
             <a href="/reviews.html">Reviews</a>
             <a href="/contact.html">Contact</a>
-            <a class="whatsapp-contact" href="https://wa.me/916366118850?text=${encodeURIComponent('Hello DTDC Kudlu Gate, I need help with a courier.')}" target="_blank" rel="noopener noreferrer"><span class="whatsapp-dot" aria-hidden="true"></span>WhatsApp</a>
+            <a class="whatsapp-contact" href="https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise Kudlu New Franchise, I need help with a courier.')}" target="_blank" rel="noopener noreferrer"><span class="whatsapp-dot" aria-hidden="true"></span>WhatsApp</a>
             <span data-auth-slot style="display:flex;gap:6px;align-items:center;"></span>
           </div>
         </div>
@@ -68,7 +68,7 @@ function renderChrome() {
             </div>
           </div>
         </div>
-        <div class="fine">&copy; ${new Date().getFullYear()} DTDC Kudlu Gate. Franchise site — independently operated.</div>
+        <div class="fine">&copy; ${new Date().getFullYear()} DK Enterprise Kudlu New Franchise. Franchise site — independently operated.</div>
       </footer>`;
   }
   // AI assistant chat (bottom-left, all customer pages)
@@ -83,7 +83,7 @@ function renderChrome() {
     const panel = document.createElement('div');
     panel.id = 'ai-panel';
     panel.style.cssText = 'position:fixed;left:18px;bottom:76px;z-index:9999;width:340px;max-width:calc(100vw - 36px);height:440px;max-height:calc(100vh - 110px);background:#fff;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.3);display:none;flex-direction:column;overflow:hidden;font-family:inherit;';
-    panel.innerHTML = '<div style="background:#d71920;color:#fff;padding:12px 14px;font-weight:600;display:flex;justify-content:space-between;align-items:center;"><span>DTDC Kudlu Gate Assistant</span><button type="button" id="ai-close" aria-label="Close" style="background:none;border:0;color:#fff;font-size:20px;cursor:pointer;">&times;</button></div>'
+    panel.innerHTML = '<div style="background:#d71920;color:#fff;padding:12px 14px;font-weight:600;display:flex;justify-content:space-between;align-items:center;"><span>DK Enterprise Assistant</span><button type="button" id="ai-close" aria-label="Close" style="background:none;border:0;color:#fff;font-size:20px;cursor:pointer;">&times;</button></div>'
       + '<div id="ai-msgs" style="flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:#f6f6f6;"></div>'
       + '<div style="display:flex;gap:6px;padding:10px;border-top:1px solid #e5e5e5;background:#fff;"><input id="ai-input" type="text" maxlength="1000" placeholder="Ask about booking, rates..." style="flex:1;padding:9px 10px;border:1px solid #ccc;border-radius:8px;font-size:14px;"><button type="button" id="ai-send" style="background:#d71920;color:#fff;border:0;border-radius:8px;padding:0 14px;cursor:pointer;font-weight:600;">Send</button></div>';
     document.body.appendChild(panel);
@@ -101,7 +101,7 @@ function renderChrome() {
       msgsEl.scrollTop = msgsEl.scrollHeight;
       return d;
     }
-    addMsg('Hi! I\u2019m the DTDC Kudlu Gate AI assistant. Ask me about booking, rates or services.', 'bot');
+    addMsg('Hi! I\u2019m the DK Enterprise AI assistant. Ask me about booking, rates or services.', 'bot');
     let busy = false;
     async function send() {
       const text = input.value.trim();

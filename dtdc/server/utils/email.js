@@ -37,10 +37,10 @@ async function sendStatusEmail({ to, name, trackingId, status, location }) {
       subject: `Your parcel ${trackingId} is now "${status}"`,
       text:
         `Hi ${name || 'there'},\n\n` +
-        `Your DTDC Kudlu Gate parcel ${trackingId} status has been updated to: ${status}.\n` +
+        `Your DK Enterprise parcel ${trackingId} status has been updated to: ${status}.\n` +
         (location ? `Location: ${location}\n` : '') +
         `\nTrack it any time at your convenience using tracking ID ${trackingId}.\n\n` +
-        `- DTDC Kudlu Gate`
+        `- DK Enterprise Kudlu New Franchise`
     });
     return { sent: true };
   } catch (err) {
@@ -57,8 +57,8 @@ async function sendEnquiryReceipt({ to, name }) {
     await t.sendMail({
       from: process.env.EMAIL_FROM,
       to: recipient,
-      subject: 'We received your enquiry - DTDC Kudlu Gate',
-      text: `Hi ${name || 'there'},\n\nThanks for reaching out to DTDC Kudlu Gate. Our team will get back to you shortly.\n\n- DTDC Kudlu Gate`
+      subject: 'We received your enquiry - DK Enterprise Kudlu New Franchise',
+      text: `Hi ${name || 'there'},\n\nThanks for reaching out to DK Enterprise Kudlu New Franchise. Our team will get back to you shortly.\n\n- DK Enterprise Kudlu New Franchise`
     });
     return { sent: true };
   } catch (err) {
@@ -79,7 +79,7 @@ async function sendAdminEnquiryAlert({ name, phone, email, subject, message }) {
       to: adminTo,
       subject: `New enquiry from ${name}${subject ? ' - ' + subject : ''}`,
       text:
-        `You have a new contact form submission on the DTDC Kudlu Gate site:\n\n` +
+        `You have a new contact form submission on the DK Enterprise site:\n\n` +
         `Name: ${name}\n` +
         `Phone: ${phone}\n` +
         (email ? `Email: ${email}\n` : '') +
@@ -105,13 +105,13 @@ async function sendPasswordResetEmail({ to, name, resetLink }) {
     await t.sendMail({
       from: process.env.EMAIL_FROM,
       to: recipient,
-      subject: 'Reset your DTDC Kudlu Gate password',
+      subject: 'Reset your DK Enterprise password',
       text:
         `Hi ${name || 'there'},\n\n` +
-        `We got a request to reset your DTDC Kudlu Gate account password.\n\n` +
+        `We got a request to reset your DK Enterprise account password.\n\n` +
         `Reset it here (link expires in 1 hour):\n${resetLink}\n\n` +
         `If you didn't request this, you can safely ignore this email - your password will stay the same.\n\n` +
-        `- DTDC Kudlu Gate`
+        `- DK Enterprise Kudlu New Franchise`
     });
     return { sent: true };
   } catch (err) {

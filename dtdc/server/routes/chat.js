@@ -7,29 +7,29 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
 const MAX_MESSAGES = 20;
 const MAX_CHARS = 1000;
 
-const SYSTEM_PROMPT = `You are the AI assistant for the DTDC Kudlu Gate courier franchise in Bengaluru, India.
-Help customers with: how the rate calculator works, services (standard/express), branch info, and general courier questions.
+const SYSTEM_PROMPT = `You are the AI assistant for DK Enterprise Kudlu New Franchise courier service in Bengaluru, India.
+Help customers with: services (standard/express), branch info, tracking, and general courier questions.
 
 Site facts:
 - Location: Shop no 3, 1st floor, BREN PALMS, Kudlu Main Rd, Bengaluru 560068 (https://maps.app.goo.gl/Bp4kTUK2omVuxT347).
 - Hours: Mon-Sat, 9:30 AM - 8:30 PM (Closed on Sundays).
-- Rate calculator: /calculator.html. Contact form: /contact.html. Reviews: /reviews.html.
-- Tracking: send customers to official DTDC tracking page: https://www.dtdc.com/track-your-shipment/
+- Contact form: /contact.html. Reviews: /reviews.html.
+- Tracking: send customers to tracking page: https://www.dtdc.com/track-your-shipment/
 - Phone: +91 63661 18850. WhatsApp: https://wa.me/916366118850
 
 Rules:
 - Be brief and friendly (2-4 sentences). Plain text, no markdown headings.
-- Never invent prices, delivery times, or parcel statuses. For exact prices point to rate calculator; for anything uncertain, suggest calling or WhatsApp.
+- Never invent prices, delivery times, or parcel statuses. For anything uncertain, suggest calling or WhatsApp.
 - Reply in the language the customer writes in (English, Kannada, Hindi, etc.).`;
 
 // Smart instant fallback assistant for when cloud/local LLM is offline
 function getSmartFallbackReply(userText) {
   const q = userText.toLowerCase();
   if (q.includes('track') || q.includes('status') || q.includes('where is')) {
-    return 'You can track your shipment live on the official DTDC tracking portal: https://www.dtdc.com/track-your-shipment/ . Just enter the tracking ID from your booking receipt!';
+    return 'You can track your shipment live on the tracking portal: https://www.dtdc.com/track-your-shipment/ . Just enter the tracking ID from your booking receipt!';
   }
   if (q.includes('rate') || q.includes('cost') || q.includes('price') || q.includes('charge') || q.includes('calculate')) {
-    return 'To estimate your shipping cost, please use our Rate Calculator at /calculator.html or reach us directly on WhatsApp: https://wa.me/916366118850';
+    return 'To estimate your shipping cost or inquire about rates, please contact us directly on WhatsApp: https://wa.me/916366118850 or call +91 63661 18850.';
   }
   if (q.includes('location') || q.includes('address') || q.includes('where') || q.includes('map') || q.includes('shop')) {
     return 'Our branch is located at: Shop No. 3, 1st Floor, BREN PALMS, Kudlu Main Rd, Bengaluru 560068 (above Med Plus, near TVS Godown). Map: https://maps.app.goo.gl/Bp4kTUK2omVuxT347';
@@ -40,7 +40,7 @@ function getSmartFallbackReply(userText) {
   if (q.includes('phone') || q.includes('contact') || q.includes('call') || q.includes('whatsapp') || q.includes('number')) {
     return 'You can call us directly at +91 63661 18850 or chat with us on WhatsApp: https://wa.me/916366118850';
   }
-  return 'Hello! Welcome to DTDC Kudlu Gate. How can I help you today? You can ask about our shipping rates, branch location, timings (9:30 AM - 8:30 PM), or tracking details. You can also call us at +91 63661 18850.';
+  return 'Hello! Welcome to DK Enterprise Kudlu New Franchise. How can I help you today? You can ask about our shipping services, branch location, timings (9:30 AM - 8:30 PM), or tracking details. You can also call us at +91 63661 18850.';
 }
 
 // Gemini API call helper

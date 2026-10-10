@@ -114,5 +114,5 @@ app.use('/api', (req, res) => res.status(404).json({ error: 'Not found.' }));
 const PORT = process.env.PORT || 3000;
 
 connectDB().then(() => {
-  app.listen(PORT, () => console.log(`🔒 DTDC Kudlu Gate secure server running on port ${PORT}`));
+  app.listen(PORT, () => console.log(`🔒 DK Enterprise Kudlu New Franchise server running on port ${PORT}`));
 });

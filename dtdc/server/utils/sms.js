@@ -24,7 +24,7 @@ async function sendStatusSms({ to, trackingId, status }) {
     await c.messages.create({
       from: process.env.TWILIO_FROM_NUMBER,
       to,
-      body: `DTDC Kudlu Gate: parcel ${trackingId} is now "${status}".`
+      body: `DK Enterprise: parcel ${trackingId} is now "${status}".`
     });
     return { sent: true };
   } catch (err) {

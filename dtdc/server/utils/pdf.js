@@ -31,8 +31,8 @@ function generateReceiptPdf(parcel, destination) {
   doc.pipe(destination);
 
   doc.rect(0, 0, doc.page.width, 86).fill(INK);
-  doc.fillColor('#FFFFFF').fontSize(18).font('Helvetica-Bold').text('DTDC Kudlu Gate', 50, 26);
-  doc.fontSize(9).font('Helvetica').fillColor('#C6CCDA').text('Courier & Cargo - Kudlu Gate, Bengaluru', 50, 49);
+  doc.fillColor('#FFFFFF').fontSize(18).font('Helvetica-Bold').text('DK Enterprise', 50, 26);
+  doc.fontSize(9).font('Helvetica').fillColor('#C6CCDA').text('Courier & Cargo - Kudlu New Franchise, Bengaluru', 50, 49);
   doc.fontSize(13).font('Helvetica-Bold').fillColor(AMBER).text('BOOKING RECEIPT', 0, 34, { align: 'right', width: doc.page.width - 50 });
 
   doc.fontSize(8.5).font('Helvetica').fillColor(GREY)
@@ -74,7 +74,7 @@ function generateReceiptPdf(parcel, destination) {
   }
 
   doc.fontSize(8).font('Helvetica').fillColor(GREY)
-    .text('This is a system-generated receipt from DTDC Kudlu Gate. For queries call +91 63661 18850.', 50, doc.page.height - 60, { width: 495, align: 'center' });
+    .text('This is a system-generated receipt from DK Enterprise. For queries call +91 63661 18850.', 50, doc.page.height - 60, { width: 495, align: 'center' });
 
   doc.end();
 }
@@ -85,8 +85,8 @@ function generateLabelPdf(parcel, destination) {
   doc.pipe(destination);
 
   doc.rect(0, 0, 288, 46).fill(INK);
-  doc.fillColor('#FFFFFF').fontSize(13).font('Helvetica-Bold').text('DTDC KUDLU GATE', 14, 10);
-  doc.fontSize(8).font('Helvetica').fillColor('#C6CCDA').text('Courier & Cargo Franchise', 14, 27);
+  doc.fillColor('#FFFFFF').fontSize(13).font('Helvetica-Bold').text('DK ENTERPRISE', 14, 10);
+  doc.fontSize(8).font('Helvetica').fillColor('#C6CCDA').text('Courier & Cargo - Kudlu New Franchise', 14, 27);
 
   doc.roundedRect(210, 12, 64, 22, 3).fill(AMBER);
   doc.fontSize(9).font('Helvetica-Bold').fillColor(INK)

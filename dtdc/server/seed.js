@@ -19,14 +19,14 @@ async function seed() {
   let branch = await Branch.findOne({ code: 'KUDLU' });
   if (!branch) {
     branch = await Branch.create({
-      name: 'DTDC Kudlu Gate',
+      name: 'DK Enterprise Kudlu New Franchise',
       code: 'KUDLU',
       city: 'Bengaluru',
       state: 'Karnataka',
       address: 'Kudlu Gate, Bengaluru, Karnataka',
       phone: ''
     });
-    console.log('Created branch: DTDC Kudlu Gate');
+    console.log('Created branch: DK Enterprise Kudlu New Franchise');
   }
 
   // Admin account
