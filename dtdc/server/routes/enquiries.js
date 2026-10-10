@@ -16,8 +16,8 @@ router.post('/', async (req, res) => {
     if (!isValidPhone(phone)) return res.status(400).json({ error: 'Enter a valid 10-digit mobile number.' });
     if (email && !isValidEmail(email)) return res.status(400).json({ error: 'Enter a valid email address.' });
     const enquiry = await Enquiry.create({ name, email, phone, subject, message });
-    sendEnquiryReceipt({ to: email, name }).catch(() => {});
-    sendAdminEnquiryAlert({ name, phone, email, subject, message }).catch(() => {});
+    sendEnquiryReceipt({ to: email, name }).catch((err) => console.error('Enquiry customer receipt error:', err));
+    sendAdminEnquiryAlert({ name, phone, email, subject, message }).catch((err) => console.error('Admin enquiry notification error:', err));
     res.status(201).json({ enquiry, message: 'Thanks, we will get back to you shortly.' });
   } catch (err) {
     res.status(500).json({ error: 'Could not submit enquiry.', detail: err.message });

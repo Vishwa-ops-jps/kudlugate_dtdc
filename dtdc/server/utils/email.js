@@ -2,25 +2,33 @@ const nodemailer = require('nodemailer');
 
 let transporter = null;
 
-function getForceEmailTo() {
-  const forced = (process.env.FORCE_EMAIL_TO || process.env.ADMIN_NOTIFY_EMAIL || process.env.EMAIL_USER || '').trim().toLowerCase();
-  return forced || null;
-}
-
 function getRecipient(to) {
-  const forced = getForceEmailTo();
+  const forced = (process.env.FORCE_EMAIL_TO || '').trim();
   return forced || to;
 }
 
 function getTransporter() {
   if (process.env.EMAIL_ENABLED !== 'true') return null;
   if (transporter) return transporter;
-  transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: Number(process.env.EMAIL_PORT || 587),
-    secure: false,
-    auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
-  });
+  const user = (process.env.EMAIL_USER || '').trim();
+  // Passwords can be passed with spaces or trimmed
+  const pass = (process.env.EMAIL_PASS || '').trim();
+  if (!user || !pass) return null;
+
+  const isGmail = (process.env.EMAIL_HOST || '').includes('gmail') || user.endsWith('@gmail.com');
+  if (isGmail) {
+    transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: { user, pass }
+    });
+  } else {
+    transporter = nodemailer.createTransport({
+      host: process.env.EMAIL_HOST || 'smtp.gmail.com',
+      port: Number(process.env.EMAIL_PORT || 587),
+      secure: Number(process.env.EMAIL_PORT) === 465,
+      auth: { user, pass }
+    });
+  }
   return transporter;
 }
 
