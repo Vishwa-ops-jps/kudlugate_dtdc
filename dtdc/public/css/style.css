@@ -231,8 +231,9 @@ section { padding: 56px 0; }
 /* ---------- Dynamic Animated AI Robot Button ---------- */
 .robot-ai-btn {
   position: fixed;
-  left: 20px;
-  bottom: 20px;
+  right: 24px;
+  bottom: 24px;
+  left: auto;
   z-index: 9999;
   width: 58px;
   height: 58px;
