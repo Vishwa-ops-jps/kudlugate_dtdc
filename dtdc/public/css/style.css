@@ -108,8 +108,8 @@ img { max-width: 100%; }
   transition: transform .12s ease, background .15s ease;
 }
 .btn:hover { background: var(--ink-soft); transform: translateY(-1px); }
-.btn.amber { background: var(--amber); color: var(--ink); }
-.btn.amber:hover { background: var(--amber-dark); }
+.btn.amber { background: var(--amber); color: #ffffff; }
+.btn.amber:hover { background: var(--amber-dark); color: #ffffff; }
 .btn.outline { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
 .btn.outline:hover { background: var(--ink); color: var(--paper); }
 .btn.block { width: 100%; }
