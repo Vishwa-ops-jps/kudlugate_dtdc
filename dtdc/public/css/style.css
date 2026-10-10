@@ -147,6 +147,7 @@ section { padding: 56px 0; }
 
 /* ---------- Hero ---------- */
 .hero { background: var(--ink); color: var(--paper); padding: 72px 0 64px; position: relative; overflow: hidden; }
+.hero .eyebrow { color: #ffffff; }
 .hero .wrap { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; position: relative; z-index: 1; }
 @media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } }
 .hero h1 { font-size: clamp(30px, 4.4vw, 46px); color: #fff; }
