@@ -58,20 +58,13 @@
 <script src="/js/api.js"></script>
 <script src="/js/chrome.js?v=31"></script>
 <script>
-// If the customer is logged in (including via "Sign in with Google"), use
-// their verified account email instead of letting them type any address -
-// that way the alert we send you always carries a real, verified email.
 (function prefillFromSession() {
   const user = Session.getUser();
-  if (!user || user.role !== 'customer') return;
+  if (!user) return;
   const nameEl = document.getElementById('c-name');
   const emailEl = document.getElementById('c-email');
-  if (nameEl && !nameEl.value) nameEl.value = user.name || '';
-  if (emailEl) {
-    emailEl.value = user.email || '';
-    emailEl.readOnly = true;
-    emailEl.title = 'Using your verified account email';
-  }
+  if (nameEl && !nameEl.value && user.name) nameEl.value = user.name;
+  if (emailEl && !emailEl.value && user.email) emailEl.value = user.email;
 })();
 
 document.getElementById('c-submit').addEventListener('click', async () => {
