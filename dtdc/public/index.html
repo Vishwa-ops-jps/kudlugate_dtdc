@@ -465,13 +465,18 @@
 
 API.request('/reviews', { auth: false }).then(({ reviews }) => {
   const el = document.getElementById('reviews-list');
-  if (!reviews.length) { el.innerHTML = '<p style="color:var(--grey);">No reviews yet — be the first to leave one.</p>'; return; }
+  if (!reviews || !reviews.length) { el.innerHTML = '<p style="color:var(--grey);">No reviews yet — be the first to leave one.</p>'; return; }
   el.innerHTML = reviews.slice(0, 3).map(r => `
     <div class="card review-card">
       <div class="stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
       <p>"${escapeHtml(r.comment)}"</p>
       <div class="review-name">${escapeHtml(r.name)}</div>
     </div>`).join('');
+}).catch(() => {
+  const el = document.getElementById('reviews-list');
+  if (el) el.innerHTML = '<p style="color:var(--grey);">No reviews yet — be the first to leave one.</p>';
+});
+
 // ---------- Sound / Unmute Controller + 350% Volume Booster ----------
 (function() {
   const wrapper = document.getElementById('video-slider-wrapper');
