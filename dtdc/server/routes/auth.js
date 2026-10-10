@@ -36,10 +36,23 @@ router.post('/register', async (req, res) => {
     }
     if (password.length < 6) return res.status(400).json({ error: 'Password should be at least 6 characters.' });
     const existing = await User.findOne({ email: email.toLowerCase() });
-    if (existing) return res.status(409).json({ error: 'An account with this email already exists.' });
+    if (existing) {
+      if (!existing.passwordHash) {
+        existing.passwordHash = await bcrypt.hash(password, 10);
+        if (name && (!existing.name || existing.name === existing.email.split('@')[0])) existing.name = name;
+        if (phone && !existing.phone) existing.phone = phone;
+        await existing.save();
+        const token = signToken(existing);
+        return res.status(200).json({
+          token,
+          user: { id: existing._id, name: existing.name, email: existing.email, role: existing.role, branch: existing.branch }
+        });
+      }
+      return res.status(409).json({ error: 'An account with this email already exists. Please log in or use Forgot Password.' });
+    }
 
     const passwordHash = await bcrypt.hash(password, 10);
-    const user = await User.create({ name, email, phone, passwordHash, role: 'customer' });
+    const user = await User.create({ name, email: email.toLowerCase(), phone, passwordHash, role: 'customer' });
     const token = signToken(user);
     res.status(201).json({ token, user: { id: user._id, name: user.name, email: user.email, role: user.role } });
   } catch (err) {
@@ -152,9 +165,8 @@ router.post('/forgot-password', async (req, res) => {
     if (!email) return res.status(400).json({ error: 'Email is required.' });
 
     const user = await User.findOne({ email });
-    // No account, account disabled, or a Google-only account with no password
-    // to reset - stay silent and return the same message either way.
-    if (!user || !user.active || !user.passwordHash) return res.json(generic);
+    // No account or account disabled - stay silent and return generic message
+    if (!user || !user.active) return res.json(generic);
 
     const rawToken = crypto.randomBytes(32).toString('hex');
     user.resetTokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');

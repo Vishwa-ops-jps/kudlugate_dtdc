@@ -26,8 +26,10 @@
 <script>
 (async () => {
   const user = Session.getUser();
-  if (!user || user.role !== 'customer') { window.location.href = '/login.html'; return; }
-  document.getElementById('welcome').textContent = `Welcome back, ${user.name.split(' ')[0]}`;
+  if (!user) { window.location.href = '/login.html'; return; }
+  if (user.role !== 'customer') { window.location.href = '/admin/dashboard.html'; return; }
+  const firstName = (user.name || user.email || 'Customer').split(' ')[0];
+  document.getElementById('welcome').textContent = `Welcome back, ${firstName}`;
 
   try {
     const { parcels } = await API.request('/parcels/mine');

@@ -16,6 +16,9 @@ const chatRoutes = require('./routes/chat');
 
 const app = express();
 
+// Trust reverse proxies (Render, Vercel, Cloudflare, AWS) so client IPs are accurate
+app.set('trust proxy', 1);
+
 // Hide server stack signatures
 app.disable('x-powered-by');
 
@@ -67,10 +70,10 @@ const generalLimiter = rateLimit({
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 15,
+  max: 100,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { error: 'Too many login or registration attempts. Please wait 15 minutes before trying again.' }
+  message: { error: 'Too many login or registration attempts. Please wait a few minutes before trying again.' }
 });
 
 const chatLimiter = rateLimit({

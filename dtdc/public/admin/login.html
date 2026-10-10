@@ -39,6 +39,22 @@
 
 <script src="/js/api.js"></script>
 <script>
+(function checkLoggedIn() {
+  const current = Session.getUser();
+  if (current) {
+    const msgEl = document.getElementById('msg');
+    if (msgEl) {
+      msgEl.innerHTML = `<div class="msg ok" style="margin-top:10px;">
+        Logged in as <strong>${escapeHtml(current.name || current.email)}</strong> (${current.role}).<br>
+        <a href="${current.role === 'customer' ? '/dashboard.html' : '/admin/dashboard.html'}" style="font-weight:600;text-decoration:underline;">Go to Dashboard →</a> &nbsp;|&nbsp;
+        <a href="#" id="switch-acc-link" style="font-weight:600;text-decoration:underline;color:var(--red);">Log Out to Switch Account</a>
+      </div>`;
+      const link = document.getElementById('switch-acc-link');
+      if (link) link.addEventListener('click', (e) => { e.preventDefault(); Session.clear(); window.location.reload(); });
+    }
+  }
+})();
+
 document.getElementById('login-btn').addEventListener('click', async () => {
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
@@ -47,12 +63,12 @@ document.getElementById('login-btn').addEventListener('click', async () => {
   if (!email || !password) { msgEl.innerHTML = '<div class="msg err">Enter email and password.</div>'; return; }
   try {
     const { token, user } = await API.request('/auth/login', { method: 'POST', body: { email, password }, auth: false });
-    if (user.role === 'customer') {
-      msgEl.innerHTML = '<div class="msg err">This is a customer account — use the customer login page.</div>';
-      return;
-    }
     Session.set(token, user);
-    window.location.href = '/admin/dashboard.html';
+    if (user.role === 'customer') {
+      window.location.href = '/dashboard.html';
+    } else {
+      window.location.href = '/admin/dashboard.html';
+    }
   } catch (err) {
     msgEl.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
   }
