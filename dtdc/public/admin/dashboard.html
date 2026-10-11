@@ -568,7 +568,7 @@ async function loadAnalytics() {
       data: {
         labels: dailyLabels,
         datasets: [
-          { label: 'Bookings', data: stats.daily.map(d => d.bookings), borderColor: '#142B6E', backgroundColor: 'rgba(20,43,110,0.08)', tension: 0.3, yAxisID: 'y' },
+          { label: 'Bookings', data: stats.daily.map(d => d.bookings), borderColor: '#0c2340', backgroundColor: 'rgba(12,35,64,0.08)', tension: 0.3, yAxisID: 'y' },
           { label: 'Revenue (₹)', data: stats.daily.map(d => d.revenue), borderColor: '#E31E24', backgroundColor: 'rgba(227,30,36,0.08)', tension: 0.3, yAxisID: 'y1' }
         ]
       },
