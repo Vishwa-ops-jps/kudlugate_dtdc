@@ -1,3 +1,13 @@
+// Client-side launch guard: launches on 20 October 2026 at 2:20 PM IST (UTC+05:30)
+(function() {
+  const launchTime = new Date('2026-10-20T14:20:00+05:30').getTime();
+  const isPreview = new URLSearchParams(window.location.search).get('preview') === 'true';
+  const path = window.location.pathname.toLowerCase();
+  if (!isPreview && Date.now() < launchTime && !path.startsWith('/admin') && !path.includes('launching.html')) {
+    window.location.replace('/launching.html');
+  }
+})();
+
 // Injects the site nav and footer into #site-header / #site-footer placeholders.
 function renderChrome() {
   const currentUser = typeof Session !== 'undefined' ? Session.getUser() : null;

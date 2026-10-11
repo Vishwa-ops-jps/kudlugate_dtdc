@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DK Enterprise Kudlu New Franchise — Courier &amp; Cargo, Bengaluru</title>
 <link rel="stylesheet" href="/css/style.css?v=35">
+<script>
+  (function() {
+    var launchTime = new Date('2026-10-20T14:20:00+05:30').getTime();
+    var isPreview = new URLSearchParams(window.location.search).get('preview') === 'true';
+    if (!isPreview && Date.now() < launchTime && !window.location.pathname.startsWith('/admin')) {
+      window.location.replace('/launching.html');
+    }
+  })();
+</script>
 </head>
 <body>
 <div id="site-header">

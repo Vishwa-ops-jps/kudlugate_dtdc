@@ -135,6 +135,48 @@ app.get('/api/email-diag', async (req, res) => {
   return res.json({ ok: true, info });
 });
 
+// Launch Countdown Gate (Official launch on 20 October 2026 at 2:20 PM IST)
+const LAUNCH_DATE_IST = new Date('2026-10-20T14:20:00+05:30').getTime();
+
+app.use((req, res, next) => {
+  // If launch time is reached, grant full access
+  if (Date.now() >= LAUNCH_DATE_IST) {
+    return next();
+  }
+
+  // Always allow APIs, admin dashboard, and static assets
+  const p = req.path.toLowerCase();
+  if (
+    p.startsWith('/api') ||
+    p.startsWith('/admin') ||
+    p.startsWith('/images') ||
+    p.startsWith('/css') ||
+    p.startsWith('/js') ||
+    p.startsWith('/videos') ||
+    p.endsWith('.css') ||
+    p.endsWith('.js') ||
+    p.endsWith('.png') ||
+    p.endsWith('.jpg') ||
+    p.endsWith('.jpeg') ||
+    p.endsWith('.svg') ||
+    p.endsWith('.ico') ||
+    p.endsWith('.mp4') ||
+    p.endsWith('.woff2') ||
+    p.endsWith('.woff') ||
+    p.endsWith('.ttf')
+  ) {
+    return next();
+  }
+
+  // Allow preview testing if ?preview=true is passed
+  if (req.query.preview === 'true') {
+    return next();
+  }
+
+  // Serve Launching Soon countdown page until 20 October 2:20 PM IST
+  return res.sendFile(path.join(__dirname, '..', 'public', 'launching.html'));
+});
+
 // Static frontend
 app.use(express.static(path.join(__dirname, '..', 'public'), {
   setHeaders: (res) => {

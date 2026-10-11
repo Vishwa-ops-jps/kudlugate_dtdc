@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DK Enterprises — Launching Soon | 20 October 2:20 PM IST</title>
+  <meta name="description" content="DK Enterprises Kudlu New Branch — Launching soon on 20 October 2026 at 2:20 PM IST. Premier courier, cargo, and parcel delivery services in Bengaluru.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700;800&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #040d1a;
+      color: #ffffff;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      padding: 16px;
+      position: relative;
+    }
+
+    /* Ambient background glowing orbs */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -20%;
+      left: 10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0, 150, 255, 0.15) 0%, rgba(4, 13, 26, 0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -20%;
+      right: 10%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(0, 102, 255, 0.12) 0%, rgba(4, 13, 26, 0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Top navigation bar / status */
+    .top-strip {
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 20;
+    }
+
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(14, 38, 77, 0.85);
+      border: 1px solid rgba(0, 170, 255, 0.35);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #00d2ff;
+      backdrop-filter: blur(8px);
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #00e5ff;
+      box-shadow: 0 0 10px #00e5ff;
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.7); }
+      70% { transform: scale(1.15); box-shadow: 0 0 0 8px rgba(0, 229, 255, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 229, 255, 0); }
+    }
+
+    .admin-link {
+      color: #94a3b8;
+      font-size: 12.5px;
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.2s ease;
+    }
+
+    .admin-link:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Main banner stage */
+    .stage {
+      position: relative;
+      width: 100%;
+      max-width: 1100px;
+      background: #051329;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 150, 255, 0.15);
+      border: 1px solid rgba(0, 170, 255, 0.3);
+      margin: 48px auto 20px;
+      z-index: 10;
+    }
+
+    /* Desktop banner view */
+    .banner-container {
+      position: relative;
+      width: 100%;
+      padding-top: 66.6%; /* 1024 / 682 aspect ratio */
+      background: url('/images/launching-soon-clean.jpg') center/cover no-repeat;
+    }
+
+    /* The exact countdown overlay mapped to the banner boxes */
+    .timer-overlay {
+      position: absolute;
+      top: 61.2%;
+      left: 5.8%;
+      width: 48.5%;
+      height: 12.2%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      pointer-events: auto;
+    }
+
+    .timer-box {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 2.2%;
+    }
+
+    .timer-val {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: clamp(18px, 3.2vw, 36px);
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      text-shadow: 0 0 15px rgba(0, 200, 255, 0.8), 0 2px 4px rgba(0,0,0,0.8);
+      font-variant-numeric: tabular-nums;
+      transition: transform 0.15s ease;
+    }
+
+    /* Interactive click zones on the desktop poster */
+    .click-target-phone {
+      position: absolute;
+      bottom: 2.5%;
+      left: 6.2%;
+      width: 25%;
+      height: 8.5%;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+    .click-target-phone:hover {
+      background: rgba(0, 180, 255, 0.15);
+    }
+
+    .click-target-loc {
+      position: absolute;
+      bottom: 2.5%;
+      left: 36.5%;
+      width: 38%;
+      height: 8.5%;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+    .click-target-loc:hover {
+      background: rgba(0, 180, 255, 0.15);
+    }
+
+    /* Bottom quick action bar */
+    .action-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      width: 100%;
+      max-width: 1100px;
+      margin: 8px auto 20px;
+      z-index: 10;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn-call {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 18px rgba(2, 132, 199, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .btn-call:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(2, 132, 199, 0.6);
+      background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+    }
+
+    .btn-whatsapp {
+      background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 18px rgba(22, 163, 74, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .btn-whatsapp:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(22, 163, 74, 0.6);
+      background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+    }
+
+    .btn-location {
+      background: rgba(14, 38, 77, 0.85);
+      color: #cbd5e1;
+      border: 1px solid rgba(0, 170, 255, 0.35);
+      backdrop-filter: blur(8px);
+    }
+    .btn-location:hover {
+      color: #ffffff;
+      border-color: #00d2ff;
+      background: rgba(14, 38, 77, 1);
+      transform: translateY(-2px);
+    }
+
+    /* Mobile dedicated clean view */
+    .mobile-cards-wrap {
+      display: none;
+      width: 100%;
+      padding: 24px 20px;
+      background: #051329;
+    }
+
+    .mobile-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .mobile-logo {
+      font-size: 24px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+    .mobile-logo span {
+      color: #00d2ff;
+    }
+
+    .mobile-subtag {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    .mobile-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 34px;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 16px 0 10px;
+      line-height: 1.15;
+    }
+
+    .mobile-pill {
+      background: rgba(0, 170, 255, 0.12);
+      border: 1px solid rgba(0, 170, 255, 0.35);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #bae6fd;
+      line-height: 1.45;
+      margin-bottom: 22px;
+    }
+
+    .mobile-timer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .mobile-timer-card {
+      background: rgba(6, 26, 62, 0.85);
+      border: 1.5px solid rgba(0, 170, 255, 0.45);
+      border-radius: 12px;
+      padding: 14px 6px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .mobile-timer-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: #ffffff;
+      text-shadow: 0 0 10px rgba(0, 200, 255, 0.8);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .mobile-timer-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #7dd3fc;
+      margin-top: 6px;
+    }
+
+    .mobile-features {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 24px;
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 12px;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .mobile-feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .mobile-feature-item strong {
+      color: #ffffff;
+    }
+
+    .mobile-feature-item span {
+      color: #94a3b8;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+
+    .footer-note strong {
+      color: #cbd5e1;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 640px) {
+      .banner-container {
+        display: none;
+      }
+      .mobile-cards-wrap {
+        display: block;
+      }
+      .stage {
+        margin-top: 54px;
+        border-radius: 14px;
+      }
+      .action-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .action-btn {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Status Strip -->
+  <header class="top-strip">
+    <div class="live-badge">
+      <span class="pulse-dot"></span>
+      <span>Official Launch Countdown</span>
+    </div>
+    <a href="/admin/login.html" class="admin-link">Staff Login</a>
+  </header>
+
+  <!-- Main Stage Display -->
+  <main class="stage">
+    
+    <!-- Desktop & Tablet Aspect-Mapped View -->
+    <div class="banner-container" id="banner-stage">
+      
+      <!-- Live Dynamic Countdown Numbers placed directly inside the 4 boxes -->
+      <div class="timer-overlay" aria-label="Live Launching Countdown">
+        <!-- DAYS -->
+        <div class="timer-box">
+          <span class="timer-val" id="d-days">00</span>
+        </div>
+        <!-- HOURS -->
+        <div class="timer-box">
+          <span class="timer-val" id="d-hours">00</span>
+        </div>
+        <!-- MINUTES -->
+        <div class="timer-box">
+          <span class="timer-val" id="d-minutes">00</span>
+        </div>
+        <!-- SECONDS -->
+        <div class="timer-box">
+          <span class="timer-val" id="d-seconds">00</span>
+        </div>
+      </div>
+
+      <!-- Clickable Link Targets over Phone & Location on the Banner -->
+      <a href="tel:+916366118850" class="click-target-phone" title="Call DK Enterprises">+91 63661 18850</a>
+      <a href="https://maps.app.goo.gl/Bp4kTUK2omVuxT347" target="_blank" rel="noopener noreferrer" class="click-target-loc" title="View Branch Location">Kudlu New Branch</a>
+    </div>
+
+    <!-- Mobile View (Adaptive for smartphones) -->
+    <div class="mobile-cards-wrap">
+      <div class="mobile-header">
+        <div class="mobile-logo">DK <span>ENTERPRISES</span> ✈</div>
+        <div class="mobile-subtag">COURIER · LOGISTICS · PARCEL SERVICES</div>
+        <h1 class="mobile-title">Launching Soon</h1>
+        <div class="mobile-pill">
+          📣 <strong>Something exciting is on the way!</strong><br>
+          We’ll be launching soon on <strong>20 October at 2:20 PM IST</strong>. Stay connected!
+        </div>
+      </div>
+
+      <!-- Mobile Countdown Grid -->
+      <div class="mobile-timer-grid">
+        <div class="mobile-timer-card">
+          <div class="mobile-timer-num" id="m-days">00</div>
+          <div class="mobile-timer-label">Days</div>
+        </div>
+        <div class="mobile-timer-card">
+          <div class="mobile-timer-num" id="m-hours">00</div>
+          <div class="mobile-timer-label">Hours</div>
+        </div>
+        <div class="mobile-timer-card">
+          <div class="mobile-timer-num" id="m-minutes">00</div>
+          <div class="mobile-timer-label">Minutes</div>
+        </div>
+        <div class="mobile-timer-card">
+          <div class="mobile-timer-num" id="m-seconds">00</div>
+          <div class="mobile-timer-label">Seconds</div>
+        </div>
+      </div>
+
+      <!-- Mobile Service Features -->
+      <div class="mobile-features">
+        <div class="mobile-feature-item">
+          <span>🚚</span>
+          <div><strong>Safe Delivery:</strong> <span>Your parcels, our priority</span></div>
+        </div>
+        <div class="mobile-feature-item">
+          <span>⏱️</span>
+          <div><strong>On-Time Service:</strong> <span>Fast &amp; reliable</span></div>
+        </div>
+        <div class="mobile-feature-item">
+          <span>📍</span>
+          <div><strong>Doorstep Pickup:</strong> <span>Convenient for you</span></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Interactive Action Bar -->
+  <nav class="action-bar" aria-label="Contact options">
+    <a href="tel:+916366118850" class="action-btn btn-call">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      Call: +91 63661 18850
+    </a>
+    <a href="https://wa.me/916366118850?text=Hello%20DK%20Enterprises%2C%20I%20have%20an%20enquiry%20regarding%20courier%20booking." target="_blank" rel="noopener noreferrer" class="action-btn btn-whatsapp">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.062-1.144-.082-.301-.096-.694-.237-1.205-.457-2.127-.92-3.516-3.08-3.622-3.22-.107-.142-.863-1.147-.863-2.188 0-1.042.546-1.554.74-1.765.195-.211.425-.264.567-.264.143 0 .285.002.408.008.131.006.307-.05.479.364.177.429.605 1.478.658 1.585.053.107.088.232.018.374-.07.143-.105.231-.21.354-.106.123-.223.275-.319.369-.106.106-.217.221-.093.434.124.213.551.908 1.18 1.468.81.722 1.493.945 1.706 1.051.213.106.338.089.462-.054.125-.143.533-.62.675-.832.142-.213.285-.178.479-.107.195.071 1.233.582 1.446.689.213.107.355.16.408.249.053.089.053.516-.091.921zM12 2C6.477 2 2 6.477 2 12c0 1.891.526 3.66 1.438 5.168L2 22l4.98-1.307A9.957 9.957 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+      Chat on WhatsApp
+    </a>
+    <a href="https://maps.app.goo.gl/Bp4kTUK2omVuxT347" target="_blank" rel="noopener noreferrer" class="action-btn btn-location">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+      Kudlu New Branch Location
+    </a>
+  </nav>
+
+  <!-- Branch Address Footer Note -->
+  <footer class="footer-note">
+    <p><strong>DK ENTERPRISES · KUDLU NEW BRANCH</strong></p>
+    <p>Kudlugate, Near Bhagya Veg, Bengaluru – 560068 · Karnataka, India</p>
+    <p style="margin-top: 6px; font-size: 11.5px; color: #475569;">
+      Target Launch Date: <strong>20 October 2026, 2:20 PM IST</strong> &middot; Direct enquiries: +91 63661 18850
+    </p>
+  </footer>
+
+  <!-- Real-Time Countdown Engine based on Indian Standard Time (IST) -->
+  <script>
+    (function() {
+      // TARGET: 20 October 2026 at 2:20 PM Indian Standard Time (UTC+05:30)
+      const TARGET_TIMESTAMP = new Date('2026-10-20T14:20:00+05:30').getTime();
+
+      // Desktop Elements
+      const dDays = document.getElementById('d-days');
+      const dHours = document.getElementById('d-hours');
+      const dMinutes = document.getElementById('d-minutes');
+      const dSeconds = document.getElementById('d-seconds');
+
+      // Mobile Elements
+      const mDays = document.getElementById('m-days');
+      const mHours = document.getElementById('m-hours');
+      const mMinutes = document.getElementById('m-minutes');
+      const mSeconds = document.getElementById('m-seconds');
+
+      function pad(num) {
+        return num < 10 ? '0' + num : String(num);
+      }
+
+      function updateCountdown() {
+        const now = Date.now();
+        const diff = TARGET_TIMESTAMP - now;
+
+        if (diff <= 0) {
+          // Launch reached! Redirect to full site
+          if (dDays) dDays.textContent = '00';
+          if (dHours) dHours.textContent = '00';
+          if (dMinutes) dMinutes.textContent = '00';
+          if (dSeconds) dSeconds.textContent = '00';
+          
+          if (mDays) mDays.textContent = '00';
+          if (mHours) mHours.textContent = '00';
+          if (mMinutes) mMinutes.textContent = '00';
+          if (mSeconds) mSeconds.textContent = '00';
+
+          // Auto-unlock the full site
+          setTimeout(() => {
+            window.location.replace('/?launch=live');
+          }, 1500);
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        const sDays = pad(days);
+        const sHours = pad(hours);
+        const sMinutes = pad(minutes);
+        const sSeconds = pad(seconds);
+
+        // Update Desktop Values
+        if (dDays && dDays.textContent !== sDays) dDays.textContent = sDays;
+        if (dHours && dHours.textContent !== sHours) dHours.textContent = sHours;
+        if (dMinutes && dMinutes.textContent !== sMinutes) dMinutes.textContent = sMinutes;
+        if (dSeconds) dSeconds.textContent = sSeconds;
+
+        // Update Mobile Values
+        if (mDays && mDays.textContent !== sDays) mDays.textContent = sDays;
+        if (mHours && mHours.textContent !== sHours) mHours.textContent = sHours;
+        if (mMinutes && mMinutes.textContent !== sMinutes) mMinutes.textContent = sMinutes;
+        if (mSeconds) mSeconds.textContent = sSeconds;
+      }
+
+      // Initial run immediately
+      updateCountdown();
+      // Tick every 1000 milliseconds
+      setInterval(updateCountdown, 1000);
+    })();
+  </script>
+</body>
+</html>
