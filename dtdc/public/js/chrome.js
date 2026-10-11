@@ -1,10 +1,44 @@
 // Client-side launch guard: launches on 20 October 2026 at 2:20 PM IST (UTC+05:30)
 (function() {
+  const params = new URLSearchParams(window.location.search);
+  const isLock = params.get('preview') === 'false' || params.get('lock') === 'true';
+  if (isLock) {
+    try { localStorage.removeItem('dev_preview'); } catch(e){}
+    document.cookie = "dev_preview=; path=/; max-age=0";
+  }
+
+  const isDevHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const hasQuery = params.get('preview') === 'true';
+  if (hasQuery) {
+    try { localStorage.setItem('dev_preview', '1'); } catch(e){}
+    document.cookie = "dev_preview=1; path=/; max-age=2592000";
+  }
+  let hasStorage = false;
+  try { hasStorage = localStorage.getItem('dev_preview') === '1'; } catch(e){}
+  const hasCookie = document.cookie.indexOf('dev_preview=1') !== -1;
+
   const launchTime = new Date('2026-10-20T14:20:00+05:30').getTime();
-  const isPreview = new URLSearchParams(window.location.search).get('preview') === 'true';
   const path = window.location.pathname.toLowerCase();
-  if (!isPreview && Date.now() < launchTime && !path.startsWith('/admin') && !path.includes('launching.html')) {
+  const isBypassed = !isLock && (isDevHost || hasQuery || hasStorage || hasCookie);
+
+  if (!isBypassed && Date.now() < launchTime && !path.startsWith('/admin') && !path.includes('launching.html')) {
     window.location.replace('/launching.html');
+    return;
+  }
+
+  // Show subtle dev preview banner if site is in preview mode prior to launch
+  if (isBypassed && Date.now() < launchTime && !path.startsWith('/admin') && !path.includes('launching.html')) {
+    document.addEventListener('DOMContentLoaded', function() {
+      const pill = document.createElement('div');
+      pill.id = 'dev-preview-pill';
+      pill.innerHTML = `
+        <span>🛠️ <strong>Dev Preview Mode</strong> (Launch: 20 Oct 2:20 PM)</span>
+        <a href="/launching.html" style="color:#38bdf8;text-decoration:underline;margin-left:8px;">View Countdown</a>
+        <a href="/launching.html?lock=true" style="color:#f87171;text-decoration:underline;margin-left:8px;" onclick="try{localStorage.removeItem('dev_preview');}catch(e){}">Lock Site</a>
+      `;
+      pill.style.cssText = 'position:fixed;bottom:12px;left:12px;z-index:99999;background:rgba(15,23,42,0.92);color:#e2e8f0;font-size:12px;padding:7px 14px;border-radius:20px;border:1px solid rgba(56,189,248,0.4);box-shadow:0 4px 15px rgba(0,0,0,0.5);display:flex;align-items:center;font-family:sans-serif;backdrop-filter:blur(6px);';
+      document.body.appendChild(pill);
+    });
   }
 })();
 

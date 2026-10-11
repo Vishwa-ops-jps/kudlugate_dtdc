@@ -7,9 +7,27 @@
 <link rel="stylesheet" href="/css/style.css?v=35">
 <script>
   (function() {
+    var params = new URLSearchParams(window.location.search);
+    var isLock = params.get('preview') === 'false' || params.get('lock') === 'true';
+    if (isLock) {
+      try { localStorage.removeItem('dev_preview'); } catch(e){}
+      document.cookie = "dev_preview=; path=/; max-age=0";
+    }
+
+    var isDevHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    var hasQuery = params.get('preview') === 'true';
+    if (hasQuery) {
+      try { localStorage.setItem('dev_preview', '1'); } catch(e){}
+      document.cookie = "dev_preview=1; path=/; max-age=2592000";
+    }
+    var hasStorage = false;
+    try { hasStorage = localStorage.getItem('dev_preview') === '1'; } catch(e){}
+    var hasCookie = document.cookie.indexOf('dev_preview=1') !== -1;
+
     var launchTime = new Date('2026-10-20T14:20:00+05:30').getTime();
-    var isPreview = new URLSearchParams(window.location.search).get('preview') === 'true';
-    if (!isPreview && Date.now() < launchTime && !window.location.pathname.startsWith('/admin')) {
+    var isBypassed = !isLock && (isDevHost || hasQuery || hasStorage || hasCookie);
+
+    if (!isBypassed && Date.now() < launchTime && !window.location.pathname.startsWith('/admin')) {
       window.location.replace('/launching.html');
     }
   })();

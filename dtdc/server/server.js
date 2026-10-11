@@ -144,9 +144,10 @@ app.use((req, res, next) => {
     return next();
   }
 
-  // Always allow APIs, admin dashboard, and static assets
+  // Always allow APIs, admin dashboard, countdown page itself, and static assets
   const p = req.path.toLowerCase();
   if (
+    p === '/launching.html' ||
     p.startsWith('/api') ||
     p.startsWith('/admin') ||
     p.startsWith('/images') ||
@@ -168,8 +169,24 @@ app.use((req, res, next) => {
     return next();
   }
 
-  // Allow preview testing if ?preview=true is passed
-  if (req.query.preview === 'true') {
+  // Preview & Local Development Bypass
+  const isDevHost = req.hostname === 'localhost' || req.hostname === '127.0.0.1';
+  const cookieHeader = req.headers.cookie || '';
+  const hasPreviewCookie = cookieHeader.includes('dev_preview=1');
+  const hasPreviewQuery = req.query.preview === 'true';
+  const hasLockQuery = req.query.preview === 'false' || req.query.lock === 'true';
+
+  if (hasLockQuery) {
+    res.setHeader('Set-Cookie', 'dev_preview=; Path=/; Max-Age=0; SameSite=Lax');
+    return res.sendFile(path.join(__dirname, '..', 'public', 'launching.html'));
+  }
+
+  if (hasPreviewQuery) {
+    res.setHeader('Set-Cookie', 'dev_preview=1; Path=/; Max-Age=2592000; SameSite=Lax');
+  }
+
+  // Grant full access for local development or preview session
+  if (isDevHost || hasPreviewQuery || hasPreviewCookie) {
     return next();
   }
 
