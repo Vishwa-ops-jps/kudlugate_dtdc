@@ -21,7 +21,7 @@ function renderChrome() {
       <nav class="site-nav">
         <div class="wrap">
           <a href="/" class="brand">
-            <span class="brand-mark">DTDC</span>
+            <span class="brand-mark">DK</span>
             <span class="brand-text">DK Enterprise Kudlu New Franchise<small>Courier &amp; Cargo · Bengaluru</small></span>
           </a>
           <button class="nav-toggle" aria-label="Menu">&#9776;</button>
@@ -31,7 +31,7 @@ function renderChrome() {
             <a href="/reviews.html">Reviews</a>
             <a href="/contact.html">Contact</a>
             <a class="whatsapp-contact" href="https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise Kudlu New Franchise, I need help with a courier.')}" target="_blank" rel="noopener noreferrer"><span class="whatsapp-dot" aria-hidden="true"></span>WhatsApp</a>
-            <a href="https://www.dtdc.com/track-your-shipment/" target="_blank" rel="noopener noreferrer" class="cta">SHIP NOW ▾</a>
+            <a href="/contact.html" class="cta">BOOK NOW ▾</a>
             <span data-auth-slot style="display:flex;gap:6px;align-items:center;"></span>
           </div>
         </div>
@@ -44,16 +44,16 @@ function renderChrome() {
         <div class="wrap">
           <div class="footer-brand-col">
             <div class="brand" style="margin-bottom:12px;">
-              <span class="brand-mark" style="background:#e31837;color:#fff;">DTDC</span>
+              <span class="brand-mark" style="background:#e31837;color:#fff;">DK</span>
               <span class="brand-text" style="color:#fff;">DK Enterprise Kudlu New Franchise<small style="color:#cbd5e1;">Courier &amp; Cargo · Bengaluru</small></span>
             </div>
-            <p style="max-width:290px;font-size:13.5px;color:#cbd5e1;line-height:1.5;">Kudlu Gate, Hosur Road, Bengaluru, Karnataka. Authorized DTDC Booking, Tracking &amp; Doorstep Courier Service.</p>
+            <p style="max-width:290px;font-size:13.5px;color:#cbd5e1;line-height:1.5;">Kudlu Gate, Hosur Road, Bengaluru, Karnataka. Authorized Booking, Tracking &amp; Doorstep Courier Service.</p>
             <div class="footer-app-badges" style="margin-top:16px;">
-              <span style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#94a3b8;margin-bottom:8px;">Download MY DTDC APP</span>
+              <span style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#94a3b8;margin-bottom:8px;">Express Courier &amp; Cargo</span>
               <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                <span class="app-badge-pill">Google Play</span>
-                <span class="app-badge-pill">App Store</span>
-                <span class="app-badge-pill">MyDTDC Web</span>
+                <span class="app-badge-pill">Local Courier</span>
+                <span class="app-badge-pill">National Transit</span>
+                <span class="app-badge-pill">Express Cargo</span>
               </div>
             </div>
           </div>
@@ -82,7 +82,7 @@ function renderChrome() {
                 <a href="/reviews.html"><span class="arrow">&gt;</span> ABOUT US &amp; REVIEWS</a>
                 <a href="/contact.html"><span class="arrow">&gt;</span> STORE LOCATION</a>
                 <a href="/contact.html"><span class="arrow">&gt;</span> CONTACT SUPPORT</a>
-                <a href="https://www.dtdc.com" target="_blank" rel="noopener noreferrer"><span class="arrow">&gt;</span> OFFICIAL DTDC.COM</a>
+                <a href="/contact.html"><span class="arrow">&gt;</span> STORE TIMINGS &amp; MAP</a>
               </div>
             </div>
             <div>
@@ -98,9 +98,9 @@ function renderChrome() {
         </div>
         <div class="fine">
           <div class="wrap" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding:0;">
-            <span>&copy; 2026 DTDC. All rights reserved &middot; DK Enterprise Kudlu New Franchise</span>
+            <span>&copy; 2026 DK Enterprise Kudlu New Franchise. All rights reserved.</span>
             <div style="display:flex;gap:14px;align-items:center;">
-              <a href="https://www.dtdc.com" target="_blank" rel="noopener noreferrer" style="color:#94a3b8;font-size:12.5px;">Terms of Use &gt; Privacy Policy</a>
+              <a href="/contact.html" style="color:#94a3b8;font-size:12.5px;">Terms of Service &middot; Privacy Policy</a>
             </div>
           </div>
         </div>
@@ -133,7 +133,7 @@ function renderChrome() {
     const panel = document.createElement('div');
     panel.id = 'ai-panel';
     panel.style.cssText = 'position:fixed;right:24px;left:auto;bottom:90px;z-index:9999;width:340px;max-width:calc(100vw - 36px);height:440px;max-height:calc(100vh - 110px);background:#fff;border-radius:14px;box-shadow:0 8px 30px rgba(12,35,64,.3);display:none;flex-direction:column;overflow:hidden;font-family:inherit;border:1px solid #e2e8f0;';
-    panel.innerHTML = '<div style="background:#e31837;color:#fff;padding:12px 14px;font-weight:600;display:flex;justify-content:space-between;align-items:center;"><span>DTDC Kudlu Gate Assistant</span><button type="button" id="ai-close" aria-label="Close" style="background:none;border:0;color:#fff;font-size:20px;cursor:pointer;">&times;</button></div>'
+    panel.innerHTML = '<div style="background:#e31837;color:#fff;padding:12px 14px;font-weight:600;display:flex;justify-content:space-between;align-items:center;"><span>DK Enterprise Assistant</span><button type="button" id="ai-close" aria-label="Close" style="background:none;border:0;color:#fff;font-size:20px;cursor:pointer;">&times;</button></div>'
       + '<div id="ai-msgs" style="flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:#f8fafc;"></div>'
       + '<div style="display:flex;gap:6px;padding:10px;border-top:1px solid #e2e8f0;background:#fff;"><input id="ai-input" type="text" maxlength="1000" placeholder="Ask about tracking, booking, rates..." style="flex:1;padding:9px 10px;border:1.5px solid #cbd5e1;border-radius:8px;font-size:14px;"><button type="button" id="ai-send" style="background:#e31837;color:#fff;border:0;border-radius:8px;padding:0 14px;cursor:pointer;font-weight:600;">Send</button></div>';
     

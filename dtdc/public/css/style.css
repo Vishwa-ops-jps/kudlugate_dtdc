@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 :root {
-  --ink: #0c2340;       /* Official DTDC Deep Navy */
+  --ink: #0c2340;       /* Official Deep Navy */
   --ink-deep: #081a2e;  /* Midnight Navy */
   --ink-soft: #12335c;  /* Medium Navy */
   --kraft: #F4F6FA;     /* Clean neutral page background */
-  --amber: #E31837;     /* Official DTDC Red */
-  --amber-dark: #B81028;/* DTDC Red Dark */
+  --amber: #E31837;     /* Official Red */
+  --amber-dark: #B81028;/* DK Red Dark */
   --red: #E31837;       /* used for error/cancelled states */
   --paper: #FFFFFF;     /* Pure white */
   --grey: #64748B;      /* Slate grey */
@@ -43,7 +43,7 @@ img { max-width: 100%; }
 
 .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
 
-/* ---------- Nav (Official DTDC Clean White Header) ---------- */
+/* ---------- Nav (Official Clean White Header) ---------- */
 .site-nav {
   background: #ffffff;
   color: var(--ink);
@@ -154,7 +154,7 @@ section { padding: 56px 0; }
   font-size: 12px; color: var(--amber); font-weight: 700; margin-bottom: 8px; display: block;
 }
 
-/* ---------- Hero (Official DTDC Deep Navy) ---------- */
+/* ---------- Hero (Official Deep Navy) ---------- */
 .hero {
   background: linear-gradient(135deg, #081a2e 0%, #0c2340 50%, #0d2a4d 100%);
   color: #ffffff;
@@ -196,7 +196,7 @@ section { padding: 56px 0; }
 }
 .hero-actions { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
 
-/* ---------- Official DTDC Waybill Tracking Card (from Screenshot) ---------- */
+/* ---------- Official Waybill Tracking Card (from Screenshot) ---------- */
 .dtdc-track-card {
   background: #ffffff;
   border-radius: 10px;
@@ -491,7 +491,7 @@ tr:hover td { background: rgba(232,163,61,0.06); }
 .empty-state { text-align: center; padding: 40px 20px; color: var(--grey); }
 .empty-state .icon { font-size: 32px; margin-bottom: 10px; }
 
-/* ---------- Footer (Official DTDC Deep Navy from Screenshot) ---------- */
+/* ---------- Footer (Official Deep Navy from Screenshot) ---------- */
 footer {
   background: var(--ink);
   color: #CBD5E1;

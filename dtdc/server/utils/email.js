@@ -53,7 +53,7 @@ async function sendViaResend({ to, subject, text }) {
   const apiKey = (process.env.RESEND_API_KEY || '').trim();
   if (!apiKey) return null;
   const payload = JSON.stringify({
-    from: 'DTDC Kudlu Gate <onboarding@resend.dev>',
+    from: 'DK Enterprise Kudlu Gate <onboarding@resend.dev>',
     to: Array.isArray(to) ? to : [to],
     subject,
     text

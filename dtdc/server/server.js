@@ -126,7 +126,7 @@ app.get('/api/email-diag', async (req, res) => {
   if (req.query.testSend === 'true') {
     const result = await deliverEmail({
       to: process.env.ADMIN_NOTIFY_EMAIL || 'vishwa2o2ok@gmail.com',
-      subject: 'Test Notification from DTDC Kudlu Gate',
+      subject: 'Test Notification from DK Enterprise Kudlu Gate',
       text: 'This is a test notification confirming that email delivery from Render is working!'
     });
     return res.json({ testSend: true, result, info });
