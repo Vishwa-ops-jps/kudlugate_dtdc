@@ -180,6 +180,9 @@
       height: 8.5%;
       cursor: pointer;
       border-radius: 8px;
+      font-size: 0;
+      color: transparent;
+      text-decoration: none;
       transition: background 0.2s ease;
     }
     .click-target-phone:hover {
@@ -194,6 +197,9 @@
       height: 8.5%;
       cursor: pointer;
       border-radius: 8px;
+      font-size: 0;
+      color: transparent;
+      text-decoration: none;
       transition: background 0.2s ease;
     }
     .click-target-loc:hover {
@@ -447,9 +453,9 @@
         </div>
       </div>
 
-      <!-- Clickable Link Targets over Phone & Location on the Banner -->
-      <a href="tel:+916366118850" class="click-target-phone" title="Call DK Enterprises">+91 63661 18850</a>
-      <a href="https://maps.app.goo.gl/Bp4kTUK2omVuxT347" target="_blank" rel="noopener noreferrer" class="click-target-loc" title="View Branch Location">Kudlu New Branch</a>
+      <!-- Clickable Link Targets over Phone & Location on the Banner (Transparent hitboxes) -->
+      <a href="tel:+916366118850" class="click-target-phone" aria-label="Call +91 63661 18850" title="Call DK Enterprises (+91 63661 18850)"></a>
+      <a href="https://maps.app.goo.gl/Bp4kTUK2omVuxT347" target="_blank" rel="noopener noreferrer" class="click-target-loc" aria-label="View Kudlu New Branch Location on Google Maps" title="View Kudlu New Branch Location on Google Maps"></a>
     </div>
 
     <!-- Mobile View (Adaptive for smartphones) -->
@@ -604,3 +610,4 @@
   </script>
 </body>
 </html>
+
