@@ -106,32 +106,33 @@ app.use('/api/chat', chatRoutes);
 app.get('/api/health', (req, res) => res.json({ ok: true, status: 'secure', time: new Date().toISOString() }));
 
 app.get('/api/email-diag', async (req, res) => {
-  const nodemailer = require('nodemailer');
+  const { deliverEmail } = require('./utils/email');
   const user = (process.env.EMAIL_USER || '').trim();
   const pass = (process.env.EMAIL_PASS || '').trim();
+  const resendKey = (process.env.RESEND_API_KEY || '').trim();
+  const webhookUrl = (process.env.GOOGLE_SCRIPT_WEBHOOK_URL || process.env.EMAIL_WEBHOOK_URL || '').trim();
+
   const info = {
+    renderEgressNotice: 'Render Free Tier blocks outbound SMTP (ports 25, 465, 587) causing ETIMEDOUT. Use RESEND_API_KEY or GOOGLE_SCRIPT_WEBHOOK_URL over HTTPS port 443.',
     EMAIL_ENABLED: process.env.EMAIL_ENABLED,
+    has_RESEND_API_KEY: !!resendKey,
+    has_GOOGLE_SCRIPT_WEBHOOK_URL: !!webhookUrl,
     has_EMAIL_USER: !!user,
     EMAIL_USER: user || null,
     has_EMAIL_PASS: !!pass,
-    EMAIL_PASS_LENGTH: pass.length,
-    EMAIL_PASS_SNIPPET: pass ? (pass.slice(0, 2) + '...' + pass.slice(-2)) : null,
-    ADMIN_NOTIFY_EMAIL: process.env.ADMIN_NOTIFY_EMAIL || null,
-    EMAIL_FROM: process.env.EMAIL_FROM || null
+    ADMIN_NOTIFY_EMAIL: process.env.ADMIN_NOTIFY_EMAIL || 'vishwa2o2ok@gmail.com'
   };
-  if (!user || !pass) {
-    return res.json({ ok: false, reason: 'Missing EMAIL_USER or EMAIL_PASS environment variable in Render', info });
+
+  if (req.query.testSend === 'true') {
+    const result = await deliverEmail({
+      to: process.env.ADMIN_NOTIFY_EMAIL || 'vishwa2o2ok@gmail.com',
+      subject: 'Test Notification from DTDC Kudlu Gate',
+      text: 'This is a test notification confirming that email delivery from Render is working!'
+    });
+    return res.json({ testSend: true, result, info });
   }
-  const t = nodemailer.createTransport({
-    service: 'gmail',
-    auth: { user, pass }
-  });
-  try {
-    await t.verify();
-    return res.json({ ok: true, message: 'SMTP verify succeeded on Render!', info });
-  } catch (err) {
-    return res.json({ ok: false, error: err.message, code: err.code, info });
-  }
+
+  return res.json({ ok: true, info });
 });
 
 // Static frontend
