@@ -7,13 +7,31 @@ function getRecipient(to) {
   return forced || to;
 }
 
+function getFromAddress() {
+  if (process.env.EMAIL_FROM) return process.env.EMAIL_FROM.trim();
+  const user = (process.env.EMAIL_USER || '').trim();
+  if (user) return `"DK Enterprise Kudlu Gate" <${user}>`;
+  return '"DK Enterprise Kudlu Gate" <vishwa2o2ok@gmail.com>';
+}
+
+function getAdminRecipient() {
+  const admin = (process.env.ADMIN_NOTIFY_EMAIL || process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'vishwa2o2ok@gmail.com').trim();
+  return getRecipient(admin);
+}
+
 function getTransporter() {
-  if (process.env.EMAIL_ENABLED !== 'true') return null;
+  if (process.env.EMAIL_ENABLED === 'false') {
+    console.log('[Email] EMAIL_ENABLED is set to false, skipping email');
+    return null;
+  }
   if (transporter) return transporter;
   const user = (process.env.EMAIL_USER || '').trim();
   // Passwords can be passed with spaces or trimmed
   const pass = (process.env.EMAIL_PASS || '').trim();
-  if (!user || !pass) return null;
+  if (!user || !pass) {
+    console.warn('[Email] Missing EMAIL_USER or EMAIL_PASS environment variables');
+    return null;
+  }
 
   const isGmail = (process.env.EMAIL_HOST || '').includes('gmail') || user.endsWith('@gmail.com');
   if (isGmail) {
@@ -40,7 +58,7 @@ async function sendStatusEmail({ to, name, trackingId, status, location }) {
   if (!t || !recipient) return { sent: false, reason: 'email disabled or no address' };
   try {
     await t.sendMail({
-      from: process.env.EMAIL_FROM,
+      from: getFromAddress(),
       to: recipient,
       subject: `Your parcel ${trackingId} is now "${status}"`,
       text:
@@ -62,13 +80,14 @@ async function sendEnquiryReceipt({ to, name }) {
   const recipient = getRecipient(to);
   if (!t || !recipient) return { sent: false };
   try {
-    await t.sendMail({
-      from: process.env.EMAIL_FROM,
+    const res = await t.sendMail({
+      from: getFromAddress(),
       to: recipient,
       subject: 'We received your enquiry - DK Enterprise Kudlu New Franchise',
       text: `Hi ${name || 'there'},\n\nThanks for reaching out to DK Enterprise Kudlu New Franchise. Our team will get back to you shortly.\n\n- DK Enterprise Kudlu New Franchise`
     });
-    return { sent: true };
+    console.log('[Email] Customer receipt sent:', res.messageId);
+    return { sent: true, messageId: res.messageId };
   } catch (err) {
     console.error('Email send failed:', err.message);
     return { sent: false, reason: err.message };
@@ -76,14 +95,17 @@ async function sendEnquiryReceipt({ to, name }) {
 }
 
 // Notifies the shop owner/admin the moment a customer submits the contact form.
-// Goes to ADMIN_NOTIFY_EMAIL if set, otherwise falls back to ADMIN_EMAIL.
+// Goes to ADMIN_NOTIFY_EMAIL if set, otherwise falls back to ADMIN_EMAIL or EMAIL_USER or vishwa2o2ok@gmail.com.
 async function sendAdminEnquiryAlert({ name, phone, email, subject, message }) {
   const t = getTransporter();
-  const adminTo = getRecipient(process.env.ADMIN_NOTIFY_EMAIL || process.env.ADMIN_EMAIL || process.env.EMAIL_USER);
-  if (!t || !adminTo) return { sent: false, reason: 'email disabled or no admin address configured' };
+  const adminTo = getAdminRecipient();
+  if (!t || !adminTo) {
+    console.warn('[Email] Admin alert skipped: no transporter or admin recipient', { hasTransporter: !!t, adminTo });
+    return { sent: false, reason: 'email disabled or no admin address configured' };
+  }
   try {
-    await t.sendMail({
-      from: process.env.EMAIL_FROM,
+    const res = await t.sendMail({
+      from: getFromAddress(),
       to: adminTo,
       subject: `New enquiry from ${name}${subject ? ' - ' + subject : ''}`,
       text:
@@ -95,7 +117,8 @@ async function sendAdminEnquiryAlert({ name, phone, email, subject, message }) {
         `\nMessage:\n${message}\n\n` +
         `Log in to the staff panel to view and manage all enquiries.`
     });
-    return { sent: true };
+    console.log('[Email] Admin enquiry alert sent successfully:', res.messageId, 'to:', adminTo);
+    return { sent: true, messageId: res.messageId };
   } catch (err) {
     console.error('Admin alert email failed:', err.message);
     return { sent: false, reason: err.message };
@@ -111,7 +134,7 @@ async function sendPasswordResetEmail({ to, name, resetLink }) {
   if (!t || !recipient) return { sent: false, reason: 'email disabled or no address' };
   try {
     await t.sendMail({
-      from: process.env.EMAIL_FROM,
+      from: getFromAddress(),
       to: recipient,
       subject: 'Reset your DK Enterprise password',
       text:
