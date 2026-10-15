@@ -660,26 +660,15 @@ footer .fine {
 @media (max-width: 900px) { .grid-6 { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .grid-6 { grid-template-columns: 1fr; } }
 
-/* ---------- Our Services Grid Layout ---------- */
+/* ---------- Our Services Layout (Full-Width Horizontal Cards stacked like Image 2) ---------- */
 .services-grid,
 .services-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-@media (max-width: 960px) {
-  .services-grid,
-  .services-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .services-grid,
-  .services-list {
-    grid-template-columns: 1fr;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 820px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .service-bullet-item {
