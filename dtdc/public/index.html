@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DK Enterprise Kudlu New Franchise — Courier &amp; Cargo, Bengaluru</title>
-<link rel="stylesheet" href="/css/style.css?v=35">
+<link rel="stylesheet" href="/css/style.css?v=36">
 <script>
   (function() {
     var params = new URLSearchParams(window.location.search);
@@ -122,54 +122,7 @@
     <span class="eyebrow">What we offer</span>
     <h2>Our Services</h2>
   </div>
-  <div class="services-split">
-    <!-- Widescreen Horizontal Video Showcase Slider -->
-    <div class="video-slider-wrapper" id="video-slider-wrapper">
-      <div class="video-slides-container">
-        <!-- Video Showcase 1: Storefront & Counter Booking -->
-        <div class="video-slide active" data-slide="0">
-          <div class="services-video-box" style="background: url('/images/widescreen-slide1.jpg') center/cover no-repeat;">
-            <div class="video-overlay-gradient"></div>
-            <video src="/videos/promo-video.mp4" autoplay loop muted playsinline onerror="this.style.display='none'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"></video>
-            <h3 style="position:relative;z-index:3;">1. Storefront &amp; Parcel Booking</h3>
-            <span class="video-embed-tag" style="position:relative;z-index:3;">🌅 Express Air Booking &amp; Live Waybill Tracking</span>
-          </div>
-        </div>
-
-        <!-- Video Showcase 2: Express Scooter Transit -->
-        <div class="video-slide" data-slide="1">
-          <div class="services-video-box" style="background: url('/images/widescreen-slide2.jpg') center/cover no-repeat;">
-            <div class="video-overlay-gradient"></div>
-            <video src="/videos/promo-video.mp4" autoplay loop muted playsinline onerror="this.style.display='none'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"></video>
-            <h3 style="position:relative;z-index:3;">2. City Express Rider Transit</h3>
-            <span class="video-embed-tag" style="position:relative;z-index:3;">⚡ Speed Rider Navigating Neon City Traffic</span>
-          </div>
-        </div>
-
-        <!-- Video Showcase 3: Doorstep Parcel Delivery -->
-        <div class="video-slide" data-slide="2">
-          <div class="services-video-box" style="background: url('/images/widescreen-slide3.jpg') center/cover no-repeat;">
-            <div class="video-overlay-gradient"></div>
-            <video src="/videos/promo-video.mp4" autoplay loop muted playsinline onerror="this.style.display='none'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"></video>
-            <h3 style="position:relative;z-index:3;">3. Guaranteed Doorstep Delivery</h3>
-            <span class="video-embed-tag" style="position:relative;z-index:3;">✨ Safe Handover to Customer · Rain or Shine</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Navigation Controls -->
-      <button class="slider-btn prev-btn" id="slider-prev-btn" aria-label="Previous Slide">‹</button>
-      <button class="slider-btn next-btn" id="slider-next-btn" aria-label="Next Slide">›</button>
-
-      <!-- Slide Indicator Dots -->
-      <div class="slider-dots" id="slider-dots">
-        <span class="dot active" data-index="0"></span>
-        <span class="dot" data-index="1"></span>
-        <span class="dot" data-index="2"></span>
-      </div>
-    </div>
-    <!-- Right Column Bullet Cards -->
-    <div class="services-list">
+  <div class="services-grid">
       <div class="service-bullet-item">
         <div class="bullet-icon icon-domestic">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -254,7 +207,6 @@
         </div>
       </div>
     </div>
-  </div>
 </section>
 
 <section class="info-band">
@@ -413,83 +365,8 @@
 </div>
 
 <script src="/js/api.js"></script>
-<script src="/js/chrome.js?v=33"></script>
+<script src="/js/chrome.js?v=34"></script>
 <script>
-// ---------- Video Carousel Slider ----------
-(function() {
-  const slides = document.querySelectorAll('.video-slide');
-  const dots = document.querySelectorAll('.slider-dots .dot');
-  const prevBtn = document.getElementById('slider-prev-btn');
-  const nextBtn = document.getElementById('slider-next-btn');
-  const wrapper = document.getElementById('video-slider-wrapper');
-  
-  if (!slides.length) return;
-  
-  let currentIndex = 0;
-  let autoTimer = null;
-
-  function showSlide(index) {
-    currentIndex = (index + slides.length) % slides.length;
-    slides.forEach((slide, idx) => {
-      const isActive = idx === currentIndex;
-      slide.classList.toggle('active', isActive);
-      const vid = slide.querySelector('video');
-      if (vid) {
-        if (isActive) {
-          vid.currentTime = 0;
-          vid.play().catch(() => {});
-        } else {
-          vid.pause();
-        }
-      }
-    });
-    dots.forEach((dot, idx) => {
-      dot.classList.toggle('active', idx === currentIndex);
-    });
-  }
-
-  function startAutoSlide() {
-    stopAutoSlide();
-    autoTimer = setInterval(() => {
-      showSlide(currentIndex + 1);
-    }, 5000);
-  }
-
-  function stopAutoSlide() {
-    if (autoTimer) clearInterval(autoTimer);
-  }
-
-  if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
-      showSlide(currentIndex - 1);
-      startAutoSlide();
-    });
-  }
-
-  if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
-      showSlide(currentIndex + 1);
-      startAutoSlide();
-    });
-  }
-
-  dots.forEach(dot => {
-    dot.addEventListener('click', () => {
-      const idx = parseInt(dot.getAttribute('data-index'), 10);
-      showSlide(idx);
-      startAutoSlide();
-    });
-  });
-
-  if (wrapper) {
-    wrapper.addEventListener('mouseenter', stopAutoSlide);
-    wrapper.addEventListener('mouseleave', startAutoSlide);
-  }
-
-  showSlide(0);
-  startAutoSlide();
-})();
-
 API.request('/reviews', { auth: false }).then(({ reviews }) => {
   const el = document.getElementById('reviews-list');
   if (!reviews || !reviews.length) { el.innerHTML = '<p style="color:var(--grey);">No reviews yet — be the first to leave one.</p>'; return; }
@@ -503,58 +380,6 @@ API.request('/reviews', { auth: false }).then(({ reviews }) => {
   const el = document.getElementById('reviews-list');
   if (el) el.innerHTML = '<p style="color:var(--grey);">No reviews yet — be the first to leave one.</p>';
 });
-
-// ---------- Sound / Unmute Controller + 350% Volume Booster ----------
-(function() {
-  const wrapper = document.getElementById('video-slider-wrapper');
-  const videos = document.querySelectorAll('.services-video-box video');
-
-  let audioCtx = null;
-
-  function boostVolume(videoElement) {
-    try {
-      if (!audioCtx) {
-        const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
-        if (AudioCtxClass) {
-          audioCtx = new AudioCtxClass();
-        }
-      }
-      if (audioCtx && audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-      if (audioCtx && !videoElement._gainConnected) {
-        const source = audioCtx.createMediaElementSource(videoElement);
-        const gainNode = audioCtx.createGain();
-        gainNode.gain.value = 3.5; // Boost volume 3.5x (350% loudness)
-        source.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-        videoElement._gainConnected = true;
-      }
-    } catch (err) {
-      // Gain node attached or blocked
-    }
-  }
-
-  function enableAudio() {
-    videos.forEach(v => {
-      v.muted = false;
-      v.volume = 1.0;
-      boostVolume(v);
-      const p = v.play();
-      if (p !== undefined) p.catch(() => {});
-    });
-  }
-
-  if (wrapper) {
-    wrapper.addEventListener('click', enableAudio);
-  }
-
-  ['click', 'touchstart', 'keydown'].forEach(evt => {
-    document.addEventListener(evt, function userActivated() {
-      enableAudio();
-    }, { once: true });
-  });
-})();
 </script>
 </body>
 </html>

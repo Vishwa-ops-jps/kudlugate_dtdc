@@ -34,11 +34,8 @@ router.get('/:trackingId/receipt', async (req, res) => {
   }
 });
 
-// Staff/Admin book on behalf of a branch; customers can also book their own
-// pickup (they pick which branch they're dropping off at / being picked up
-// from themselves). Either way the record starts as "Booked" - it only
-// becomes "Picked Up" once staff physically receive the parcel.
-router.post('/', requireAuth, requireRole('customer', 'staff', 'admin'), async (req, res) => {
+// Staff/Admin book on behalf of a branch at the counter. The record starts as "Booked".
+router.post('/', requireAuth, requireRole('staff', 'admin'), async (req, res) => {
   try {
     const { sender, receiver, weightKg, serviceType, branch, customer, customerEmail } = req.body;
     if (!sender || !receiver || !weightKg) {
@@ -51,27 +48,15 @@ router.post('/', requireAuth, requireRole('customer', 'staff', 'admin'), async (
       return res.status(400).json({ error: 'Pincode should be 6 digits.' });
     }
 
-    let branchId;
-    let customerId = null;
-    let bookingNote = 'Parcel booked at branch';
+    const branchId = req.user.role === 'staff' ? req.user.branch : branch;
+    if (!branchId) return res.status(400).json({ error: 'A branch must be specified.' });
+    let customerId = customer || null;
+    const bookingNote = 'Parcel booked at branch';
 
-    if (req.user.role === 'customer') {
-      // Customers choose their own drop-off/pickup branch and can only ever
-      // book under their own account - never on behalf of someone else.
-      branchId = branch;
-      if (!branchId) return res.status(400).json({ error: 'Choose a branch to book with.' });
-      customerId = req.user.id;
-      bookingNote = 'Booked online by customer';
-    } else {
-      branchId = req.user.role === 'staff' ? req.user.branch : branch;
-      if (!branchId) return res.status(400).json({ error: 'A branch must be specified.' });
-
-      // Link the booking to a customer account by email, if one was given and matches.
-      customerId = customer || null;
-      if (!customerId && customerEmail) {
-        const match = await User.findOne({ email: customerEmail.toLowerCase(), role: 'customer' });
-        if (match) customerId = match._id;
-      }
+    // Link the booking to a customer account by email, if one was given and matches.
+    if (!customerId && customerEmail) {
+      const match = await User.findOne({ email: customerEmail.toLowerCase(), role: 'customer' });
+      if (match) customerId = match._id;
     }
 
     const service = serviceType === 'express' ? 'express' : 'standard';
