@@ -265,7 +265,8 @@ section { padding: 56px 0; }
   color: #fff;
   padding: 44px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: none;
+  margin-bottom: 0;
 }
 
 /* ---------- Dynamic Animated AI Robot Button ---------- */
@@ -371,11 +372,17 @@ tr:hover td { background: rgba(232,163,61,0.06); }
 .empty-state .icon { font-size: 32px; margin-bottom: 10px; }
 
 /* ---------- Footer (Official Deep Navy from Screenshot) ---------- */
+#site-footer {
+  margin: 0;
+  padding: 0;
+  background: var(--ink);
+}
+
 footer {
   background: var(--ink);
   color: #CBD5E1;
   padding: 56px 0 24px;
-  margin-top: 50px;
+  margin-top: 0;
   border-top: 3px solid var(--amber);
 }
 footer .wrap {
