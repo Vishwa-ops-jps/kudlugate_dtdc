@@ -30,7 +30,7 @@ async function seed() {
   }
 
   // Admin account
-  const adminEmail = (process.env.ADMIN_EMAIL || 'admin@dtdckudlugate.com').toLowerCase();
+  const adminEmail = (process.env.ADMIN_EMAIL || 'admin@kudlugatecourier.online').toLowerCase();
   let admin = await User.findOne({ email: adminEmail });
   if (!admin) {
     const passwordHash = await bcrypt.hash(process.env.ADMIN_PASSWORD || 'ChangeMe123!', 10);

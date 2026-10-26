@@ -32,18 +32,26 @@ function getTransporter() {
     return null;
   }
 
+  const timeoutOptions = {
+    connectionTimeout: 5000,
+    greetingTimeout: 5000,
+    socketTimeout: 10000
+  };
+
   const isGmail = (process.env.EMAIL_HOST || '').includes('gmail') || user.endsWith('@gmail.com');
   if (isGmail) {
     transporter = nodemailer.createTransport({
       service: 'gmail',
-      auth: { user, pass }
+      auth: { user, pass },
+      ...timeoutOptions
     });
   } else {
     transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST || 'smtp.gmail.com',
       port: Number(process.env.EMAIL_PORT || 587),
       secure: Number(process.env.EMAIL_PORT) === 465,
-      auth: { user, pass }
+      auth: { user, pass },
+      ...timeoutOptions
     });
   }
   return transporter;
@@ -52,8 +60,9 @@ function getTransporter() {
 async function sendViaResend({ to, subject, text }) {
   const apiKey = (process.env.RESEND_API_KEY || '').trim();
   if (!apiKey) return null;
+  const from = (process.env.RESEND_FROM || '').trim() || 'DK Enterprise Kudlu Gate <onboarding@resend.dev>';
   const payload = JSON.stringify({
-    from: 'DK Enterprise Kudlu Gate <onboarding@resend.dev>',
+    from,
     to: Array.isArray(to) ? to : [to],
     subject,
     text
@@ -183,6 +192,41 @@ async function sendStatusEmail({ to, name, trackingId, status, location }) {
   });
 }
 
+async function sendViaWeb3Forms({ name, phone, email, subject, message }) {
+  const accessKey = (process.env.WEB3FORMS_ACCESS_KEY || '').trim();
+  if (!accessKey) return null;
+  const payload = JSON.stringify({
+    access_key: accessKey,
+    name,
+    email: email || 'noreply@kudlugatecourier.online',
+    phone,
+    subject: `New enquiry from ${name}${subject ? ' - ' + subject : ''}`,
+    message: `You have a new contact form message on DK Enterprise:\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email || 'Not provided'}\nSubject: ${subject || 'General'}\n\nMessage:\n${message}`
+  });
+  return new Promise((resolve, reject) => {
+    const req = https.request('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(payload)
+      }
+    }, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          resolve({ sent: true, provider: 'web3forms' });
+        } else {
+          reject(new Error(`Web3Forms error ${res.statusCode}: ${data}`));
+        }
+      });
+    });
+    req.on('error', reject);
+    req.write(payload);
+    req.end();
+  });
+}
+
 // Receipt sent to the customer
 async function sendEnquiryReceipt({ to, name }) {
   if (!to) return { sent: false };
@@ -196,6 +240,18 @@ async function sendEnquiryReceipt({ to, name }) {
 
 // Notifies shop owner/admin when a contact form enquiry is submitted
 async function sendAdminEnquiryAlert({ name, phone, email, subject, message }) {
+  if (process.env.WEB3FORMS_ACCESS_KEY) {
+    try {
+      const res = await sendViaWeb3Forms({ name, phone, email, subject, message });
+      if (res && res.sent) {
+        console.log('[Email] Admin alert delivered via Web3Forms');
+        return res;
+      }
+    } catch (err) {
+      console.error('[Email] Web3Forms alert failed:', err.message);
+    }
+  }
+
   const adminTo = getAdminRecipient();
   const text =
     `You have a new contact form submission on the DK Enterprise site:\n\n` +

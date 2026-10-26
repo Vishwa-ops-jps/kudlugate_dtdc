@@ -71,7 +71,7 @@ function renderChrome() {
           <button class="nav-toggle" aria-label="Menu">&#9776;</button>
           <div class="nav-links" data-nav-links>
             <a href="/">Home</a>
-            <a href="https://www.dtdc.com/track-your-shipment/" target="_blank" rel="noopener noreferrer">Track</a>
+            <a href="https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise, I want to track my shipment')}" target="_blank" rel="noopener noreferrer">Track</a>
             <a href="/reviews.html">Reviews</a>
             <a href="/contact.html">Contact</a>
             <a class="whatsapp-contact" href="https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise Kudlu New Franchise, I need help with a courier.')}" target="_blank" rel="noopener noreferrer"><span class="whatsapp-dot" aria-hidden="true"></span>WhatsApp</a>
@@ -96,7 +96,7 @@ function renderChrome() {
             <div>
               <h4>Shop</h4>
               <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;">
-                <a href="https://www.dtdc.com/track-your-shipment/" target="_blank" rel="noopener noreferrer">Track a parcel</a>
+                <a href="https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise, I want to track my shipment')}" target="_blank" rel="noopener noreferrer">Track a parcel</a>
                 <a href="/reviews.html">Customer reviews</a>
               </div>
             </div>
