@@ -2,96 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact — DK Enterprise Kudlu New Franchise</title>
-<link rel="stylesheet" href="/css/style.css">
+<meta http-equiv="refresh" content="0; url=/">
+<title>Redirecting...</title>
+<script>
+window.location.replace('/');
+</script>
 </head>
 <body>
-<div id="site-header"></div>
-
-<section class="wrap" style="padding-top:44px;">
-  <div class="grid-2" style="align-items:start;">
-    <div>
-      <span class="eyebrow">Get in touch</span>
-      <h2>Questions about a shipment?</h2>
-      <p style="color:var(--grey);max-width:400px;">Send us a note and our team at DK Enterprise will get back to you. For fastest results, include your tracking ID if you have one.</p>
-      <div class="card" style="margin-top:24px;">
-        <h4 style="margin-bottom:8px;">Branch Address</h4>
-        <p style="margin:0 0 10px;color:var(--grey);">DK Enterprise Kudlu New Franchise<br>Shop no 3. 1st floor, BREN PALMS, Kudlu Main Rd, above Med Plus, near TVS Godown, Bengaluru, Karnataka 560068</p>
-        <a href="https://www.google.com/maps/search/?api=1&query=BREN+PALMS,+Kudlu+Main+Rd,+Bengaluru,+Karnataka+560068" target="_blank" rel="noopener noreferrer" class="btn outline small" style="display:inline-flex;align-items:center;gap:6px;margin-bottom:14px;">📍 Open in Google Maps →</a>
-        <h4 style="margin-bottom:8px;">Hours</h4>
-        <p style="margin:0;color:var(--grey);">Mon–Sat, 9:30 AM – 8:30 PM</p>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="field">
-        <label for="c-name">Your Name</label>
-        <input type="text" id="c-name">
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label for="c-phone">Phone</label>
-          <input type="tel" id="c-phone">
-        </div>
-        <div class="field">
-          <label for="c-email">Email (optional)</label>
-          <input type="email" id="c-email">
-        </div>
-      </div>
-      <div class="field">
-        <label for="c-subject">Subject</label>
-        <input type="text" id="c-subject" placeholder="e.g. Delayed parcel">
-      </div>
-      <div class="field">
-        <label for="c-message">Message</label>
-        <textarea id="c-message" rows="5"></textarea>
-      </div>
-      <button class="btn amber block" id="c-submit">Send Message</button>
-      <div id="c-msg"></div>
-    </div>
-  </div>
-</section>
-
-<div id="site-footer"></div>
-
-<script src="/js/api.js"></script>
-<script src="/js/chrome.js?v=31"></script>
-<script>
-(function prefillFromSession() {
-  const user = Session.getUser();
-  if (!user) return;
-  const nameEl = document.getElementById('c-name');
-  const emailEl = document.getElementById('c-email');
-  if (nameEl && !nameEl.value && user.name) nameEl.value = user.name;
-  if (emailEl && !emailEl.value && user.email) emailEl.value = user.email;
-})();
-
-document.getElementById('c-submit').addEventListener('click', async () => {
-  const body = {
-    name: document.getElementById('c-name').value.trim(),
-    phone: document.getElementById('c-phone').value.trim(),
-    email: document.getElementById('c-email').value.trim(),
-    subject: document.getElementById('c-subject').value.trim(),
-    message: document.getElementById('c-message').value.trim()
-  };
-  const msgEl = document.getElementById('c-msg');
-  msgEl.innerHTML = '';
-  if (!body.name || !body.phone || !body.message) { msgEl.innerHTML = '<div class="msg err">Name, phone and message are required.</div>'; return; }
-  if (!/^[6-9]\d{9}$/.test(body.phone.replace(/[\s-]/g, '').replace(/^(\+?91)/, ''))) {
-    msgEl.innerHTML = '<div class="msg err">Enter a valid 10-digit mobile number.</div>'; return;
-  }
-  try {
-    const data = await API.request('/enquiries', { method: 'POST', body, auth: false });
-    msgEl.innerHTML = `<div class="msg ok">${escapeHtml(data.message)}</div>`;
-    ['c-name','c-phone','c-email','c-subject','c-message'].forEach(id => document.getElementById(id).value = '');
-  } catch (err) {
-    msgEl.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
-  }
-});
-</script>
+<p>Redirecting to <a href="/">homepage</a>...</p>
 </body>
 </html>
-
-
-

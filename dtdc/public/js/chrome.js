@@ -73,7 +73,6 @@ function renderChrome() {
             <a href="/">Home</a>
             <a href="https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise, I want to track my shipment')}" target="_blank" rel="noopener noreferrer">Track</a>
             <a href="/reviews.html">Reviews</a>
-            <a href="/contact.html">Contact</a>
             <a class="whatsapp-contact" href="https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise Kudlu New Franchise, I need help with a courier.')}" target="_blank" rel="noopener noreferrer"><span class="whatsapp-dot" aria-hidden="true"></span>WhatsApp</a>
             <span data-auth-slot style="display:flex;gap:6px;align-items:center;"></span>
           </div>
@@ -110,7 +109,9 @@ function renderChrome() {
             <div>
               <h4>Support</h4>
               <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;">
-                <a href="/contact.html">Contact us</a>
+                <a href="tel:+916366118850">Call Support</a>
+                <a href="https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise, I need assistance.')}" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                <a href="/admin/login.html" style="color:#8A94A6;">Staff login</a>
               </div>
             </div>
           </div>
