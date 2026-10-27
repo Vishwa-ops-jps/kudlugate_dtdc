@@ -859,8 +859,8 @@ footer .fine {
   box-shadow: 0 4px 14px rgba(37, 211, 102, 0.45);
 }
 .contact-icon-box.mail-icon {
-  background: #1877F2;
-  box-shadow: 0 4px 14px rgba(24, 119, 242, 0.45);
+  background: linear-gradient(135deg, #EA4335 0%, #D93025 100%);
+  box-shadow: 0 4px 14px rgba(234, 67, 53, 0.45);
 }
 .contact-icon-box.clock-icon {
   background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
@@ -874,7 +874,7 @@ footer .fine {
   box-shadow: 0 8px 22px rgba(37, 211, 102, 0.65);
 }
 .contact-item-card:hover .contact-icon-box.mail-icon {
-  box-shadow: 0 8px 22px rgba(24, 119, 242, 0.65);
+  box-shadow: 0 8px 22px rgba(234, 67, 53, 0.65);
 }
 .contact-item-card:hover .contact-icon-box.clock-icon {
   box-shadow: 0 8px 22px rgba(245, 158, 11, 0.65);
