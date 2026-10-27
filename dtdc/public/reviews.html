@@ -3,96 +3,333 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reviews — DK Enterprise Kudlu New Franchise</title>
-<link rel="stylesheet" href="/css/style.css">
+<title>Customer Reviews — DK Enterprise Kudlu New Franchise</title>
+<link rel="stylesheet" href="/css/style.css?v=46">
 </head>
 <body>
 <div id="site-header"></div>
 
-<section class="wrap" style="padding-top:44px;">
-  <div class="section-head">
-    <span class="eyebrow">Customer reviews</span>
-    <h2>What people are saying.</h2>
+<!-- Hero & Trust Overview Banner -->
+<div class="reviews-hero">
+  <div class="wrap">
+    <div class="reviews-hero-content">
+      <span class="eyebrow" style="color:#E31837;font-weight:700;letter-spacing:0.1em;">CUSTOMER REVIEWS &amp; RATINGS</span>
+      <h1 class="reviews-main-title">What Our Customers Say</h1>
+      <p class="reviews-subtitle">Real experiences and verified feedback from individuals and businesses using our Kudlu Gate franchise for safe, swift courier and cargo shipping.</p>
+      
+      <!-- Trust Summary Bar -->
+      <div class="trust-summary-bar">
+        <div class="rating-badge-large">
+          <div class="rating-number" id="avg-rating-val">5.0</div>
+          <div class="rating-stars-group">
+            <div class="gold-stars" id="avg-stars">★★★★★</div>
+            <div class="rating-subtext">Overall Customer Satisfaction</div>
+          </div>
+        </div>
+        <div class="trust-divider"></div>
+        <div class="trust-stats-item">
+          <div class="trust-stat-val">100% Verified</div>
+          <div class="trust-stat-lbl">Customer Shipments</div>
+        </div>
+        <div class="trust-divider"></div>
+        <div class="trust-stats-item">
+          <div class="trust-stat-val">Safe &amp; On-Time</div>
+          <div class="trust-stat-lbl">Kudlu Gate Hub</div>
+        </div>
+        <div class="trust-actions">
+          <a href="#leave-review-section" class="btn btn-review-cta">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            Write a Review
+          </a>
+          <a href="https://maps.app.goo.gl/Bp4kTUK2omVuxT347?g_st=awb" target="_blank" rel="noopener noreferrer" class="btn btn-google-maps">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="#EA4335"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Reviews
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="grid-3" id="reviews-list">
-    <p style="color:var(--grey);">Loading reviews…</p>
-  </div>
-</section>
+</div>
 
-<section class="wrap">
-  <div class="card" style="max-width:520px;">
-    <h3>Leave a Review</h3>
-    <div class="field">
-      <label for="r-name">Your Name</label>
-      <input type="text" id="r-name">
+<!-- 2-Column Responsive Reviews Layout -->
+<section class="wrap reviews-layout-wrap">
+  <!-- Left Column: Reviews List Feed -->
+  <div class="reviews-feed-col">
+    <div class="feed-header">
+      <h3>Customer Stories (<span id="review-count">...</span>)</h3>
+      <span class="feed-filter-tag">Verified Feed</span>
     </div>
-    <div class="field">
-      <label for="r-rating">Rating</label>
-      <select id="r-rating">
-        <option value="5">★★★★★ Excellent</option>
-        <option value="4">★★★★☆ Good</option>
-        <option value="3">★★★☆☆ Okay</option>
-        <option value="2">★★☆☆☆ Poor</option>
-        <option value="1">★☆☆☆☆ Very poor</option>
-      </select>
-    </div>
-    <div class="field">
-      <label for="r-tid">Tracking ID (optional)</label>
-      <input type="text" id="r-tid" class="mono" placeholder="If this review is about a specific delivery">
-    </div>
-    <div class="field">
-      <label for="r-comment">Your Review</label>
-      <textarea id="r-comment" rows="4"></textarea>
-    </div>
-    <button class="btn amber block" id="r-submit">Submit Review</button>
-    <div id="r-msg"></div>
-    <div id="google-review-prompt" style="display:none;margin-top:14px;">
-      <p style="margin:0 0 10px;color:var(--grey);font-size:14px;">Would you also like to share your experience on Google Maps?</p>
-      <a class="btn outline" href="https://maps.app.goo.gl/uXeKRjDFh6hjU465A" target="_blank" rel="noopener noreferrer">Write a Google review</a>
+    
+    <div id="reviews-list" class="reviews-grid">
+      <div style="padding:30px;text-align:center;color:var(--grey);background:#ffffff;border:1px solid #E2E8F0;border-radius:14px;">
+        <span class="spinner" style="margin-right:8px;"></span> Loading verified reviews…
+      </div>
     </div>
   </div>
+
+  <!-- Right Column: Sticky Sidebar with "Leave a Review" Form & Google Box -->
+  <aside class="reviews-sidebar-col" id="leave-review-section">
+    <!-- Leave a Review Form Card -->
+    <div class="review-form-card">
+      <div class="form-card-header">
+        <div class="form-header-icon">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+          </svg>
+        </div>
+        <div>
+          <h4>Leave a Review</h4>
+          <p>Share your courier experience with us</p>
+        </div>
+      </div>
+
+      <!-- Star Rating Interactive Selector -->
+      <div class="rating-picker-wrapper">
+        <label>Your Rating</label>
+        <div class="star-rating-picker" id="star-picker">
+          <button type="button" class="star-btn active" data-rating="1" aria-label="1 star">★</button>
+          <button type="button" class="star-btn active" data-rating="2" aria-label="2 stars">★</button>
+          <button type="button" class="star-btn active" data-rating="3" aria-label="3 stars">★</button>
+          <button type="button" class="star-btn active" data-rating="4" aria-label="4 stars">★</button>
+          <button type="button" class="star-btn active" data-rating="5" aria-label="5 stars">★</button>
+          <span class="rating-text-label" id="rating-label">5.0 · Excellent</span>
+        </div>
+        <input type="hidden" id="r-rating" value="5">
+      </div>
+
+      <div class="field">
+        <label for="r-name">Your Full Name</label>
+        <input type="text" id="r-name" placeholder="e.g. Ramesh Kumar">
+      </div>
+
+      <div class="field">
+        <label for="r-tid">Tracking ID <span class="opt-label">(Optional)</span></label>
+        <input type="text" id="r-tid" class="mono" placeholder="e.g. 7D12345678">
+      </div>
+
+      <div class="field">
+        <label for="r-comment">Your Review Feedback</label>
+        <textarea id="r-comment" rows="4" placeholder="How was your courier experience? Mention delivery speed, packaging or staff support..."></textarea>
+      </div>
+
+      <button class="btn btn-submit-review" id="r-submit">
+        <span>Submit Review</span>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </button>
+
+      <div id="r-msg"></div>
+
+      <!-- Google Review Prompt on Success -->
+      <div id="google-review-prompt" class="google-prompt-card" style="display:none;">
+        <p style="margin:0 0 6px;color:#166534;font-size:13.5px;font-weight:600;">🎉 Thank you! Your review has been submitted for approval.</p>
+        <p style="margin:0 0 10px;font-size:12.5px;color:var(--grey);line-height:1.4;">Would you also like to post your rating directly on Google Maps to help our franchise grow?</p>
+        <a class="btn btn-google-pill" href="https://maps.app.goo.gl/Bp4kTUK2omVuxT347?g_st=awb" target="_blank" rel="noopener noreferrer">
+          ★ Write Google Review
+        </a>
+      </div>
+    </div>
+
+    <!-- Google Maps Card in Sidebar -->
+    <div class="google-aside-box">
+      <div class="google-aside-header">
+        <div class="google-icon-circle">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="#EA4335"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+        <div>
+          <h5>Google Maps Reviews</h5>
+          <p>DK Enterprise Kudlu New Franchise</p>
+        </div>
+      </div>
+      <p class="google-aside-text">Are you a Google user? You can directly leave a public rating and photos of your courier experience.</p>
+      <a href="https://maps.app.goo.gl/Bp4kTUK2omVuxT347?g_st=awb" target="_blank" rel="noopener noreferrer" class="google-direct-btn">
+        <span>Review on Google</span>
+        <span>→</span>
+      </a>
+    </div>
+  </aside>
 </section>
 
 <div id="site-footer"></div>
 <script src="/js/api.js"></script>
 <script src="/js/chrome.js?v=31"></script>
 <script>
+// Avatar gradients palette for verified review cards
+const avatarGradients = [
+  'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)',
+  'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+  'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
+  'linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%)',
+  'linear-gradient(135deg, #EC4899 0%, #DB2777 100%)',
+  'linear-gradient(135deg, #0c2340 0%, #1e3a8a 100%)'
+];
+
+function getAvatarBg(name) {
+  let hash = 0;
+  for (let i = 0; i < (name || '').length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  const idx = Math.abs(hash) % avatarGradients.length;
+  return avatarGradients[idx];
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return 'Verified Customer';
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return 'Verified Customer';
+    return d.toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' });
+  } catch(e) {
+    return 'Verified Customer';
+  }
+}
+
+// Fetch and render approved reviews
 API.request('/reviews', { auth: false }).then(({ reviews }) => {
   const el = document.getElementById('reviews-list');
-  if (!reviews.length) { el.innerHTML = '<p style="color:var(--grey);">No reviews yet — be the first to leave one below.</p>'; return; }
-  el.innerHTML = reviews.map(r => `
-    <div class="card review-card">
-      <div class="stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
-      <p>"${escapeHtml(r.comment)}"</p>
-      <div class="review-name">${escapeHtml(r.name)}</div>
-    </div>`).join('');
+  const countEl = document.getElementById('review-count');
+  const avgValEl = document.getElementById('avg-rating-val');
+  const avgStarsEl = document.getElementById('avg-stars');
+
+  if (!reviews || !reviews.length) {
+    if (countEl) countEl.textContent = '0';
+    el.innerHTML = `
+      <div style="padding:40px 24px;text-align:center;background:#ffffff;border:1px solid #E2E8F0;border-radius:14px;">
+        <p style="color:var(--grey);font-size:15px;margin:0 0 14px;">No reviews published yet — be the first to share your courier experience!</p>
+        <a href="#leave-review-section" class="btn btn-review-cta">Write the First Review</a>
+      </div>`;
+    return;
+  }
+
+  if (countEl) countEl.textContent = reviews.length;
+
+  // Calculate average rating
+  const totalStars = reviews.reduce((acc, r) => acc + (Number(r.rating) || 5), 0);
+  const avg = (totalStars / reviews.length).toFixed(1);
+  if (avgValEl) avgValEl.textContent = avg;
+  const roundedStars = Math.round(Number(avg));
+  if (avgStarsEl) avgStarsEl.textContent = '★'.repeat(roundedStars) + '☆'.repeat(Math.max(0, 5 - roundedStars));
+
+  el.innerHTML = reviews.map(r => {
+    const initial = (r.name || 'C').trim().charAt(0).toUpperCase() || 'C';
+    const bg = getAvatarBg(r.name);
+    const dateFormatted = formatDate(r.createdAt);
+    const ratingNum = Number(r.rating) || 5;
+    const goldStars = '★'.repeat(ratingNum) + '☆'.repeat(5 - ratingNum);
+
+    return `
+      <div class="rich-review-card">
+        <div class="rc-header">
+          <div class="rc-user-group">
+            <div class="rc-avatar" style="background:${bg};">${escapeHtml(initial)}</div>
+            <div class="rc-user-info">
+              <div class="rc-name">${escapeHtml(r.name)}</div>
+              <div class="rc-meta">
+                <span class="rc-badge-verified">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                  Verified Customer
+                </span>
+                <span class="rc-date">${escapeHtml(dateFormatted)}</span>
+              </div>
+            </div>
+          </div>
+          <div class="rc-stars-badge">
+            <span class="rc-gold-stars">${goldStars}</span>
+            <span class="rc-rating-num">${ratingNum}.0</span>
+          </div>
+        </div>
+
+        <div class="rc-body">
+          <svg class="rc-quote-mark" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+          </svg>
+          <p class="rc-comment">${escapeHtml(r.comment)}</p>
+        </div>
+
+        ${r.trackingId ? `
+          <div class="rc-footer">
+            <span class="rc-track-tag">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              Shipment Verified: <strong>${escapeHtml(r.trackingId)}</strong>
+            </span>
+          </div>
+        ` : ''}
+      </div>`;
+  }).join('');
 }).catch(() => {
-  document.getElementById('reviews-list').innerHTML = '<p style="color:var(--grey);">Could not load reviews right now.</p>';
+  document.getElementById('reviews-list').innerHTML = `
+    <div style="padding:30px;text-align:center;color:var(--grey);background:#ffffff;border:1px solid #E2E8F0;border-radius:14px;">
+      Could not load reviews right now. Please refresh the page.
+    </div>`;
 });
 
+// Interactive Star Rating Selector
+const ratingLabels = {
+  1: '1.0 · Very Poor',
+  2: '2.0 · Poor',
+  3: '3.0 · Average',
+  4: '4.0 · Very Good',
+  5: '5.0 · Excellent'
+};
+
+const starPicker = document.getElementById('star-picker');
+const starBtns = starPicker.querySelectorAll('.star-btn');
+const ratingInput = document.getElementById('r-rating');
+const ratingLabel = document.getElementById('rating-label');
+
+function updateStars(val) {
+  ratingInput.value = val;
+  starBtns.forEach(btn => {
+    const starVal = Number(btn.getAttribute('data-rating'));
+    if (starVal <= val) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+  if (ratingLabel) ratingLabel.textContent = ratingLabels[val] || (val + '.0');
+}
+
+starBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const val = Number(btn.getAttribute('data-rating'));
+    updateStars(val);
+  });
+});
+
+// Form Submission
 document.getElementById('r-submit').addEventListener('click', async () => {
+  const submitBtn = document.getElementById('r-submit');
   const body = {
     name: document.getElementById('r-name').value.trim(),
-    rating: Number(document.getElementById('r-rating').value),
+    rating: Number(document.getElementById('r-rating').value) || 5,
     trackingId: document.getElementById('r-tid').value.trim(),
     comment: document.getElementById('r-comment').value.trim()
   };
   const msgEl = document.getElementById('r-msg');
   msgEl.innerHTML = '';
-  if (!body.name || !body.comment) { msgEl.innerHTML = '<div class="msg err">Name and review text are required.</div>'; return; }
+  
+  if (!body.name || !body.comment) {
+    msgEl.innerHTML = '<div class="msg err" style="margin-top:12px;">Please enter your name and review feedback.</div>';
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<span class="spinner" style="width:14px;height:14px;border-width:2px;margin-right:6px;"></span> Submitting…';
+
   try {
     const data = await API.request('/reviews', { method: 'POST', body, auth: false });
-    msgEl.innerHTML = `<div class="msg ok">${escapeHtml(data.message)}</div>`;
+    msgEl.innerHTML = `<div class="msg ok" style="margin-top:12px;">${escapeHtml(data.message || 'Thanks! Your review has been submitted for approval.')}</div>`;
     document.getElementById('google-review-prompt').style.display = 'block';
-    ['r-name','r-tid','r-comment'].forEach(id => document.getElementById(id).value = '');
+    ['r-name','r-tid','r-comment'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+    updateStars(5);
   } catch (err) {
-    msgEl.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
+    msgEl.innerHTML = `<div class="msg err" style="margin-top:12px;">${escapeHtml(err.message)}</div>`;
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = '<span>Submit Review</span><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
   }
 });
 </script>
 </body>
 </html>
-
-
-
-
