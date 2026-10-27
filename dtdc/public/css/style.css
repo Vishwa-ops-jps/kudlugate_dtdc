@@ -867,8 +867,8 @@ footer .fine {
   box-shadow: 0 4px 14px rgba(245, 158, 11, 0.45);
 }
 .contact-icon-box.pin-icon {
-  background: linear-gradient(135deg, #EF4444 0%, #E31837 100%);
-  box-shadow: 0 4px 14px rgba(227, 24, 55, 0.45);
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.45);
 }
 .contact-item-card:hover .contact-icon-box.phone-icon {
   box-shadow: 0 8px 22px rgba(37, 211, 102, 0.65);
@@ -880,7 +880,7 @@ footer .fine {
   box-shadow: 0 8px 22px rgba(245, 158, 11, 0.65);
 }
 .contact-item-card:hover .contact-icon-box.pin-icon {
-  box-shadow: 0 8px 22px rgba(227, 24, 55, 0.65);
+  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.65);
 }
 .contact-text-group {
   display: flex;
