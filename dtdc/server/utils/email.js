@@ -92,6 +92,42 @@ async function sendViaResend({ to, subject, text }) {
   });
 }
 
+async function sendViaBrevo({ to, subject, text }) {
+  const apiKey = (process.env.BREVO_API_KEY || '').trim();
+  if (!apiKey) return null;
+  const user = (process.env.EMAIL_USER || 'vishwa2o2ok@gmail.com').trim();
+  const payload = JSON.stringify({
+    sender: { name: 'DK Enterprise', email: user },
+    to: [{ email: to }],
+    subject,
+    textContent: text
+  });
+  return new Promise((resolve, reject) => {
+    const req = https.request('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'api-key': apiKey,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Content-Length': Buffer.byteLength(payload)
+      }
+    }, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          resolve({ sent: true, provider: 'brevo', data: JSON.parse(data || '{}') });
+        } else {
+          reject(new Error(`Brevo HTTP ${res.statusCode}: ${data}`));
+        }
+      });
+    });
+    req.on('error', reject);
+    req.write(payload);
+    req.end();
+  });
+}
+
 async function sendViaWebhook({ to, subject, text }) {
   const webhookUrl = (process.env.GOOGLE_SCRIPT_WEBHOOK_URL || process.env.EMAIL_WEBHOOK_URL || '').trim();
   if (!webhookUrl) return null;
@@ -118,7 +154,7 @@ async function sendViaWebhook({ to, subject, text }) {
 }
 
 // Universal delivery function:
-// 1. Tries HTTP APIs (Resend, Webhook) over port 443 (Allowed on Render Free tier)
+// 1. Tries HTTP APIs (Resend, Brevo, Webhook) over port 443 (Allowed on Render Free tier)
 // 2. Falls back to Nodemailer SMTP (Local dev or Render paid instances)
 async function deliverEmail({ to, subject, text }) {
   const recipient = getRecipient(to);
@@ -139,6 +175,19 @@ async function deliverEmail({ to, subject, text }) {
       }
     } catch (err) {
       console.error('[Email] Resend delivery failed:', err.message);
+    }
+  }
+
+  // 2. Brevo (Port 443)
+  if (process.env.BREVO_API_KEY) {
+    try {
+      const res = await sendViaBrevo({ to: recipient, subject, text });
+      if (res && res.sent) {
+        console.log('[Email] Delivered via Brevo to:', recipient);
+        return res;
+      }
+    } catch (err) {
+      console.error('[Email] Brevo delivery failed:', err.message);
     }
   }
 
