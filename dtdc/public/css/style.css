@@ -715,54 +715,62 @@ footer .fine {
 .service-bullet-item .bullet-icon {
   width: 44px;
   height: 44px;
-  border-radius: 12px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  color: #ffffff;
+  transition: all 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.service-bullet-item .bullet-icon svg {
+  width: 21px;
+  height: 21px;
+  stroke: #ffffff;
+  stroke-width: 2.2;
 }
 
 .service-bullet-item:hover .bullet-icon {
-  transform: scale(1.18) rotate(-4deg);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: scale(1.15) translateY(-2px);
 }
 
 .bullet-icon.icon-domestic {
-  background: rgba(20, 43, 110, 0.08);
-  color: #0c2340;
-  border: 1px solid rgba(20, 43, 110, 0.2);
+  background: linear-gradient(135deg, #1E3A8A 0%, #0c2340 100%);
+  box-shadow: 0 4px 14px rgba(12, 35, 64, 0.45);
 }
 
 .bullet-icon.icon-ecommerce {
-  background: rgba(5, 150, 105, 0.09);
-  color: #059669;
-  border: 1px solid rgba(5, 150, 105, 0.22);
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.45);
 }
 
 .bullet-icon.icon-document {
-  background: rgba(217, 119, 6, 0.09);
-  color: #D97706;
-  border: 1px solid rgba(217, 119, 6, 0.22);
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.45);
 }
 
 .bullet-icon.icon-cargo {
-  background: rgba(220, 38, 38, 0.09);
-  color: #DC2626;
-  border: 1px solid rgba(220, 38, 38, 0.22);
+  background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.45);
 }
 
 .bullet-icon.icon-ledger {
-  background: rgba(37, 99, 235, 0.09);
-  color: #2563EB;
-  border: 1px solid rgba(37, 99, 235, 0.22);
+  background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.45);
 }
 
 .bullet-icon.icon-alerts {
-  background: rgba(124, 58, 237, 0.09);
-  color: #7C3AED;
-  border: 1px solid rgba(124, 58, 237, 0.22);
+  background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.45);
 }
+
+.service-bullet-item:hover .bullet-icon.icon-domestic { box-shadow: 0 8px 22px rgba(12, 35, 64, 0.65); }
+.service-bullet-item:hover .bullet-icon.icon-ecommerce { box-shadow: 0 8px 22px rgba(16, 185, 129, 0.65); }
+.service-bullet-item:hover .bullet-icon.icon-document { box-shadow: 0 8px 22px rgba(245, 158, 11, 0.65); }
+.service-bullet-item:hover .bullet-icon.icon-cargo { box-shadow: 0 8px 22px rgba(239, 68, 68, 0.65); }
+.service-bullet-item:hover .bullet-icon.icon-ledger { box-shadow: 0 8px 22px rgba(59, 130, 246, 0.65); }
+.service-bullet-item:hover .bullet-icon.icon-alerts { box-shadow: 0 8px 22px rgba(139, 92, 246, 0.65); }
 
 .service-bullet-item h4 {
   font-size: 15.5px;
@@ -779,10 +787,6 @@ footer .fine {
   line-height: 1.4;
 }
 
-.service-bullet-item:hover .bullet-icon {
-  transform: scale(1.1);
-  background: rgba(215, 25, 32, 0.1);
-}
 
 .service-bullet-item .bullet-content h4 {
   font-family: 'Space Grotesk', sans-serif;
