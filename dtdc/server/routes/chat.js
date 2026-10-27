@@ -49,7 +49,8 @@ BRANCH KNOWLEDGE BASE & FACTS
 
 7. TRACKING:
    - Every booking receives a unique tracking ID on the printed receipt or SMS.
-   - Customers can track their shipment by messaging WhatsApp (+91 63661 18850) or calling our branch with their tracking ID.
+   - Tracking Portal: https://www.dtdc.com/track-your-shipment/
+   - Enter your tracking ID on the portal to view live transit updates anytime 24/7.
 
 8. ACCEPTABLE ITEMS:
    - Clothes, books, dry non-perishable foods (properly sealed), gifts, corporate documents, electronics & laptops (with protective bubble wrap packing), household items, sealed non-liquid goods.
@@ -109,7 +110,7 @@ function getSmartFallbackReply(userText) {
 
   // 8. Tracking / Status
   if (q.includes('track') || q.includes('status') || q.includes('where is my parcel') || q.includes('consignment') || q.includes('waybill') || q.includes('receipt')) {
-    return 'You can track your shipment live 24/7 by messaging our team on WhatsApp (+91 63661 18850) or calling our branch with your tracking ID printed on your booking receipt.';
+    return 'You can track your shipment live 24/7 on our tracking portal: https://www.dtdc.com/track-your-shipment/ . Simply enter the tracking ID printed on your booking receipt.';
   }
 
   // 9. International / Abroad / USA / UK / UAE / Canada
