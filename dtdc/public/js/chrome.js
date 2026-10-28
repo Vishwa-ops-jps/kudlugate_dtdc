@@ -129,20 +129,58 @@ function renderChrome() {
     btn.className = 'robot-ai-btn';
     btn.setAttribute('aria-label', 'Chat with AI Assistant');
     btn.innerHTML = `
-      <svg class="robot-svg" viewBox="0 0 40 40" aria-hidden="true">
-        <line x1="20" y1="9" x2="20" y2="4" stroke="#C6CCDA" stroke-width="2" stroke-linecap="round"/>
-        <circle class="robot-antenna-light" cx="20" cy="3" r="2.5"/>
-        <rect x="4" y="15" width="3" height="8" rx="1.5" fill="#E31E24"/>
-        <rect x="33" y="15" width="3" height="8" rx="1.5" fill="#E31E24"/>
+      <svg class="robot-svg" viewBox="0 0 48 58" aria-hidden="true">
+        <!-- Antenna -->
+        <line x1="24" y1="6" x2="24" y2="10" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round"/>
+        <circle class="robot-antenna-light" cx="24" cy="4" r="2.8"/>
+
+        <!-- Ears / Earphones -->
+        <rect x="6.5" y="16" width="3" height="7.5" rx="1.5" fill="#E31E24"/>
+        <rect x="38.5" y="16" width="3" height="7.5" rx="1.5" fill="#E31E24"/>
+
+        <!-- Head -->
         <g class="robot-head">
-          <rect x="7" y="9" width="26" height="20" rx="7" fill="#ffffff" stroke="#E2E6EE" stroke-width="1.2"/>
-          <rect x="10" y="12" width="20" height="13" rx="4" fill="#0F172A"/>
-          <ellipse class="robot-eye" cx="15" cy="18" rx="2.2" ry="2.6" fill="#00F0FF"/>
-          <ellipse class="robot-eye" cx="25" cy="18" rx="2.2" ry="2.6" fill="#00F0FF"/>
-          <path d="M17 22 Q20 24 23 22" stroke="#00F0FF" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+          <rect x="9" y="10" width="30" height="19" rx="6.5" fill="#ffffff" stroke="#E2E6EE" stroke-width="1.2"/>
+          <rect x="12" y="12.5" width="24" height="14" rx="4" fill="#0F172A"/>
+          <ellipse class="robot-eye" cx="18" cy="19" rx="2.2" ry="2.6" fill="#00F0FF"/>
+          <ellipse class="robot-eye" cx="30" cy="19" rx="2.2" ry="2.6" fill="#00F0FF"/>
+          <path d="M20 22.5 Q24 24.8 28 22.5" stroke="#00F0FF" stroke-width="1.5" stroke-linecap="round" fill="none"/>
         </g>
-        <rect x="16" y="29" width="8" height="3" rx="1.5" fill="#C6CCDA"/>
-        <path d="M12 32 C12 30, 28 30, 28 32 L31 37 C31 38, 9 38, 9 37 Z" fill="#E31E24"/>
+
+        <!-- Neck Joint -->
+        <rect x="21" y="29" width="6" height="2.5" rx="1.2" fill="#94A3B8"/>
+
+        <!-- Torso Body -->
+        <rect x="14" y="31.5" width="20" height="14.5" rx="4.5" fill="#ffffff" stroke="#CBD5E1" stroke-width="1.2"/>
+        <!-- Chest Screen & Meter -->
+        <rect x="17.5" y="34" width="13" height="6.5" rx="2" fill="#0F172A"/>
+        <circle cx="21" cy="37.2" r="1.5" fill="#00F0FF"/>
+        <rect x="24.5" y="36.5" width="4" height="1.6" rx="0.8" fill="#E31E24"/>
+        <!-- Belt -->
+        <rect x="15.5" y="43" width="17" height="2" rx="1" fill="#E31E24"/>
+
+        <!-- Left Arm & Hand (Waving!) -->
+        <g class="robot-wave-arm">
+          <path d="M14 33 Q8 30 6 22" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <circle cx="6" cy="21" r="2.6" fill="#E31E24"/>
+        </g>
+
+        <!-- Right Arm & Hand -->
+        <g>
+          <path d="M34 33 Q39 36 40 42" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <circle cx="40" cy="43" r="2.6" fill="#E31E24"/>
+        </g>
+
+        <!-- Legs & Feet -->
+        <g class="robot-legs">
+          <!-- Left Leg -->
+          <line x1="19" y1="46" x2="19" y2="52" stroke="#94A3B8" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M15.5 52 C15.5 50.5, 22 50.5, 22 52 L22 54.5 C22 55.5, 15.5 55.5, 15.5 54.5 Z" fill="#E31E24"/>
+
+          <!-- Right Leg -->
+          <line x1="29" y1="46" x2="29" y2="52" stroke="#94A3B8" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M26 52 C26 50.5, 32.5 50.5, 32.5 52 L32.5 54.5 C32.5 55.5, 26 55.5, 26 54.5 Z" fill="#E31E24"/>
+        </g>
       </svg>`;
 
     const panel = document.createElement('div');
