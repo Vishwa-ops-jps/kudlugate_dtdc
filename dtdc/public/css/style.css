@@ -290,9 +290,9 @@ section { padding: 56px 0; }
 
 .robot-ai-btn {
   position: fixed;
-  right: 24px;
+  left: 24px;
+  right: auto;
   bottom: 24px;
-  left: auto;
   z-index: 9999;
   width: 58px;
   height: 58px;
@@ -360,6 +360,293 @@ section { padding: 56px 0; }
   0%, 100% { transform: rotate(0deg); }
   25% { transform: rotate(-3deg); }
   75% { transform: rotate(3deg); }
+}
+
+/* ---------- Floating WhatsApp Quick Action Widget ---------- */
+.wa-float-btn {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  left: auto;
+  z-index: 9998;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #25D366;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 22px rgba(37, 211, 102, 0.45);
+  transition: transform 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease, background 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.wa-float-btn:hover {
+  transform: scale(1.12) translateY(-3px);
+  box-shadow: 0 10px 28px rgba(37, 211, 102, 0.6);
+}
+.wa-float-btn:active {
+  transform: scale(0.95);
+}
+.wa-float-btn.is-open {
+  background: #0F172A;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.4);
+}
+.wa-online-pulse {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 14px;
+  height: 14px;
+  background: #10B981;
+  border: 2.5px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: waPulse 2s infinite;
+}
+.wa-float-btn.is-open .wa-online-pulse {
+  display: none;
+}
+@keyframes waPulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+.wa-icon-holder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wa-close-svg {
+  display: none;
+}
+.wa-float-btn.is-open .wa-brand-svg {
+  display: none;
+}
+.wa-float-btn.is-open .wa-close-svg {
+  display: block;
+}
+
+/* Quick Action Panel Card */
+.wa-quick-panel {
+  position: fixed;
+  right: 24px;
+  bottom: 92px;
+  z-index: 9999;
+  width: 330px;
+  max-width: calc(100vw - 36px);
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 14px 40px rgba(12, 35, 64, 0.22);
+  border: 1px solid #E2E8F0;
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+  font-family: 'Inter', sans-serif;
+  animation: waSlideUp 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.wa-quick-panel.is-visible {
+  display: flex;
+}
+@keyframes waSlideUp {
+  from { opacity: 0; transform: translateY(14px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.wa-panel-head {
+  background: linear-gradient(135deg, #075E54 0%, #128C7E 100%);
+  color: #ffffff;
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.wa-panel-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.wa-panel-title {
+  flex: 1;
+  min-width: 0;
+}
+.wa-panel-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+}
+.wa-panel-status {
+  font-size: 11px;
+  color: #DCF8C6;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+}
+.wa-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #25D366;
+  box-shadow: 0 0 6px #25D366;
+  display: inline-block;
+}
+.wa-panel-close-btn {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+.wa-panel-close-btn:hover {
+  opacity: 1;
+}
+.wa-panel-body {
+  padding: 14px;
+  background: #F8FAFC;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 380px;
+  overflow-y: auto;
+}
+.wa-chat-bubble {
+  background: #ffffff;
+  border-radius: 12px;
+  border-bottom-left-radius: 4px;
+  padding: 10px 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  border: 1px solid #EEF2F6;
+}
+.wa-bubble-text {
+  margin: 0;
+  font-size: 13px;
+  color: #334155;
+  line-height: 1.45;
+}
+.wa-bubble-time {
+  display: block;
+  font-size: 10px;
+  color: #94A3B8;
+  text-align: right;
+  margin-top: 4px;
+}
+.wa-actions-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 4px 0 2px;
+}
+.wa-actions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.wa-action-item {
+  background: #ffffff;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.wa-action-item:hover {
+  border-color: #25D366;
+  background: #F0FDF4;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.12);
+}
+.wa-action-icon {
+  font-size: 17px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F1F5F9;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+.wa-action-item:hover .wa-action-icon {
+  background: #DCFCE7;
+}
+.wa-action-texts {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.wa-action-main {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0F172A;
+  line-height: 1.25;
+}
+.wa-action-sub {
+  font-size: 11px;
+  color: #64748B;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.wa-action-arrow {
+  font-size: 14px;
+  font-weight: 700;
+  color: #94A3B8;
+  transition: transform 0.2s, color 0.2s;
+}
+.wa-action-item:hover .wa-action-arrow {
+  color: #16A34A;
+  transform: translateX(3px);
+}
+.wa-panel-footer {
+  background: #FFFFFF;
+  border-top: 1px solid #E2E8F0;
+  padding: 8px 14px;
+  text-align: center;
+  font-size: 10.5px;
+  color: #94A3B8;
+  font-weight: 500;
+}
+
+@media (max-width: 480px) {
+  .robot-ai-btn {
+    left: 14px;
+    bottom: 18px;
+    width: 52px;
+    height: 52px;
+  }
+  .wa-float-btn {
+    right: 14px;
+    bottom: 18px;
+    width: 52px;
+    height: 52px;
+  }
+  .wa-quick-panel {
+    right: 14px;
+    bottom: 80px;
+    width: calc(100vw - 28px);
+  }
 }
 
 /* ---------- Customer Reviews Section (Modern Verified Testimonials) ---------- */

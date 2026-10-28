@@ -145,7 +145,7 @@ function renderChrome() {
 
     const panel = document.createElement('div');
     panel.id = 'ai-panel';
-    panel.style.cssText = 'position:fixed;right:24px;left:auto;bottom:90px;z-index:9999;width:340px;max-width:calc(100vw - 36px);height:440px;max-height:calc(100vh - 110px);background:#fff;border-radius:14px;box-shadow:0 8px 30px rgba(12,35,64,.3);display:none;flex-direction:column;overflow:hidden;font-family:inherit;border:1px solid #e2e8f0;';
+    panel.style.cssText = 'position:fixed;left:24px;right:auto;bottom:90px;z-index:9999;width:340px;max-width:calc(100vw - 36px);height:440px;max-height:calc(100vh - 110px);background:#fff;border-radius:14px;box-shadow:0 8px 30px rgba(12,35,64,.3);display:none;flex-direction:column;overflow:hidden;font-family:inherit;border:1px solid #e2e8f0;';
     panel.innerHTML = '<div style="background:#e31837;color:#fff;padding:12px 14px;font-weight:600;display:flex;justify-content:space-between;align-items:center;"><span>DK Enterprise Assistant</span><button type="button" id="ai-close" aria-label="Close" style="background:none;border:0;color:#fff;font-size:20px;cursor:pointer;">&times;</button></div>'
       + '<div id="ai-msgs" style="flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:#f8fafc;"></div>'
       + '<div style="display:flex;gap:6px;padding:10px;border-top:1px solid #e2e8f0;background:#fff;"><input id="ai-input" type="text" maxlength="1000" placeholder="Ask about booking, rates..." style="flex:1;padding:9px 10px;border:1.5px solid #cbd5e1;border-radius:8px;font-size:14px;"><button type="button" id="ai-send" style="background:#e31837;color:#fff;border:0;border-radius:8px;padding:0 14px;cursor:pointer;font-weight:600;">Send</button></div>';
@@ -188,8 +188,129 @@ function renderChrome() {
     }
     panel.querySelector('#ai-send').addEventListener('click', send);
     input.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
-    btn.addEventListener('click', () => { panel.style.display = panel.style.display === 'flex' ? 'none' : 'flex'; if (panel.style.display === 'flex') input.focus(); });
+    btn.addEventListener('click', () => {
+      const isOpen = panel.style.display === 'flex';
+      panel.style.display = isOpen ? 'none' : 'flex';
+      if (!isOpen) {
+        input.focus();
+        const waP = document.getElementById('wa-quick-panel');
+        const waB = document.getElementById('wa-float-btn');
+        if (waP) waP.classList.remove('is-visible');
+        if (waB) waB.classList.remove('is-open');
+      }
+    });
     panel.querySelector('#ai-close').addEventListener('click', () => { panel.style.display = 'none'; });
+  }
+
+  // Floating WhatsApp Quick Action Widget (bottom-right, all customer pages)
+  if (!document.getElementById('wa-float-btn')) {
+    const waBtn = document.createElement('button');
+    waBtn.id = 'wa-float-btn';
+    waBtn.type = 'button';
+    waBtn.className = 'wa-float-btn';
+    waBtn.setAttribute('aria-label', 'WhatsApp Quick Actions');
+    waBtn.innerHTML = `
+      <span class="wa-online-pulse"></span>
+      <span class="wa-icon-holder">
+        <svg class="wa-brand-svg" viewBox="0 0 24 24" width="28" height="28" fill="#ffffff">
+          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.705 1.754zm6.097-4.148l.437.259c1.554.921 3.33 1.409 5.145 1.41 5.46 0 9.902-4.442 9.904-9.9 0-2.645-1.03-5.132-2.903-7.006-1.874-1.874-4.362-2.903-7.007-2.903-5.462 0-9.903 4.442-9.905 9.9-.001 1.887.521 3.727 1.51 5.323l.285.457-1.002 3.662 3.746-.982z"/>
+        </svg>
+        <svg class="wa-close-svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </span>`;
+
+    const waPanel = document.createElement('div');
+    waPanel.id = 'wa-quick-panel';
+    waPanel.className = 'wa-quick-panel';
+    waPanel.innerHTML = `
+      <div class="wa-panel-head">
+        <div class="wa-panel-avatar">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="#ffffff">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.705 1.754zm6.097-4.148l.437.259c1.554.921 3.33 1.409 5.145 1.41 5.46 0 9.902-4.442 9.904-9.9 0-2.645-1.03-5.132-2.903-7.006-1.874-1.874-4.362-2.903-7.007-2.903-5.462 0-9.903 4.442-9.905 9.9-.001 1.887.521 3.727 1.51 5.323l.285.457-1.002 3.662 3.746-.982z"/>
+          </svg>
+        </div>
+        <div class="wa-panel-title">
+          <div class="wa-panel-name">DK Enterprise Kudlu Gate</div>
+          <div class="wa-panel-status">
+            <span class="wa-status-dot"></span> Online · Replies in minutes
+          </div>
+        </div>
+        <button type="button" class="wa-panel-close-btn" id="wa-panel-close" aria-label="Close">&times;</button>
+      </div>
+
+      <div class="wa-panel-body">
+        <div class="wa-chat-bubble">
+          <p class="wa-bubble-text">Hello! 👋 Welcome to DK Enterprise Kudlu New Franchise. How can we help you today?</p>
+          <span class="wa-bubble-time">Just now</span>
+        </div>
+
+        <div class="wa-actions-label">Quick Actions</div>
+        <div class="wa-actions-list">
+          <a href="https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise Kudlu Gate, I want to schedule a doorstep parcel pickup from my address. Please let me know the available time slots.')}" target="_blank" rel="noopener noreferrer" class="wa-action-item">
+            <span class="wa-action-icon">📦</span>
+            <div class="wa-action-texts">
+              <span class="wa-action-main">Schedule a Pickup</span>
+              <span class="wa-action-sub">Doorstep collection at Kudlu Gate</span>
+            </div>
+            <span class="wa-action-arrow">→</span>
+          </a>
+
+          <a href="https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise Kudlu Gate, I need a courier rate estimate. My destination pincode is: [  ] and parcel weight is approx: [  ] kg.')}" target="_blank" rel="noopener noreferrer" class="wa-action-item">
+            <span class="wa-action-icon">💰</span>
+            <div class="wa-action-texts">
+              <span class="wa-action-main">Get Price Estimate</span>
+              <span class="wa-action-sub">Domestic &amp; International courier</span>
+            </div>
+            <span class="wa-action-arrow">→</span>
+          </a>
+
+          <a href="https://maps.app.goo.gl/Bp4kTUK2omVuxT347?g_st=awb" target="_blank" rel="noopener noreferrer" class="wa-action-item">
+            <span class="wa-action-icon">📍</span>
+            <div class="wa-action-texts">
+              <span class="wa-action-main">Store Directions</span>
+              <span class="wa-action-sub">Bren Palms, Kudlu · Open 9:30 AM–8:30 PM</span>
+            </div>
+            <span class="wa-action-arrow">↗</span>
+          </a>
+
+          <a href="https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise Kudlu Gate, I have an inquiry about courier services.')}" target="_blank" rel="noopener noreferrer" class="wa-action-item">
+            <span class="wa-action-icon">💬</span>
+            <div class="wa-action-texts">
+              <span class="wa-action-main">Direct Chat</span>
+              <span class="wa-action-sub">Talk directly with store staff</span>
+            </div>
+            <span class="wa-action-arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="wa-panel-footer">
+        DK Enterprise Kudlu New Franchise · Fast &amp; Safe Delivery
+      </div>`;
+
+    document.body.appendChild(waPanel);
+    document.body.appendChild(waBtn);
+
+    function toggleWa(open) {
+      const show = open !== undefined ? open : !waPanel.classList.contains('is-visible');
+      if (show) {
+        waPanel.classList.add('is-visible');
+        waBtn.classList.add('is-open');
+        const aiP = document.getElementById('ai-panel');
+        if (aiP) aiP.style.display = 'none';
+      } else {
+        waPanel.classList.remove('is-visible');
+        waBtn.classList.remove('is-open');
+      }
+    }
+
+    waBtn.addEventListener('click', () => toggleWa());
+    waPanel.querySelector('#wa-panel-close').addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleWa(false);
+    });
   }
   // re-run the active-link + auth-slot logic now that nav exists
   document.dispatchEvent(new Event('DOMContentLoaded'));
