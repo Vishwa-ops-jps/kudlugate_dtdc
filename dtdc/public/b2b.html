@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>B2B &amp; E-Commerce Courier Solutions — DK Enterprise Kudlu New Franchise</title>
-<link rel="stylesheet" href="/css/style.css?v=48">
+<link rel="stylesheet" href="/css/style.css?v=49">
 </head>
 <body>
 <div id="site-header"></div>
@@ -162,30 +162,24 @@
           <textarea id="b2b-notes" rows="3" placeholder="Tell us what goods you ship (e.g. clothes, documents, laptops, heavy cargo)..."></textarea>
         </div>
 
-        <button type="submit" class="btn btn-submit-review" id="b2b-submit-btn">
-          <span>Submit Corporate Inquiry</span>
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <button type="submit" class="btn btn-submit-review" id="b2b-submit-btn" style="background:linear-gradient(135deg, #25D366 0%, #16A34A 100%);box-shadow:0 4px 16px rgba(37,211,102,0.4);font-size:15px;">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="#ffffff" style="margin-right:6px;">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.705 1.754zm6.097-4.148l.437.259c1.554.921 3.33 1.409 5.145 1.41 5.46 0 9.902-4.442 9.904-9.9 0-2.645-1.03-5.132-2.903-7.006-1.874-1.874-4.362-2.903-7.007-2.903-5.462 0-9.903 4.442-9.905 9.9-.001 1.887.521 3.727 1.51 5.323l.285.457-1.002 3.662 3.746-.982z"/>
+          </svg>
+          <span>Send Inquiry via WhatsApp</span>
         </button>
       </form>
 
-      <div id="b2b-msg" style="margin-top:12px;"></div>
-
-      <div id="b2b-whatsapp-action" style="display:none;margin-top:16px;padding:14px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:12px;text-align:center;">
-        <p style="margin:0 0 8px;font-size:13.5px;color:#166534;font-weight:600;">✅ Inquiry Received! Our manager will call you shortly.</p>
-        <p style="margin:0 0 10px;font-size:12.5px;color:var(--grey);">Need an instant rate card or same-day pickup? Talk right away on WhatsApp:</p>
-        <a id="b2b-wa-link" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-review-cta" style="background:#25D366;box-shadow:0 4px 14px rgba(37,211,102,0.4);">
-          💬 Open WhatsApp with Details
-        </a>
-      </div>
+      <div id="b2b-msg" style="margin-top:14px;"></div>
     </div>
   </aside>
 </section>
 
 <div id="site-footer"></div>
 <script src="/js/api.js"></script>
-<script src="/js/chrome.js?v=37"></script>
+<script src="/js/chrome.js?v=38"></script>
 <script>
-document.getElementById('b2b-inquiry-form').addEventListener('submit', async function(e) {
+document.getElementById('b2b-inquiry-form').addEventListener('submit', function(e) {
   e.preventDefault();
   const btn = document.getElementById('b2b-submit-btn');
   const msgEl = document.getElementById('b2b-msg');
@@ -200,41 +194,52 @@ document.getElementById('b2b-inquiry-form').addEventListener('submit', async fun
   const notes = document.getElementById('b2b-notes').value.trim();
 
   if (!company || !name || !phone || !location) {
-    msgEl.innerHTML = '<div class="msg err">Please fill all required fields.</div>';
+    msgEl.innerHTML = '<div class="msg err">Please fill all required fields marked with *.</div>';
     return;
   }
 
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner" style="width:14px;height:14px;border-width:2px;margin-right:6px;"></span> Sending Inquiry…';
+  // Format clean, professional WhatsApp text
+  const waMessage = 
+`*New B2B Corporate Account Inquiry* 📦
+• *Company / Store:* ${company}
+• *Contact Person:* ${name}
+• *Mobile / WhatsApp:* ${phone}
+• *Business Email:* ${email || 'N/A'}
+• *Estimated Volume:* ${volume}
+• *Pickup Location:* ${location}
+• *Goods / Requirements:* ${notes || 'N/A'}`;
 
-  const fullMessage = `B2B Corporate Account Inquiry:\nCompany: ${company}\nContact: ${name}\nDaily Volume: ${volume}\nPickup Area: ${location}\nNotes: ${notes || 'N/A'}`;
+  const waUrl = `https://wa.me/916366118850?text=${encodeURIComponent(waMessage)}`;
 
-  try {
-    const res = await API.request('/enquiries', {
-      method: 'POST',
-      body: {
-        name: `${name} (${company})`,
-        phone: phone,
-        email: email || undefined,
-        subject: `[B2B Account] ${company} - ${volume}`,
-        message: fullMessage
-      },
-      auth: false
-    });
+  // Save to database in background so admin dashboard has a persistent record
+  API.request('/enquiries', {
+    method: 'POST',
+    body: {
+      name: `${name} (${company})`,
+      phone: phone,
+      email: email || undefined,
+      subject: `[B2B Account] ${company} - ${volume}`,
+      message: waMessage
+    },
+    auth: false
+  }).catch(err => console.warn('Enquiry background save error:', err));
 
-    msgEl.innerHTML = '<div class="msg ok">Inquiry saved! Our B2B representative has been notified.</div>';
-    
-    // Prepare WhatsApp link
-    const waText = encodeURIComponent(`Hello DK Enterprises Kudlu Gate, I would like to set up a B2B Courier Account.\nCompany: ${company}\nContact: ${name}\nDaily Volume: ${volume}\nPickup Location: ${location}\nPhone: ${phone}`);
-    const waLink = document.getElementById('b2b-wa-link');
-    waLink.href = `https://wa.me/916366118850?text=${waText}`;
-    document.getElementById('b2b-whatsapp-action').style.display = 'block';
+  // Show status & fallback link
+  msgEl.innerHTML = `
+    <div style="background:#F0FDF4;border:1.5px solid #86EFAC;color:#166534;padding:14px;border-radius:12px;text-align:center;">
+      <p style="margin:0 0 8px;font-size:14px;font-weight:700;">✅ Opening WhatsApp with your details...</p>
+      <p style="margin:0 0 12px;font-size:12.5px;color:#15803D;">If WhatsApp didn't launch automatically, tap below:</p>
+      <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="btn" style="background:#25D366;color:#ffffff;display:inline-flex;align-items:center;gap:6px;font-size:13.5px;padding:9px 18px;border-radius:24px;text-decoration:none;box-shadow:0 4px 12px rgba(37,211,102,0.4);">
+        <span>Open WhatsApp</span> →
+      </a>
+    </div>`;
 
-  } catch(err) {
-    msgEl.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = '<span>Submit Corporate Inquiry</span><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+  // Immediately launch WhatsApp
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if (isMobile) {
+    window.location.href = waUrl;
+  } else {
+    window.open(waUrl, '_blank');
   }
 });
 </script>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Student &amp; IT Luggage Relocation — DK Enterprise Kudlu New Franchise</title>
-<link rel="stylesheet" href="/css/style.css?v=48">
+<link rel="stylesheet" href="/css/style.css?v=49">
 </head>
 <body>
 <div id="site-header"></div>
@@ -174,28 +174,22 @@
           <textarea id="rel-notes" rows="2" placeholder="Mention if you have computer monitors, books, heavy winter wear, or special boxes needed..."></textarea>
         </div>
 
-        <button type="submit" class="btn btn-submit-review" id="rel-submit-btn">
-          <span>Get Quote &amp; Book Pickup</span>
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <button type="submit" class="btn btn-submit-review" id="rel-submit-btn" style="background:linear-gradient(135deg, #25D366 0%, #16A34A 100%);box-shadow:0 4px 16px rgba(37,211,102,0.4);font-size:15px;">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="#ffffff" style="margin-right:6px;">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.705 1.754zm6.097-4.148l.437.259c1.554.921 3.33 1.409 5.145 1.41 5.46 0 9.902-4.442 9.904-9.9 0-2.645-1.03-5.132-2.903-7.006-1.874-1.874-4.362-2.903-7.007-2.903-5.462 0-9.903 4.442-9.905 9.9-.001 1.887.521 3.727 1.51 5.323l.285.457-1.002 3.662 3.746-.982z"/>
+          </svg>
+          <span>Request Quote via WhatsApp</span>
         </button>
       </form>
 
-      <div id="rel-msg" style="margin-top:12px;"></div>
-
-      <div id="rel-whatsapp-action" style="display:none;margin-top:16px;padding:14px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:12px;text-align:center;">
-        <p style="margin:0 0 8px;font-size:13.5px;color:#166534;font-weight:600;">🎉 Request Received! We will call you with the lowest rate.</p>
-        <p style="margin:0 0 10px;font-size:12.5px;color:var(--grey);">For an immediate rate estimate or same-day box packing:</p>
-        <a id="rel-wa-link" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-review-cta" style="background:#25D366;box-shadow:0 4px 14px rgba(37,211,102,0.4);">
-          💬 Chat on WhatsApp with Details
-        </a>
-      </div>
+      <div id="rel-msg" style="margin-top:14px;"></div>
     </div>
   </aside>
 </section>
 
 <div id="site-footer"></div>
 <script src="/js/api.js"></script>
-<script src="/js/chrome.js?v=37"></script>
+<script src="/js/chrome.js?v=38"></script>
 <script>
 // Set default date to tomorrow
 try {
@@ -204,7 +198,7 @@ try {
   document.getElementById('rel-date').value = tomorrow.toISOString().split('T')[0];
 } catch(e){}
 
-document.getElementById('relocation-form').addEventListener('submit', async function(e) {
+document.getElementById('relocation-form').addEventListener('submit', function(e) {
   e.preventDefault();
   const btn = document.getElementById('rel-submit-btn');
   const msgEl = document.getElementById('rel-msg');
@@ -221,41 +215,53 @@ document.getElementById('relocation-form').addEventListener('submit', async func
   const notes = document.getElementById('rel-notes').value.trim();
 
   if (!name || !phone || !pickup || !city) {
-    msgEl.innerHTML = '<div class="msg err">Please fill all required fields.</div>';
+    msgEl.innerHTML = '<div class="msg err">Please fill all required fields marked with *.</div>';
     return;
   }
 
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner" style="width:14px;height:14px;border-width:2px;margin-right:6px;"></span> Sending Request…';
+  // Format clean, professional WhatsApp text
+  const waMessage = 
+`*New Luggage Relocation Quote Request* 🎒📦
+• *Customer Name:* ${name}
+• *Mobile / WhatsApp:* ${phone}
+• *Email:* ${email || 'N/A'}
+• *Bangalore Pickup Location:* ${pickup}
+• *Destination City:* ${city} (PIN: ${pincode || 'N/A'})
+• *Weight / Bags:* ${weight}
+• *Preferred Pickup Date:* ${date || 'Soonest'}
+• *Fragile / Special Notes:* ${notes || 'N/A'}`;
 
-  const fullMessage = `Luggage Relocation Request:\nName: ${name}\nDestination: ${city} (PIN: ${pincode || 'N/A'})\nWeight/Bags: ${weight}\nPickup Address: ${pickup}\nPreferred Date: ${date || 'Soonest'}\nNotes: ${notes || 'N/A'}`;
+  const waUrl = `https://wa.me/916366118850?text=${encodeURIComponent(waMessage)}`;
 
-  try {
-    const res = await API.request('/enquiries', {
-      method: 'POST',
-      body: {
-        name: name,
-        phone: phone,
-        email: email || undefined,
-        subject: `[Luggage Relocation] ${city} - ${weight}`,
-        message: fullMessage
-      },
-      auth: false
-    });
+  // Save to database in background
+  API.request('/enquiries', {
+    method: 'POST',
+    body: {
+      name: name,
+      phone: phone,
+      email: email || undefined,
+      subject: `[Luggage Relocation] ${city} - ${weight}`,
+      message: waMessage
+    },
+    auth: false
+  }).catch(err => console.warn('Relocation background save error:', err));
 
-    msgEl.innerHTML = '<div class="msg ok">Relocation request saved! Our cargo manager will call you shortly.</div>';
-    
-    // Prepare WhatsApp link
-    const waText = encodeURIComponent(`Hello DK Enterprises Kudlu Gate, I need a Luggage Relocation quote from Bangalore.\nName: ${name}\nDestination City: ${city}\nWeight/Bags: ${weight}\nPickup Location: ${pickup}\nDate: ${date}\nPhone: ${phone}`);
-    const waLink = document.getElementById('rel-wa-link');
-    waLink.href = `https://wa.me/916366118850?text=${waText}`;
-    document.getElementById('rel-whatsapp-action').style.display = 'block';
+  // Show status & fallback link
+  msgEl.innerHTML = `
+    <div style="background:#F0FDF4;border:1.5px solid #86EFAC;color:#166534;padding:14px;border-radius:12px;text-align:center;">
+      <p style="margin:0 0 8px;font-size:14px;font-weight:700;">✅ Opening WhatsApp with your details...</p>
+      <p style="margin:0 0 12px;font-size:12.5px;color:#15803D;">If WhatsApp didn't launch automatically, tap below:</p>
+      <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="btn" style="background:#25D366;color:#ffffff;display:inline-flex;align-items:center;gap:6px;font-size:13.5px;padding:9px 18px;border-radius:24px;text-decoration:none;box-shadow:0 4px 12px rgba(37,211,102,0.4);">
+        <span>Open WhatsApp</span> →
+      </a>
+    </div>`;
 
-  } catch(err) {
-    msgEl.innerHTML = `<div class="msg err">${escapeHtml(err.message)}</div>`;
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = '<span>Get Quote &amp; Book Pickup</span><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+  // Immediately launch WhatsApp
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if (isMobile) {
+    window.location.href = waUrl;
+  } else {
+    window.open(waUrl, '_blank');
   }
 });
 </script>
