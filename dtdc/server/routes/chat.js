@@ -41,6 +41,8 @@ BRANCH KNOWLEDGE BASE & FACTS
    - Document Courier: High-priority delivery for legal documents, passports, bank letters, academic certificates with tamper-evident envelopes.
    - International Shipping: Global parcel delivery to 200+ countries including USA, UK, Canada, Australia, UAE/Dubai, Europe, and Asia (requires standard invoice & KYC like Aadhaar/Passport).
    - Commercial & Bulk Cargo: Special discounted rates for business consignments, e-commerce dispatch, and multi-box relocations.
+   - B2B Corporate & E-Commerce Shipping (Dedicated page: /b2b.html): Tailored for local online brands, sellers, and offices. Scheduled 5 PM daily doorstep evening van collection, consolidated monthly GST credit invoicing (ITC tax invoice), commercial volume slab discounts, and protective laptop packaging.
+   - Student & IT Luggage Relocation (Dedicated page: /relocation.html): Designed for college students and IT professionals shifting PG or flats across India. Cheap per-kg surface cargo rates (much cheaper than airline excess baggage), free doorstep collection from PGs/apartments in Kudlu & Electronic City, and free waterproof shrink-wrap protection.
 
 6. RATES & PRICING RULES:
    - Rates depend on actual weight vs volumetric weight (Length × Width × Height in cm / 5000), destination pin code, and mode (Air Express vs Surface).
@@ -153,12 +155,22 @@ function getSmartFallbackReply(userText) {
     return 'We accept all standard payment methods including UPI (Google Pay, PhonePe, Paytm, QR scan), Cash, and Card at our counter.';
   }
 
-  // 17. Cargo / Heavy / Bulk shipment
-  if (q.includes('cargo') || q.includes('bulk') || q.includes('heavy') || q.includes('relocation') || q.includes('commercial')) {
-    return 'Yes, we handle heavy commercial cargo, freight consignments, and bulk parcels with special discounted commercial rates. Contact us on WhatsApp (+91 63661 18850) for bulk freight pricing.';
+  // 17. Student & IT Luggage Relocation / Shifting / PG Move
+  if (q.includes('luggage') || q.includes('relocat') || q.includes('shift') || q.includes('suitcase') || q.includes('duffle') || q.includes('student') || q.includes('pg move') || q.includes('baggage')) {
+    return 'Yes! We offer specialized Student & IT Luggage Relocation across India with cheap per-kg surface rates (much cheaper than airline excess baggage fees!). Includes free doorstep PG collection in Kudlu, HSR & Electronic City, plus free waterproof shrink wrapping. Book your luggage pickup here: /relocation.html or WhatsApp us at +91 63661 18850!';
   }
 
-  // 18. Default fallback
+  // 18. Corporate & E-Commerce B2B Shipping
+  if (q.includes('b2b') || q.includes('corporate') || q.includes('seller') || q.includes('business account') || q.includes('monthly bill') || q.includes('gst invoice') || q.includes('daily pickup') || q.includes('ecommerce') || q.includes('credit period')) {
+    return 'Yes! We provide dedicated B2B & Corporate Shipping accounts for local online sellers, startups, and offices. Benefits include daily scheduled 5 PM doorstep van collection, consolidated monthly GST credit billing (ITC invoice), and bulk commercial discounts. Register your business account here: /b2b.html or message our B2B desk on WhatsApp (+91 63661 18850)!';
+  }
+
+  // 19. Cargo / Heavy / Bulk shipment
+  if (q.includes('cargo') || q.includes('bulk') || q.includes('heavy') || q.includes('freight') || q.includes('commercial')) {
+    return 'Yes, we handle heavy commercial cargo, freight consignments, and multi-box bulk parcels with special discounted commercial rates. Contact us on WhatsApp (+91 63661 18850) or view our B2B solutions at /b2b.html for custom freight quotes!';
+  }
+
+  // 20. Default fallback
   return 'Welcome to DK Enterprise Kudlu New Franchise! We are open Mon–Sat (9:30 AM – 8:30 PM) at BREN PALMS, Kudlu Main Road (above Med Plus). For instant rate quotes, doorstep pickup, or queries, call or WhatsApp us at +91 63661 18850!';
 }
 

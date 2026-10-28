@@ -1,0 +1,7 @@
+# robots.txt for DK Enterprise Kudlu New Franchise
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: https://kudlugatecourier.online/sitemap.xml

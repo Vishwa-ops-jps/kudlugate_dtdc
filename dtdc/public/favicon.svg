@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="dkBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E31837"/>
+      <stop offset="100%" stop-color="#991B1B"/>
+    </linearGradient>
+    <filter id="dkShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#dkBg)"/>
+  <rect x="2.5" y="2.5" width="59" height="59" rx="13" fill="none" stroke="#F59E0B" stroke-width="2" opacity="0.75"/>
+  <text x="32" y="44" font-family="'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="30" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1" filter="url(#dkShadow)">DK</text>
+  <circle cx="51" cy="13" r="5" fill="#10B981" stroke="#ffffff" stroke-width="1.8"/>
+</svg>
