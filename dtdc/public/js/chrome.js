@@ -72,8 +72,6 @@ function renderChrome() {
           <div class="nav-links" data-nav-links>
             <a href="/">Home</a>
             <a href="https://www.dtdc.com/track-your-shipment/" target="_blank" rel="noopener noreferrer">Track</a>
-            <a href="/b2b.html">B2B Shipping</a>
-            <a href="/relocation.html">Luggage Relocation</a>
             <a href="/reviews.html">Reviews</a>
             <a class="whatsapp-contact" href="https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise Kudlu New Franchise, I need help with a courier.')}" target="_blank" rel="noopener noreferrer"><span class="whatsapp-dot" aria-hidden="true"></span>WhatsApp</a>
             <span data-auth-slot style="display:flex;gap:6px;align-items:center;"></span>
