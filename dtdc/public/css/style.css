@@ -1760,3 +1760,150 @@ footer .fine {
   .btn:hover { transform: none; }
   .spinner { animation: none; }
 }
+
+/* ---------- B2B & Relocation Specialized Pages ---------- */
+.b2b-hero, .relocation-hero {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F1F5F9 100%);
+  border-bottom: 1px solid var(--grey-line);
+  padding: 44px 0 36px;
+}
+.b2b-hero-content, .relocation-hero-content {
+  max-width: 860px;
+}
+.b2b-title {
+  font-size: clamp(28px, 3.8vw, 42px);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+  margin: 10px 0 14px;
+  letter-spacing: -0.02em;
+}
+.b2b-subtitle {
+  font-size: 16px;
+  color: #475569;
+  line-height: 1.65;
+  margin: 0 0 24px;
+}
+.b2b-hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 26px;
+}
+.b2b-badge-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 24px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  box-shadow: 0 2px 8px rgba(12, 35, 64, 0.04);
+}
+.b2b-badge-icon {
+  font-size: 16px;
+}
+.b2b-hero-ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.b2b-layout-wrap {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 36px;
+  padding-top: 40px;
+  padding-bottom: 70px;
+  align-items: start;
+}
+.b2b-info-col {
+  min-width: 0;
+}
+.b2b-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 28px;
+}
+.b2b-feature-card {
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 4px 14px rgba(12, 35, 64, 0.04);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.b2b-feature-card:hover {
+  transform: translateY(-3px);
+  border-color: #CBD5E1;
+  box-shadow: 0 8px 24px rgba(12, 35, 64, 0.08);
+}
+.b2b-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+.b2b-feature-card h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+.b2b-feature-card p {
+  font-size: 13.5px;
+  color: var(--grey);
+  line-height: 1.5;
+  margin: 0;
+}
+.b2b-client-types-box {
+  background: #FFFFFF;
+  border: 1.5px dashed #CBD5E1;
+  border-radius: 14px;
+  padding: 20px;
+}
+.b2b-client-types-box h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 14px;
+}
+.client-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.client-tag {
+  background: #F1F5F9;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #334155;
+}
+.b2b-form-col {
+  position: sticky;
+  top: 90px;
+}
+
+@media (max-width: 900px) {
+  .b2b-layout-wrap {
+    grid-template-columns: 1fr;
+  }
+  .b2b-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .b2b-form-col {
+    position: static;
+  }
+}
