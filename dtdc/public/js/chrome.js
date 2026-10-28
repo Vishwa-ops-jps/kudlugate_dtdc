@@ -316,5 +316,133 @@ function renderChrome() {
   }
   // re-run the active-link + auth-slot logic now that nav exists
   document.dispatchEvent(new Event('DOMContentLoaded'));
+
+  // Initialize dynamic scroll up/down animations & content reveals
+  initScrollAnimations();
+}
+
+/**
+ * Dynamic Directional Scroll Animations:
+ * 1. Scroll Down: Top header hides smoothly ("above part should be invisible").
+ * 2. Scroll Up: Bottom floating widgets hide smoothly ("down part should be invisible"), top header returns.
+ * 3. At top/bottom: Natural accessible states.
+ * 4. Elements reveal smoothly into view as you scroll up and down.
+ */
+function initScrollAnimations() {
+  let lastScrollY = Math.max(0, window.pageYOffset || document.documentElement.scrollTop || 0);
+  let isTicking = false;
+  const nav = document.querySelector('.site-nav');
+  const waBtn = document.getElementById('wa-float-btn');
+  const aiBtn = document.getElementById('ai-float');
+  const waPanel = document.getElementById('wa-quick-panel');
+  const aiPanel = document.getElementById('ai-panel');
+
+  function handleScroll() {
+    const currentScrollY = Math.max(0, window.pageYOffset || document.documentElement.scrollTop || 0);
+    const scrollDelta = currentScrollY - lastScrollY;
+    const windowHeight = window.innerHeight;
+    const docHeight = document.documentElement.scrollHeight;
+    const isNearBottom = (currentScrollY + windowHeight) >= (docHeight - 60);
+
+    // Keep nav visible if mobile menu drawer is open
+    const isMobileNavOpen = !!document.querySelector('.nav-links.open');
+
+    // Hysteresis threshold to prevent vibration/micro-movement triggers
+    if (Math.abs(scrollDelta) > 5 || currentScrollY <= 40 || isNearBottom) {
+      if (currentScrollY <= 60) {
+        // At top of page: header and bottom widgets are visible
+        if (nav) nav.classList.remove('nav-hidden');
+        if (waBtn) waBtn.classList.remove('wa-hidden');
+        if (aiBtn) aiBtn.classList.remove('robot-hidden');
+      } else if (isNearBottom) {
+        // Near page bottom: bottom quick widgets stay visible
+        if (waBtn) waBtn.classList.remove('wa-hidden');
+        if (aiBtn) aiBtn.classList.remove('robot-hidden');
+      } else if (scrollDelta > 0) {
+        // SCROLLING DOWN:
+        // Top header becomes invisible
+        if (nav && !isMobileNavOpen) {
+          nav.classList.add('nav-hidden');
+        }
+        // Bottom widgets become visible
+        if (waBtn) waBtn.classList.remove('wa-hidden');
+        if (aiBtn) aiBtn.classList.remove('robot-hidden');
+      } else {
+        // SCROLLING UP:
+        // Top header becomes visible
+        if (nav) nav.classList.remove('nav-hidden');
+        // Bottom widgets become invisible
+        if (waBtn) {
+          waBtn.classList.add('wa-hidden');
+          if (waPanel && waPanel.classList.contains('is-visible')) {
+            waPanel.classList.remove('is-visible');
+            waBtn.classList.remove('is-open');
+          }
+        }
+        if (aiBtn) {
+          aiBtn.classList.add('robot-hidden');
+          if (aiPanel && aiPanel.style.display === 'flex') {
+            aiPanel.style.display = 'none';
+          }
+        }
+      }
+      lastScrollY = currentScrollY;
+    }
+    isTicking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(handleScroll);
+      isTicking = true;
+    }
+  }, { passive: true });
+
+  // Initial trigger to configure visibility based on load position
+  handleScroll();
+
+  // Scroll reveal observer for elements across the website
+  initScrollReveal();
+}
+
+function initScrollReveal() {
+  const explicit = Array.from(document.querySelectorAll('.scroll-reveal, .scroll-reveal-scale'));
+  const autoTargets = Array.from(document.querySelectorAll(
+    '.service-bullet-item, .b2b-feature-card, .relocation-card, .b2b-card, .contact-item-card, .why-list li, .trust-score-card, .review-card-modern, .info-grid > div, .map-embed'
+  ));
+
+  const allElements = Array.from(new Set([...explicit, ...autoTargets]));
+  allElements.forEach((el) => {
+    if (!el.classList.contains('scroll-reveal') && !el.classList.contains('scroll-reveal-scale')) {
+      el.classList.add('scroll-reveal');
+      const parent = el.parentElement;
+      if (parent) {
+        const idx = Array.from(parent.children).indexOf(el);
+        if (idx >= 0 && idx < 6) {
+          el.classList.add('stagger-' + ((idx % 6) + 1));
+        }
+      }
+    }
+  });
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        } else if (entry.boundingClientRect.top > window.innerHeight) {
+          // Re-trigger animation when scrolled back down
+          entry.target.classList.remove('in-view');
+        }
+      });
+    }, {
+      rootMargin: '0px 0px -40px 0px',
+      threshold: 0.08
+    });
+
+    allElements.forEach(el => observer.observe(el));
+  } else {
+    allElements.forEach(el => el.classList.add('in-view'));
+  }
 }
 document.addEventListener('DOMContentLoaded', renderChrome, { once: true });
