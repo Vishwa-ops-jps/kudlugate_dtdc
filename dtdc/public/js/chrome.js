@@ -129,57 +129,109 @@ function renderChrome() {
     btn.className = 'robot-ai-btn';
     btn.setAttribute('aria-label', 'Chat with AI Assistant');
     btn.innerHTML = `
-      <svg class="robot-svg" viewBox="0 0 48 58" aria-hidden="true">
-        <!-- Antenna -->
-        <line x1="24" y1="6" x2="24" y2="10" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round"/>
-        <circle class="robot-antenna-light" cx="24" cy="4" r="2.8"/>
+      <svg class="robot-svg" viewBox="0 0 100 115" aria-hidden="true">
+        <defs>
+          <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="60%" stop-color="#F1F5F9"/>
+            <stop offset="100%" stop-color="#CBD5E1"/>
+          </linearGradient>
+          <linearGradient id="blueCapGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#2563EB"/>
+            <stop offset="100%" stop-color="#1D4ED8"/>
+          </linearGradient>
+          <linearGradient id="visorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#1E3A8A"/>
+            <stop offset="100%" stop-color="#0F172A"/>
+          </linearGradient>
+          <radialGradient id="eyeGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#38BDF8"/>
+            <stop offset="65%" stop-color="#0284C7"/>
+            <stop offset="100%" stop-color="#0F172A"/>
+          </radialGradient>
+          <linearGradient id="redBallGrad" x1="30%" y1="20%" x2="80%" y2="80%">
+            <stop offset="0%" stop-color="#FF4D4D"/>
+            <stop offset="40%" stop-color="#E31837"/>
+            <stop offset="100%" stop-color="#880000"/>
+          </linearGradient>
+        </defs>
 
-        <!-- Ears / Earphones -->
-        <rect x="6.5" y="16" width="3" height="7.5" rx="1.5" fill="#E31E24"/>
-        <rect x="38.5" y="16" width="3" height="7.5" rx="1.5" fill="#E31E24"/>
+        <!-- Ground Hover Shadow -->
+        <ellipse cx="50" cy="110" rx="22" ry="4" fill="#0C2340" class="robot-shadow"/>
 
-        <!-- Head -->
-        <g class="robot-head">
-          <rect x="9" y="10" width="30" height="19" rx="6.5" fill="#ffffff" stroke="#E2E6EE" stroke-width="1.2"/>
-          <rect x="12" y="12.5" width="24" height="14" rx="4" fill="#0F172A"/>
-          <ellipse class="robot-eye" cx="18" cy="19" rx="2.2" ry="2.6" fill="#00F0FF"/>
-          <ellipse class="robot-eye" cx="30" cy="19" rx="2.2" ry="2.6" fill="#00F0FF"/>
-          <path d="M20 22.5 Q24 24.8 28 22.5" stroke="#00F0FF" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <!-- Dual Antennas with Red Glossy Spheres -->
+        <path d="M28 26 L19 12" stroke="#CBD5E1" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="18" cy="11" r="5" fill="url(#redBallGrad)"/>
+        <circle cx="16.5" cy="9.5" r="1.5" fill="#FFFFFF" opacity="0.85"/>
+
+        <path d="M72 26 L81 12" stroke="#CBD5E1" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="82" cy="11" r="5" fill="url(#redBallGrad)"/>
+        <circle cx="80.5" cy="9.5" r="1.5" fill="#FFFFFF" opacity="0.85"/>
+
+        <!-- Earphone modules with red trim -->
+        <rect x="14" y="27" width="9" height="19" rx="4.5" fill="url(#bodyGrad)" stroke="#CBD5E1" stroke-width="1.2"/>
+        <path d="M16 32 L16 41" stroke="#E31837" stroke-width="2" stroke-linecap="round"/>
+        
+        <rect x="77" y="27" width="9" height="19" rx="4.5" fill="url(#bodyGrad)" stroke="#CBD5E1" stroke-width="1.2"/>
+        <path d="M84 32 L84 41" stroke="#E31837" stroke-width="2" stroke-linecap="round"/>
+
+        <!-- Head Group with subtle bob -->
+        <g class="robot-head-bob">
+          <!-- Helmet -->
+          <rect x="21" y="16" width="58" height="46" rx="23" fill="url(#bodyGrad)" stroke="#CBD5E1" stroke-width="1.3"/>
+          
+          <!-- Blue Top Crest -->
+          <path d="M30 25 C30 17, 70 17, 70 25 C66 31, 34 31, 30 25 Z" fill="url(#blueCapGrad)"/>
+          <!-- White Forehead Plate -->
+          <path d="M43 16.5 L57 16.5 L54 27 L46 27 Z" fill="#FFFFFF"/>
+
+          <!-- Blue Visor Mask -->
+          <rect x="25" y="26" width="50" height="24" rx="11" fill="url(#visorGrad)" stroke="#1D4ED8" stroke-width="1.4"/>
+
+          <!-- Eyebrows -->
+          <path d="M31 23 Q36 20 42 23" stroke="#0F172A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+          <path d="M58 23 Q64 20 69 23" stroke="#0F172A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+
+          <!-- Left Anime Eye -->
+          <ellipse cx="37" cy="38" rx="6.5" ry="8" fill="url(#eyeGlow)"/>
+          <ellipse cx="37" cy="38.5" rx="5" ry="6.5" fill="#061224"/>
+          <circle cx="35" cy="35.5" r="2.2" fill="#FFFFFF" class="robot-eye-shine"/>
+          <circle cx="39" cy="41.5" r="1.1" fill="#FFFFFF"/>
+
+          <!-- Right Anime Eye -->
+          <ellipse cx="63" cy="38" rx="6.5" ry="8" fill="url(#eyeGlow)"/>
+          <ellipse cx="63" cy="38.5" rx="5" ry="6.5" fill="#061224"/>
+          <circle cx="61" cy="35.5" r="2.2" fill="#FFFFFF" class="robot-eye-shine"/>
+          <circle cx="65" cy="41.5" r="1.1" fill="#FFFFFF"/>
+
+          <!-- Chin Speaker Accent -->
+          <rect x="47" y="54" width="6" height="2" rx="1" fill="#E31837"/>
         </g>
 
         <!-- Neck Joint -->
-        <rect x="21" y="29" width="6" height="2.5" rx="1.2" fill="#94A3B8"/>
+        <rect x="45" y="60" width="10" height="4" rx="2" fill="#64748B"/>
 
-        <!-- Torso Body -->
-        <rect x="14" y="31.5" width="20" height="14.5" rx="4.5" fill="#ffffff" stroke="#CBD5E1" stroke-width="1.2"/>
-        <!-- Chest Screen & Meter -->
-        <rect x="17.5" y="34" width="13" height="6.5" rx="2" fill="#0F172A"/>
-        <circle cx="21" cy="37.2" r="1.5" fill="#00F0FF"/>
-        <rect x="24.5" y="36.5" width="4" height="1.6" rx="0.8" fill="#E31E24"/>
-        <!-- Belt -->
-        <rect x="15.5" y="43" width="17" height="2" rx="1" fill="#E31E24"/>
+        <!-- Glossy Hover Pod Torso -->
+        <path d="M30 63 C30 59, 70 59, 70 63 C74 78, 62 100, 50 104 C38 100, 26 78, 30 63 Z" fill="url(#bodyGrad)" stroke="#CBD5E1" stroke-width="1.3"/>
+        
+        <!-- Chest Red Trim Curve -->
+        <path d="M35 67 Q50 77 65 67" stroke="#E31837" stroke-width="2" stroke-linecap="round" fill="none"/>
 
-        <!-- Left Arm & Hand (Waving!) -->
-        <g class="robot-wave-arm">
-          <path d="M14 33 Q8 30 6 22" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none"/>
-          <circle cx="6" cy="21" r="2.6" fill="#E31E24"/>
+        <!-- Red Triangular DTDC Chest Core -->
+        <polygon points="50,71 44,80 56,80" fill="url(#redBallGrad)"/>
+
+        <!-- Left Articulated Arm (Magnetic Shoulder) -->
+        <g class="robot-arm-left">
+          <circle cx="27" cy="69" r="4.5" fill="url(#redBallGrad)"/>
+          <path d="M26 70 Q16 75 18 88" stroke="url(#bodyGrad)" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <circle cx="18" cy="88" r="3.8" fill="#1D4ED8"/>
         </g>
 
-        <!-- Right Arm & Hand -->
-        <g>
-          <path d="M34 33 Q39 36 40 42" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none"/>
-          <circle cx="40" cy="43" r="2.6" fill="#E31E24"/>
-        </g>
-
-        <!-- Legs & Feet -->
-        <g class="robot-legs">
-          <!-- Left Leg -->
-          <line x1="19" y1="46" x2="19" y2="52" stroke="#94A3B8" stroke-width="2.6" stroke-linecap="round"/>
-          <path d="M15.5 52 C15.5 50.5, 22 50.5, 22 52 L22 54.5 C22 55.5, 15.5 55.5, 15.5 54.5 Z" fill="#E31E24"/>
-
-          <!-- Right Leg -->
-          <line x1="29" y1="46" x2="29" y2="52" stroke="#94A3B8" stroke-width="2.6" stroke-linecap="round"/>
-          <path d="M26 52 C26 50.5, 32.5 50.5, 32.5 52 L32.5 54.5 C32.5 55.5, 26 55.5, 26 54.5 Z" fill="#E31E24"/>
+        <!-- Right Articulated Arm (Magnetic Shoulder) -->
+        <g class="robot-arm-right">
+          <circle cx="73" cy="69" r="4.5" fill="url(#redBallGrad)"/>
+          <path d="M74 70 Q84 75 82 88" stroke="url(#bodyGrad)" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <circle cx="82" cy="88" r="3.8" fill="#1D4ED8"/>
         </g>
       </svg>`;
 
