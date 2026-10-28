@@ -1455,30 +1455,47 @@ footer .fine {
 @media (max-width: 900px) { .grid-6 { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .grid-6 { grid-template-columns: 1fr; } }
 
-/* ---------- Our Services Layout (Full-Width Horizontal Cards stacked like Image 2) ---------- */
+/* ---------- Our Services Layout (Compact Line-Wise Grid without Explanations) ---------- */
 .services-grid,
 .services-list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  max-width: 820px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 980px;
   margin: 0 auto;
   width: 100%;
+}
+
+@media (max-width: 820px) {
+  .services-grid,
+  .services-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .services-grid,
+  .services-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
 }
 
 .service-bullet-item {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 16px 20px;
+  gap: 10px;
+  padding: 10px 14px;
   background: #ffffff;
   border: 1.5px solid #0c2340;
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(20, 43, 110, 0.06);
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(20, 43, 110, 0.05);
   position: relative;
   overflow: hidden;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
+  min-height: 52px;
 }
 
 .service-bullet-item::before {
@@ -1487,20 +1504,20 @@ footer .fine {
   top: 0;
   left: 0;
   bottom: 0;
-  width: 5px;
+  width: 4px;
   background: linear-gradient(180deg, #E31837 0%, #0c2340 100%);
   border-radius: 4px 0 0 4px;
 }
 
 .service-bullet-item:hover {
   border-color: #E31837;
-  transform: translateY(-5px) translateX(3px);
-  box-shadow: 0 12px 28px rgba(20, 43, 110, 0.18), 0 0 14px rgba(215, 25, 32, 0.12);
+  transform: translateY(-3px) translateX(2px);
+  box-shadow: 0 8px 20px rgba(20, 43, 110, 0.14), 0 0 10px rgba(215, 25, 32, 0.1);
 }
 
 .service-bullet-item .bullet-icon {
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1511,8 +1528,8 @@ footer .fine {
 }
 
 .service-bullet-item .bullet-icon svg {
-  width: 21px;
-  height: 21px;
+  width: 18px;
+  height: 18px;
   stroke: #ffffff;
   stroke-width: 2.2;
 }
@@ -1558,36 +1575,45 @@ footer .fine {
 .service-bullet-item:hover .bullet-icon.icon-ledger { box-shadow: 0 8px 22px rgba(59, 130, 246, 0.65); }
 .service-bullet-item:hover .bullet-icon.icon-alerts { box-shadow: 0 8px 22px rgba(139, 92, 246, 0.65); }
 
+.service-bullet-item .bullet-content {
+  min-width: 0;
+  flex: 1;
+}
+
+.service-bullet-item .bullet-content h4,
 .service-bullet-item h4 {
-  font-size: 15.5px;
-  font-weight: 700;
-  color: #0c2340;
-  margin: 0 0 3px 0;
-  letter-spacing: 0.15px;
-}
-
-.service-bullet-item p {
-  font-size: 13.5px;
-  color: #4B5563;
-  margin: 0;
-  line-height: 1.4;
-}
-
-
-.service-bullet-item .bullet-content h4 {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 16.5px;
+  font-size: 14.5px;
   font-weight: 700;
   color: #0c2340;
-  margin: 0 0 4px 0;
+  margin: 0;
   line-height: 1.25;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.service-bullet-item .bullet-content p {
-  font-size: 13.5px;
-  color: #556987;
-  margin: 0;
-  line-height: 1.45;
+@media (max-width: 480px) {
+  .service-bullet-item {
+    padding: 8px 10px;
+    gap: 8px;
+    min-height: 48px;
+  }
+  .service-bullet-item .bullet-icon {
+    width: 32px;
+    height: 32px;
+  }
+  .service-bullet-item .bullet-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+  .service-bullet-item .bullet-content h4,
+  .service-bullet-item h4 {
+    font-size: 12px;
+    white-space: normal;
+    line-height: 1.2;
+  }
 }
 
 /* ---------- Contact / Map / Why-choose-us band ---------- */
