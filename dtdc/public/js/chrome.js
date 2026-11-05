@@ -510,108 +510,121 @@ function renderChrome() {
     btn.innerHTML = `
       <svg class="robot-svg" viewBox="0 0 100 115" aria-hidden="true">
         <defs>
-          <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <!-- Doraemon Blue Gradient -->
+          <linearGradient id="doraBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#29B6F6"/>
+            <stop offset="45%" stop-color="#0288D1"/>
+            <stop offset="100%" stop-color="#01579B"/>
+          </linearGradient>
+
+          <!-- White Belly / Face Gradient -->
+          <linearGradient id="doraWhite" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stop-color="#FFFFFF"/>
-            <stop offset="60%" stop-color="#F1F5F9"/>
-            <stop offset="100%" stop-color="#CBD5E1"/>
+            <stop offset="85%" stop-color="#F8FAFC"/>
+            <stop offset="100%" stop-color="#E2E8F0"/>
           </linearGradient>
-          <linearGradient id="blueCapGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#2563EB"/>
-            <stop offset="100%" stop-color="#1D4ED8"/>
+
+          <!-- Red Nose & Collar Gradient -->
+          <linearGradient id="doraRed" x1="25%" y1="20%" x2="80%" y2="80%">
+            <stop offset="0%" stop-color="#FF5252"/>
+            <stop offset="50%" stop-color="#E53935"/>
+            <stop offset="100%" stop-color="#B71C1C"/>
           </linearGradient>
-          <linearGradient id="visorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#1E3A8A"/>
-            <stop offset="100%" stop-color="#0F172A"/>
+
+          <!-- Gold Bell Gradient -->
+          <linearGradient id="doraBell" x1="20%" y1="20%" x2="80%" y2="90%">
+            <stop offset="0%" stop-color="#FFF176"/>
+            <stop offset="45%" stop-color="#FBC02D"/>
+            <stop offset="100%" stop-color="#F57F17"/>
           </linearGradient>
-          <radialGradient id="eyeGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#38BDF8"/>
-            <stop offset="65%" stop-color="#0284C7"/>
-            <stop offset="100%" stop-color="#0F172A"/>
-          </radialGradient>
-          <linearGradient id="redBallGrad" x1="30%" y1="20%" x2="80%" y2="80%">
-            <stop offset="0%" stop-color="#FF4D4D"/>
-            <stop offset="40%" stop-color="#E31837"/>
-            <stop offset="100%" stop-color="#880000"/>
+
+          <!-- Inner Mouth Gradient -->
+          <linearGradient id="doraMouth" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#C62828"/>
+            <stop offset="100%" stop-color="#8E0000"/>
           </linearGradient>
         </defs>
 
         <!-- Ground Hover Shadow -->
-        <ellipse cx="50" cy="110" rx="22" ry="4" fill="#0C2340" class="robot-shadow"/>
+        <ellipse cx="50" cy="111" rx="23" ry="4" fill="#0C2340" class="robot-shadow"/>
 
-        <!-- Dual Antennas with Red Glossy Spheres -->
-        <path d="M28 26 L19 12" stroke="#CBD5E1" stroke-width="2.5" stroke-linecap="round"/>
-        <circle cx="18" cy="11" r="5" fill="url(#redBallGrad)"/>
-        <circle cx="16.5" cy="9.5" r="1.5" fill="#FFFFFF" opacity="0.85"/>
-
-        <path d="M72 26 L81 12" stroke="#CBD5E1" stroke-width="2.5" stroke-linecap="round"/>
-        <circle cx="82" cy="11" r="5" fill="url(#redBallGrad)"/>
-        <circle cx="80.5" cy="9.5" r="1.5" fill="#FFFFFF" opacity="0.85"/>
-
-        <!-- Earphone modules with red trim -->
-        <rect x="14" y="27" width="9" height="19" rx="4.5" fill="url(#bodyGrad)" stroke="#CBD5E1" stroke-width="1.2"/>
-        <path d="M16 32 L16 41" stroke="#E31837" stroke-width="2" stroke-linecap="round"/>
-        
-        <rect x="77" y="27" width="9" height="19" rx="4.5" fill="url(#bodyGrad)" stroke="#CBD5E1" stroke-width="1.2"/>
-        <path d="M84 32 L84 41" stroke="#E31837" stroke-width="2" stroke-linecap="round"/>
-
-        <!-- Head Group with subtle bob -->
-        <g class="robot-head-bob">
-          <!-- Helmet -->
-          <rect x="21" y="16" width="58" height="46" rx="23" fill="url(#bodyGrad)" stroke="#CBD5E1" stroke-width="1.3"/>
-          
-          <!-- Blue Top Crest -->
-          <path d="M30 25 C30 17, 70 17, 70 25 C66 31, 34 31, 30 25 Z" fill="url(#blueCapGrad)"/>
-          <!-- White Forehead Plate -->
-          <path d="M43 16.5 L57 16.5 L54 27 L46 27 Z" fill="#FFFFFF"/>
-
-          <!-- Blue Visor Mask -->
-          <rect x="25" y="26" width="50" height="24" rx="11" fill="url(#visorGrad)" stroke="#1D4ED8" stroke-width="1.4"/>
-
-          <!-- Eyebrows -->
-          <path d="M31 23 Q36 20 42 23" stroke="#0F172A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-          <path d="M58 23 Q64 20 69 23" stroke="#0F172A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-
-          <!-- Left Anime Eye -->
-          <ellipse cx="37" cy="38" rx="6.5" ry="8" fill="url(#eyeGlow)"/>
-          <ellipse cx="37" cy="38.5" rx="5" ry="6.5" fill="#061224"/>
-          <circle cx="35" cy="35.5" r="2.2" fill="#FFFFFF" class="robot-eye-shine"/>
-          <circle cx="39" cy="41.5" r="1.1" fill="#FFFFFF"/>
-
-          <!-- Right Anime Eye -->
-          <ellipse cx="63" cy="38" rx="6.5" ry="8" fill="url(#eyeGlow)"/>
-          <ellipse cx="63" cy="38.5" rx="5" ry="6.5" fill="#061224"/>
-          <circle cx="61" cy="35.5" r="2.2" fill="#FFFFFF" class="robot-eye-shine"/>
-          <circle cx="65" cy="41.5" r="1.1" fill="#FFFFFF"/>
-
-          <!-- Chin Speaker Accent -->
-          <rect x="47" y="54" width="6" height="2" rx="1" fill="#E31837"/>
-        </g>
-
-        <!-- Neck Joint -->
-        <rect x="45" y="60" width="10" height="4" rx="2" fill="#64748B"/>
-
-        <!-- Glossy Hover Pod Torso -->
-        <path d="M30 63 C30 59, 70 59, 70 63 C74 78, 62 100, 50 104 C38 100, 26 78, 30 63 Z" fill="url(#bodyGrad)" stroke="#CBD5E1" stroke-width="1.3"/>
-        
-        <!-- Chest Red Trim Curve -->
-        <path d="M35 67 Q50 77 65 67" stroke="#E31837" stroke-width="2" stroke-linecap="round" fill="none"/>
-
-        <!-- Red Triangular DTDC Chest Core -->
-        <polygon points="50,71 44,80 56,80" fill="url(#redBallGrad)"/>
-
-        <!-- Left Articulated Arm (Magnetic Shoulder) -->
+        <!-- Left Arm (Doraemon Blue with White Ball Hand) -->
         <g class="robot-arm-left">
-          <circle cx="27" cy="69" r="4.5" fill="url(#redBallGrad)"/>
-          <path d="M26 70 Q16 75 18 88" stroke="url(#bodyGrad)" stroke-width="7" stroke-linecap="round" fill="none"/>
-          <circle cx="18" cy="88" r="3.8" fill="#1D4ED8"/>
+          <path d="M26 70 Q14 74 15 85" stroke="url(#doraBlue)" stroke-width="8" stroke-linecap="round" fill="none"/>
+          <circle cx="15" cy="85" r="5" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="0.8"/>
         </g>
 
-        <!-- Right Articulated Arm (Magnetic Shoulder) -->
+        <!-- Right Arm (Doraemon Blue with White Ball Hand) -->
         <g class="robot-arm-right">
-          <circle cx="73" cy="69" r="4.5" fill="url(#redBallGrad)"/>
-          <path d="M74 70 Q84 75 82 88" stroke="url(#bodyGrad)" stroke-width="7" stroke-linecap="round" fill="none"/>
-          <circle cx="82" cy="88" r="3.8" fill="#1D4ED8"/>
+          <path d="M74 70 Q86 74 85 85" stroke="url(#doraBlue)" stroke-width="8" stroke-linecap="round" fill="none"/>
+          <circle cx="85" cy="85" r="5" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="0.8"/>
         </g>
+
+        <!-- Blue Torso (Round Doraemon Body) -->
+        <path d="M29 65 C29 60, 71 60, 71 65 C76 80, 66 102, 50 105 C34 102, 24 80, 29 65 Z" fill="url(#doraBlue)" stroke="#01579B" stroke-width="1.2"/>
+
+        <!-- White Round Belly Area -->
+        <ellipse cx="50" cy="82" rx="17" ry="16" fill="url(#doraWhite)" stroke="#CBD5E1" stroke-width="0.8"/>
+
+        <!-- Doraemon 4D Pocket (Half-moon Pouch) -->
+        <path d="M38 80 C38 80, 50 80, 62 80 C62 89, 38 89, 38 80 Z" fill="#FFFFFF" stroke="#64748B" stroke-width="1.2"/>
+
+        <!-- Head Group with bob animation -->
+        <g class="robot-head-bob">
+          <!-- Big Round Blue Head -->
+          <ellipse cx="50" cy="35" rx="34" ry="29" fill="url(#doraBlue)" stroke="#01579B" stroke-width="1.3"/>
+
+          <!-- White Face Muzzle Patch -->
+          <ellipse cx="50" cy="38" rx="27" ry="22" fill="url(#doraWhite)" stroke="#E2E8F0" stroke-width="0.8"/>
+
+          <!-- Left Eye (Big White Oval) -->
+          <ellipse cx="44" cy="22" rx="6.5" ry="8.5" fill="#FFFFFF" stroke="#1E293B" stroke-width="1.2"/>
+          <ellipse cx="45" cy="22.5" rx="2.5" ry="3.5" fill="#0F172A"/>
+          <circle cx="44.2" cy="21" r="1.1" fill="#FFFFFF"/>
+
+          <!-- Right Eye (Big White Oval) -->
+          <ellipse cx="56" cy="22" rx="6.5" ry="8.5" fill="#FFFFFF" stroke="#1E293B" stroke-width="1.2"/>
+          <ellipse cx="55" cy="22.5" rx="2.5" ry="3.5" fill="#0F172A"/>
+          <circle cx="55.8" cy="21" r="1.1" fill="#FFFFFF"/>
+
+          <!-- Red Shiny Nose -->
+          <circle cx="50" cy="29" r="4.2" fill="url(#doraRed)"/>
+          <circle cx="48.8" cy="27.8" r="1.2" fill="#FFFFFF" opacity="0.9"/>
+
+          <!-- Nose vertical line to mouth -->
+          <line x1="50" y1="33.2" x2="50" y2="42" stroke="#1E293B" stroke-width="1.3"/>
+
+          <!-- Happy Doraemon Smile -->
+          <path d="M33 42 Q50 55 67 42" stroke="#1E293B" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <path d="M37 43 Q50 54 63 43 Z" fill="url(#doraMouth)"/>
+          <!-- Cute Pink Tongue -->
+          <path d="M43 49 Q50 46 57 49 Q50 53 43 49 Z" fill="#FF8A80"/>
+
+          <!-- Doraemon Cheeks Whiskers (3 on each side) -->
+          <!-- Left Whiskers -->
+          <line x1="27" y1="32" x2="42" y2="34" stroke="#1E293B" stroke-width="1.1" stroke-linecap="round"/>
+          <line x1="26" y1="37" x2="41" y2="38" stroke="#1E293B" stroke-width="1.1" stroke-linecap="round"/>
+          <line x1="28" y1="43" x2="42" y2="41" stroke="#1E293B" stroke-width="1.1" stroke-linecap="round"/>
+          <!-- Right Whiskers -->
+          <line x1="73" y1="32" x2="58" y2="34" stroke="#1E293B" stroke-width="1.1" stroke-linecap="round"/>
+          <line x1="74" y1="37" x2="59" y2="38" stroke="#1E293B" stroke-width="1.1" stroke-linecap="round"/>
+          <line x1="72" y1="43" x2="58" y2="41" stroke="#1E293B" stroke-width="1.1" stroke-linecap="round"/>
+        </g>
+
+        <!-- Red Collar Band around Neck -->
+        <rect x="33" y="61" width="34" height="5" rx="2.5" fill="url(#doraRed)" stroke="#B71C1C" stroke-width="0.8"/>
+
+        <!-- Golden Yellow Bell -->
+        <g class="robot-bell">
+          <circle cx="50" cy="67.5" r="5" fill="url(#doraBell)" stroke="#B45309" stroke-width="0.8"/>
+          <line x1="46" y1="66" x2="54" y2="66" stroke="#92400E" stroke-width="0.9"/>
+          <circle cx="50" cy="68.2" r="1.1" fill="#78350F"/>
+          <line x1="50" y1="69.3" x2="50" y2="72" stroke="#92400E" stroke-width="0.8"/>
+        </g>
+
+        <!-- Cute White Feet at base -->
+        <ellipse cx="41" cy="104" rx="7" ry="3.5" fill="url(#doraWhite)" stroke="#CBD5E1" stroke-width="0.8"/>
+        <ellipse cx="59" cy="104" rx="7" ry="3.5" fill="url(#doraWhite)" stroke="#CBD5E1" stroke-width="0.8"/>
       </svg>`;
 
     const panel = document.createElement('div');
