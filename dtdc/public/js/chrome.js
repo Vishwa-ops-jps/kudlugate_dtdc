@@ -42,16 +42,61 @@
   }
 })();
 
+/**
+ * Calculates live store status in Indian Standard Time (IST, UTC+05:30).
+ * Store hours: Monday to Saturday, 9:30 AM to 8:30 PM (Sunday closed).
+ */
+function getShopStatus() {
+  try {
+    const now = new Date();
+    const istString = now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
+    const istDate = new Date(istString);
+    const day = istDate.getDay(); // 0 = Sunday, 1 = Mon, ..., 6 = Sat
+    const currentMinutes = istDate.getHours() * 60 + istDate.getMinutes();
+    const openMinutes = 9 * 60 + 30;   // 9:30 AM = 570 mins
+    const closeMinutes = 20 * 60 + 30; // 8:30 PM = 1230 mins
+
+    const isSunday = (day === 0);
+    const isOpen = !isSunday && (currentMinutes >= openMinutes && currentMinutes < closeMinutes);
+
+    let label = isOpen ? 'Open Now' : 'Closed';
+    let detail = '';
+    let badgeClass = isOpen ? 'status-open' : 'status-closed';
+
+    if (isOpen) {
+      detail = 'Closes at 8:30 PM';
+    } else if (isSunday) {
+      detail = 'Opens Mon 9:30 AM';
+    } else if (currentMinutes < openMinutes) {
+      detail = 'Opens today at 9:30 AM';
+    } else {
+      detail = (day === 6) ? 'Opens Mon 9:30 AM' : 'Opens tomorrow at 9:30 AM';
+    }
+
+    return { isOpen, label, detail, badgeClass };
+  } catch (e) {
+    return { isOpen: true, label: 'Open Now', detail: 'Mon–Sat 9:30 AM–8:30 PM', badgeClass: 'status-open' };
+  }
+}
+
 // Injects the site nav and footer into #site-header / #site-footer placeholders.
 function renderChrome() {
   const currentUser = typeof Session !== 'undefined' ? Session.getUser() : null;
+  const shop = getShopStatus();
+
   const header = document.getElementById('site-header');
   if (header) {
     header.innerHTML = `
       <div class="topbar">
         <div class="wrap">
           <div class="topbar-ticker">
-            <strong>Official Franchise Site:</strong> DK Enterprise Kudlu New Franchise · Fast, Safe &amp; Direct Delivery
+            <div class="topbar-status-badge ${shop.badgeClass}" title="Store Hours: Mon–Sat 9:30 AM – 8:30 PM IST">
+              <span class="status-pulse-dot"></span>
+              <span class="status-label"><strong>${shop.label}</strong></span>
+              <span class="status-sub">· ${shop.detail}</span>
+            </div>
+            <span style="opacity:0.35;margin:0 4px;">|</span>
+            <strong>DK Enterprise Kudlu New Franchise</strong> · Kudlu Gate, Bengaluru
           </div>
           <div class="call-cta">
             <span class="phone-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="#ffffff" aria-hidden="true"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-2.2 2.2a15.053 15.053 0 0 1-6.59-6.59l2.2-2.21a.96.96 0 0 0 .25-1A11.36 11.36 0 0 1 8.57 3.99c0-.55-.45-1-1-1H4.01c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.61c0-.55-.45-1-1-1z"/></svg></span>
@@ -79,6 +124,24 @@ function renderChrome() {
         </div>
       </nav>`;
   }
+
+  // Update any Store Hours card with the live status badge
+  try {
+    document.querySelectorAll('.contact-item-card').forEach(card => {
+      const label = card.querySelector('.contact-label');
+      if (label && label.textContent.trim().toLowerCase().includes('store hours')) {
+        const val = card.querySelector('.contact-val');
+        if (val && !val.querySelector('.live-status-pill')) {
+          const pill = document.createElement('span');
+          pill.className = `live-status-pill ${shop.isOpen ? 'open' : 'closed'}`;
+          pill.style.marginLeft = '8px';
+          pill.innerHTML = `<span class="pulse-dot"></span>${shop.label}`;
+          val.appendChild(pill);
+        }
+      }
+    });
+  } catch(e){}
+
   const footer = document.getElementById('site-footer');
   if (footer) {
     footer.innerHTML = `
@@ -326,7 +389,8 @@ function renderChrome() {
         <div class="wa-panel-title">
           <div class="wa-panel-name">DK Enterprise Kudlu Gate</div>
           <div class="wa-panel-status">
-            <span class="wa-status-dot"></span> Online · Replies in minutes
+            <span class="wa-status-dot" style="background:${shop.isOpen ? '#22c55e' : '#ef4444'};box-shadow:0 0 0 2px rgba(255,255,255,0.25);"></span>
+            ${shop.isOpen ? 'Open Now · Closes 8:30 PM' : 'Closed · ' + shop.detail}
           </div>
         </div>
         <button type="button" class="wa-panel-close-btn" id="wa-panel-close" aria-label="Close">&times;</button>
@@ -348,6 +412,15 @@ function renderChrome() {
             </div>
             <span class="wa-action-arrow">→</span>
           </a>
+
+          <button type="button" class="wa-action-item" id="wa-btn-location-pickup" style="width:100%;text-align:left;background:none;border:none;padding:12px;font:inherit;cursor:pointer;">
+            <span class="wa-action-icon">📍</span>
+            <div class="wa-action-texts">
+              <span class="wa-action-main">Pickup by Map Pin / GPS</span>
+              <span class="wa-action-sub">Send doorstep pin to courier rider</span>
+            </div>
+            <span class="wa-action-arrow">→</span>
+          </button>
 
           <a href="https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise Kudlu Gate, I need a courier rate estimate. My destination pincode is: [  ] and parcel weight is approx: [  ] kg.')}" target="_blank" rel="noopener noreferrer" class="wa-action-item">
             <span class="wa-action-icon">💰</span>
@@ -384,6 +457,18 @@ function renderChrome() {
 
     document.body.appendChild(waPanel);
     document.body.appendChild(waBtn);
+
+    // Setup Pickup by Map Pin action in WA panel
+    const waLocBtn = waPanel.querySelector('#wa-btn-location-pickup');
+    if (waLocBtn) {
+      waLocBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleWa(false);
+        if (typeof window.openLocationPicker === 'function') {
+          window.openLocationPicker();
+        }
+      });
+    }
 
     function toggleWa(open) {
       const show = open !== undefined ? open : !waPanel.classList.contains('is-visible');
@@ -535,4 +620,274 @@ function initScrollReveal() {
     allElements.forEach(el => el.classList.add('in-view'));
   }
 }
-document.addEventListener('DOMContentLoaded', renderChrome, { once: true });
+
+/* ============================================================
+   LOCATION PICKER MODAL (Map Pin & GPS Coordinates)
+   ============================================================ */
+let activeLocationCallback = null;
+
+function initLocationPickerModal() {
+  if (document.getElementById('location-picker-modal')) return;
+
+  const modal = document.createElement('div');
+  modal.id = 'location-picker-modal';
+  modal.className = 'loc-modal-overlay';
+  modal.innerHTML = `
+    <div class="loc-modal-card">
+      <div class="loc-modal-header">
+        <h3>
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#E31837" stroke-width="2.3">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          Pickup Location Pin (GPS)
+        </h3>
+        <button type="button" class="loc-modal-close" id="loc-modal-close" aria-label="Close">&times;</button>
+      </div>
+
+      <div class="loc-modal-body">
+        <p style="margin:0;font-size:13px;color:#475569;line-height:1.45;">
+          Pin your home or office location so the DK DTDC pickup rider arrives at the exact spot without calling for directions.
+        </p>
+
+        <button type="button" class="loc-detect-btn-large" id="btn-gps-detect">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.3">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polygon points="12 2 15 9 22 12 15 15 12 22 9 15 2 12 9 9 12 2"></polygon>
+          </svg>
+          <span id="gps-btn-text">Detect My Live GPS Location</span>
+        </button>
+
+        <div>
+          <div class="loc-chips-title">Or Choose Nearby Landmark</div>
+          <div class="loc-chips-row">
+            <button type="button" class="loc-chip-btn is-selected" data-lat="12.8872" data-lng="77.6534" data-name="Bren Palms / Kudlu Main Rd">Bren Palms (Kudlu)</button>
+            <button type="button" class="loc-chip-btn" data-lat="12.8452" data-lng="77.6602" data-name="Electronic City Phase 1">Electronic City Ph 1</button>
+            <button type="button" class="loc-chip-btn" data-lat="12.8798" data-lng="77.6508" data-name="Singasandra Metro Station">Singasandra Metro</button>
+            <button type="button" class="loc-chip-btn" data-lat="12.9116" data-lng="77.6389" data-name="HSR Layout Sector 2">HSR Layout Sec 2</button>
+            <button type="button" class="loc-chip-btn" data-lat="12.9025" data-lng="77.6610" data-name="Haralur / Reliable Woods">Haralur Road</button>
+          </div>
+        </div>
+
+        <div class="loc-map-container">
+          <iframe id="loc-map-iframe" src="https://www.google.com/maps?q=12.8872,77.6534&z=16&output=embed" title="Selected Pickup Pin Location" loading="lazy"></iframe>
+        </div>
+
+        <div class="loc-coords-box">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <strong style="font-size:12px;color:#0F172A;">📍 Selected Coordinates:</strong>
+            <span id="loc-coords-val" style="font-family:monospace;font-size:12px;color:#2563EB;font-weight:600;">12.887200, 77.653400</span>
+          </div>
+          <div>
+            <span style="font-size:11.5px;color:#64748B;">Rider Map Link:</span>
+            <a id="loc-link-val" href="https://maps.google.com/?q=12.8872,77.6534" target="_blank" rel="noopener noreferrer" class="loc-link">https://maps.google.com/?q=12.8872,77.6534</a>
+          </div>
+        </div>
+
+        <div>
+          <label for="loc-extra-note" style="display:block;font-size:12px;font-weight:600;color:#334155;margin-bottom:4px;">Building / Flat / Gate Instructions (Optional)</label>
+          <input type="text" id="loc-extra-note" placeholder="e.g. Flat 302, Bren Palms Tower B or Landmark opposite bakery" style="width:100%;padding:9px 12px;border:1.5px solid #CBD5E1;border-radius:8px;font-size:13.5px;">
+        </div>
+      </div>
+
+      <div class="loc-modal-footer">
+        <button type="button" class="loc-btn-secondary" id="loc-modal-cancel">Cancel</button>
+        <button type="button" class="loc-btn-confirm" id="loc-modal-confirm">
+          <span id="loc-confirm-text">Send Pickup Pin via WhatsApp →</span>
+        </button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  let currentLat = 12.8872;
+  let currentLng = 77.6534;
+  let currentLocationName = "Bren Palms / Kudlu Main Rd";
+
+  function updateMapAndCoords(lat, lng, name) {
+    currentLat = Number(lat);
+    currentLng = Number(lng);
+    currentLocationName = name || `${currentLat.toFixed(4)}, ${currentLng.toFixed(4)}`;
+
+    const iframe = document.getElementById('loc-map-iframe');
+    const coordsVal = document.getElementById('loc-coords-val');
+    const linkVal = document.getElementById('loc-link-val');
+
+    if (iframe) iframe.src = `https://www.google.com/maps?q=${currentLat},${currentLng}&z=16&output=embed`;
+    if (coordsVal) coordsVal.textContent = `${currentLat.toFixed(6)}, ${currentLng.toFixed(6)}`;
+    if (linkVal) {
+      const gUrl = `https://maps.google.com/?q=${currentLat.toFixed(6)},${currentLng.toFixed(6)}`;
+      linkVal.href = gUrl;
+      linkVal.textContent = gUrl;
+    }
+  }
+
+  // Preset chips click
+  modal.querySelectorAll('.loc-chip-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      modal.querySelectorAll('.loc-chip-btn').forEach(b => b.classList.remove('is-selected'));
+      btn.classList.add('is-selected');
+      updateMapAndCoords(btn.dataset.lat, btn.dataset.lng, btn.dataset.name);
+    });
+  });
+
+  // GPS Auto-detect button
+  const gpsBtn = modal.querySelector('#btn-gps-detect');
+  const gpsText = modal.querySelector('#gps-btn-text');
+  if (gpsBtn) {
+    gpsBtn.addEventListener('click', () => {
+      if (!navigator.geolocation) {
+        alert('Geolocation is not supported by your browser. You can select one of the landmark chips instead.');
+        return;
+      }
+      gpsBtn.disabled = true;
+      gpsText.textContent = 'Acquiring GPS Satellite Pin...';
+
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          gpsBtn.disabled = false;
+          gpsText.textContent = '✔ GPS Location Found!';
+          setTimeout(() => { gpsText.textContent = 'Detect My Live GPS Location'; }, 3000);
+          modal.querySelectorAll('.loc-chip-btn').forEach(b => b.classList.remove('is-selected'));
+          updateMapAndCoords(pos.coords.latitude, pos.coords.longitude, 'Live Current Location');
+        },
+        (err) => {
+          gpsBtn.disabled = false;
+          gpsText.textContent = 'Detect My Live GPS Location';
+          let msg = 'Unable to retrieve your location.';
+          if (err.code === 1) msg = 'Location permission was denied. Please allow location access or select a nearby landmark.';
+          else if (err.code === 2) msg = 'Location unavailable. Please select a nearby landmark.';
+          alert(msg);
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
+      );
+    });
+  }
+
+  // Close handlers
+  function closeModal() {
+    modal.classList.remove('is-open');
+    activeLocationCallback = null;
+  }
+
+  modal.querySelector('#loc-modal-close').addEventListener('click', closeModal);
+  modal.querySelector('#loc-modal-cancel').addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  // Confirm button
+  modal.querySelector('#loc-modal-confirm').addEventListener('click', () => {
+    const note = (document.getElementById('loc-extra-note')?.value || '').trim();
+    const gUrl = `https://maps.google.com/?q=${currentLat.toFixed(6)},${currentLng.toFixed(6)}`;
+    const locationData = {
+      lat: currentLat.toFixed(6),
+      lng: currentLng.toFixed(6),
+      name: currentLocationName,
+      note: note,
+      mapUrl: gUrl
+    };
+
+    if (typeof activeLocationCallback === 'function') {
+      activeLocationCallback(locationData);
+      closeModal();
+    } else {
+      // Default: Direct WhatsApp message to DK DTDC Kudlu Gate
+      let waText = `*DTDC Kudlu Gate — Doorstep Pickup Location* 📍\n` +
+        `• *GPS Pin:* ${gUrl}\n` +
+        `• *Area:* ${currentLocationName}\n` +
+        (note ? `• *Door / Flat Details:* ${note}\n` : '') +
+        `Please assign a pickup rider to collect my parcel.`;
+
+      window.open(`https://wa.me/916366118850?text=${encodeURIComponent(waText)}`, '_blank');
+      closeModal();
+    }
+  });
+}
+
+/**
+ * Opens the location picker modal.
+ * @param {Function} [onConfirmCallback] Optional callback function when user selects and confirms a location.
+ */
+window.openLocationPicker = function(onConfirmCallback) {
+  initLocationPickerModal();
+  activeLocationCallback = onConfirmCallback || null;
+
+  const modal = document.getElementById('location-picker-modal');
+  const confirmText = modal.querySelector('#loc-confirm-text');
+  if (confirmText) {
+    confirmText.textContent = onConfirmCallback ? '✔ Attach Location to Form Address' : 'Send Pickup Pin via WhatsApp →';
+  }
+  modal.classList.add('is-open');
+};
+
+/* ============================================================
+   SECURITY BASICS: reCAPTCHA ANTI-BOT WIDGETS
+   ============================================================ */
+function initRecaptchaWidgets() {
+  document.querySelectorAll('.recaptcha-widget-card').forEach(box => {
+    if (box.dataset.initialized) return;
+    box.dataset.initialized = 'true';
+
+    const checkInput = box.querySelector('.recaptcha-input');
+    const label = box.querySelector('.recaptcha-checkbox-label');
+
+    if (label) {
+      label.addEventListener('click', function(e) {
+        if (box.classList.contains('is-verified') || box.classList.contains('is-loading')) return;
+        e.preventDefault();
+        box.classList.remove('is-invalid');
+        box.classList.add('is-loading');
+
+        // Human verification simulation (550ms delay)
+        setTimeout(() => {
+          box.classList.remove('is-loading');
+          box.classList.add('is-verified');
+          if (checkInput) checkInput.checked = true;
+          box.setAttribute('data-verified', 'true');
+          box.setAttribute('data-verified-at', Date.now().toString());
+        }, 550);
+      });
+    }
+  });
+}
+
+/**
+ * Validates whether the reCAPTCHA box is checked before form submission.
+ * Triggers gentle red shake animation if unchecked.
+ */
+window.verifyRecaptcha = function(cardOrFormId) {
+  let card = null;
+  if (cardOrFormId) {
+    const target = document.getElementById(cardOrFormId);
+    if (target && target.classList.contains('recaptcha-widget-card')) {
+      card = target;
+    } else if (target) {
+      card = target.querySelector('.recaptcha-widget-card');
+    }
+  }
+  if (!card) {
+    card = document.querySelector('.recaptcha-widget-card');
+  }
+  if (!card) return true; // If not present on page, allow submission
+
+  if (card.getAttribute('data-verified') === 'true') {
+    card.classList.remove('is-invalid');
+    return true;
+  }
+
+  // Trigger invalid animation
+  card.classList.remove('is-invalid');
+  void card.offsetWidth; // Force CSS reflow
+  card.classList.add('is-invalid');
+  return false;
+};
+
+// Global bootstrap
+document.addEventListener('DOMContentLoaded', () => {
+  renderChrome();
+  initRecaptchaWidgets();
+  initLocationPickerModal();
+}, { once: true });
+

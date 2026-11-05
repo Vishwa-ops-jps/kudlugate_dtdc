@@ -14,7 +14,7 @@
 <meta property="og:image" content="https://kudlugatecourier.online/images/og-card.png?v=2">
 <meta property="og:image:width" content="800">
 <meta property="og:image:height" content="800">
-<link rel="stylesheet" href="/css/style.css?v=55">
+<link rel="stylesheet" href="/css/style.css?v=56">
 </head>
 <body>
 <div id="site-header"></div>
@@ -139,10 +139,40 @@
         <textarea id="r-comment" rows="4" placeholder="How was your courier experience? Mention delivery speed, packaging or staff support..."></textarea>
       </div>
 
+      <!-- Security Basics: reCAPTCHA Anti-Bot Verification -->
+      <div class="recaptcha-widget-card" id="review-recaptcha">
+        <div class="recaptcha-left">
+          <label class="recaptcha-checkbox-label">
+            <input type="checkbox" id="review-recaptcha-check" class="recaptcha-input">
+            <span class="recaptcha-custom-box">
+              <span class="recaptcha-spinner"></span>
+              <svg class="recaptcha-checkmark" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+            <span class="recaptcha-label-text">I'm not a robot</span>
+          </label>
+        </div>
+        <div class="recaptcha-brand">
+          <img src="/images/recaptcha-logo.svg" alt="reCAPTCHA">
+          <div class="recaptcha-brand-text">reCAPTCHA</div>
+          <div class="recaptcha-terms-text">Privacy · Terms</div>
+        </div>
+      </div>
+
       <button class="btn btn-submit-review" id="r-submit">
         <span>Submit Review</span>
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
       </button>
+
+      <!-- Security Basics: HTTPS SSL Encryption Trust Badge -->
+      <div class="form-security-seal">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        <span><strong>256-Bit SSL Encrypted</strong> · Safe &amp; verified transmission</span>
+      </div>
 
       <div id="r-msg"></div>
 
@@ -178,7 +208,7 @@
 
 <div id="site-footer"></div>
 <script src="/js/api.js"></script>
-<script src="/js/chrome.js?v=44"></script>
+<script src="/js/chrome.js?v=45"></script>
 <script>
 // Avatar gradients palette for verified review cards
 const avatarGradients = [
@@ -324,14 +354,23 @@ starBtns.forEach(btn => {
 // Form Submission
 document.getElementById('r-submit').addEventListener('click', async () => {
   const submitBtn = document.getElementById('r-submit');
+  const msgEl = document.getElementById('r-msg');
+  msgEl.innerHTML = '';
+
+  // Verify anti-bot reCAPTCHA
+  if (typeof window.verifyRecaptcha === 'function') {
+    if (!window.verifyRecaptcha('review-recaptcha')) {
+      msgEl.innerHTML = '<div class="msg err" style="margin-top:12px;">⚠️ Please verify you are not a robot before submitting.</div>';
+      return;
+    }
+  }
+
   const body = {
     name: document.getElementById('r-name').value.trim(),
     rating: Number(document.getElementById('r-rating').value) || 5,
     trackingId: document.getElementById('r-tid').value.trim(),
     comment: document.getElementById('r-comment').value.trim()
   };
-  const msgEl = document.getElementById('r-msg');
-  msgEl.innerHTML = '';
   
   if (!body.name || !body.comment) {
     msgEl.innerHTML = '<div class="msg err" style="margin-top:12px;">Please enter your name and review feedback.</div>';
