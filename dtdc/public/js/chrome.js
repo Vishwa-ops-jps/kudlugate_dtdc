@@ -167,51 +167,123 @@ const I18N = {
 
 function getCurrentLang() {
   try {
+    const cookieMatch = document.cookie.match(/googtrans=\/en\/([a-z]{2})/i);
+    if (cookieMatch && (cookieMatch[1] === 'kn' || cookieMatch[1] === 'hi' || cookieMatch[1] === 'en')) {
+      return cookieMatch[1].toLowerCase();
+    }
     return localStorage.getItem('dtdc_lang') || 'en';
   } catch(e) {
     return 'en';
   }
 }
 
-function applyLanguage(lang) {
-  const dict = I18N[lang] || I18N.en;
-  document.documentElement.lang = lang === 'kn' ? 'kn-IN' : (lang === 'hi' ? 'hi-IN' : 'en-IN');
+/* ============================================================
+   WHOLE-SITE TRANSLATOR ENGINE (Kannada, Hindi, English)
+   Translates 100% of DOM content across the entire website
+   ============================================================ */
+function initWholeSiteTranslator() {
+  if (document.getElementById('google-translate-script')) return;
+
+  let el = document.getElementById('google_translate_element');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'google_translate_element';
+    el.style.display = 'none';
+    document.body.appendChild(el);
+  }
+
+  window.googleTranslateElementInit = function() {
+    try {
+      new window.google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,kn,hi',
+        autoDisplay: false
+      }, 'google_translate_element');
+    } catch(err) {
+      console.warn('Translate element init:', err);
+    }
+  };
+
+  const script = document.createElement('script');
+  script.id = 'google-translate-script';
+  script.type = 'text/javascript';
+  script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+  script.async = true;
+  document.head.appendChild(script);
+}
+
+function setGoogleTransCookie(lang) {
+  const cookieVal = (lang === 'en') ? '/en/en' : `/en/${lang}`;
+  const host = window.location.hostname;
+  
+  // Clean first
+  document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  if (host && host !== 'localhost') {
+    document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${host};`;
+    document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${host};`;
+  }
+
+  // Set new cookie across session and subdomains
+  document.cookie = `googtrans=${cookieVal}; path=/; max-age=31536000;`;
+  if (host && host !== 'localhost') {
+    document.cookie = `googtrans=${cookieVal}; path=/; domain=${host}; max-age=31536000;`;
+    document.cookie = `googtrans=${cookieVal}; path=/; domain=.${host}; max-age=31536000;`;
+  }
+}
+
+function applyLanguage(lang, userInitiated = false) {
   try { localStorage.setItem('dtdc_lang', lang); } catch(e){}
 
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.lang === lang);
   });
 
+  document.documentElement.lang = lang === 'kn' ? 'kn-IN' : (lang === 'hi' ? 'hi-IN' : 'en-IN');
+
+  // Instant pre-fill for prominent header labels for 0ms visual responsiveness
+  const dict = I18N[lang] || I18N.en;
   const callText = document.querySelector('.call-text');
   if (callText) callText.textContent = dict.callUs;
-
-  const navLinks = document.querySelector('.nav-links');
-  if (navLinks) {
-    const links = navLinks.querySelectorAll('a:not(.whatsapp-contact)');
-    if (links[0]) links[0].textContent = dict.navHome;
-    if (links[1]) links[1].textContent = dict.navTrack;
-    if (links[2]) links[2].textContent = dict.navReviews;
-    const waLink = navLinks.querySelector('.whatsapp-contact');
-    if (waLink) waLink.innerHTML = `<span class="whatsapp-dot" aria-hidden="true"></span>${dict.navWhatsApp}`;
-  }
 
   const pwaLabel = document.getElementById('pwa-btn-label');
   if (pwaLabel) pwaLabel.textContent = dict.installApp;
 
-  const heroEyebrow = document.querySelector('.hero .eyebrow');
-  if (heroEyebrow) heroEyebrow.textContent = dict.heroEyebrow;
-  const heroLead = document.querySelector('.hero .lead');
-  if (heroLead) heroLead.textContent = dict.heroLead;
-
-  const tidLabel = document.querySelector('.tid-label');
-  if (tidLabel) tidLabel.textContent = dict.trackYourParcel;
-  const trackBtn = document.querySelector('.waybill a.btn');
-  if (trackBtn) trackBtn.textContent = dict.trackBtn;
-
-  const badges = document.querySelectorAll('.trust-badges .badge-item');
-  if (badges[0] && badges[0].childNodes[2]) badges[0].childNodes[2].textContent = ' ' + dict.safeDelivery;
-  if (badges[1] && badges[1].childNodes[2]) badges[1].childNodes[2].textContent = ' ' + dict.onTimeService;
-  if (badges[2] && badges[2].childNodes[2]) badges[2].childNodes[2].textContent = ' ' + dict.responsiveSupport;
+  // Execute whole-site full DOM translation
+  if (lang === 'en') {
+    setGoogleTransCookie('en');
+    const combo = document.querySelector('.goog-te-combo');
+    if (combo) {
+      combo.value = 'en';
+      combo.dispatchEvent(new Event('change'));
+    }
+    if (userInitiated) {
+      setTimeout(() => { location.reload(); }, 120);
+      return;
+    }
+  } else {
+    setGoogleTransCookie(lang);
+    const combo = document.querySelector('.goog-te-combo');
+    if (combo) {
+      combo.value = lang;
+      combo.dispatchEvent(new Event('change'));
+    } else {
+      let tries = 0;
+      const interval = setInterval(() => {
+        tries++;
+        const c = document.querySelector('.goog-te-combo');
+        if (c) {
+          clearInterval(interval);
+          c.value = lang;
+          c.dispatchEvent(new Event('change'));
+        } else if (tries > 10) {
+          clearInterval(interval);
+          if (userInitiated) {
+            location.reload();
+          }
+        }
+      }, 150);
+    }
+  }
 }
 
 /* ============================================================
@@ -314,7 +386,7 @@ function renderChrome() {
               <span class="phone-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="#ffffff" aria-hidden="true"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-2.2 2.2a15.053 15.053 0 0 1-6.59-6.59l2.2-2.21a.96.96 0 0 0 .25-1A11.36 11.36 0 0 1 8.57 3.99c0-.55-.45-1-1-1H4.01c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.61c0-.55-.45-1-1-1z"/></svg></span>
               <span>
                 <span class="call-text">Call Us Now</span><br>
-                <a href="tel:+916366118850" class="call-number">+91 63661 18850</a>
+                <a href="tel:+916366118850" class="call-number notranslate">+91 63661 18850</a>
               </span>
             </div>
           </div>
@@ -323,7 +395,7 @@ function renderChrome() {
       <nav class="site-nav">
         <div class="wrap">
           <a href="/" class="brand">
-            <span class="brand-mark">DK</span>
+            <span class="brand-mark notranslate">DK</span>
             <span class="brand-text">DK Enterprise Kudlu New Franchise<small>Courier &amp; Cargo · Bengaluru</small></span>
           </a>
           <button class="nav-toggle" aria-label="Menu">&#9776;</button>
@@ -333,13 +405,13 @@ function renderChrome() {
             <a href="/reviews.html">Reviews</a>
             <a class="whatsapp-contact" href="https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise Kudlu New Franchise, I need help with a courier.')}" target="_blank" rel="noopener noreferrer"><span class="whatsapp-dot" aria-hidden="true"></span>WhatsApp</a>
             
-            <div class="lang-switcher" id="lang-switcher" title="Language / ಭಾಷೆ / भाषा">
+            <div class="lang-switcher notranslate" id="lang-switcher" title="Language / ಭಾಷೆ / भाषा">
               <button type="button" class="lang-btn active" data-lang="en">EN</button>
               <button type="button" class="lang-btn" data-lang="kn">ಕನ್ನಡ</button>
               <button type="button" class="lang-btn" data-lang="hi">हिन्दी</button>
             </div>
 
-            <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Dark / Light Theme" title="Toggle Dark/Light Mode">
+            <button type="button" class="theme-toggle-btn notranslate" id="theme-toggle" aria-label="Toggle Dark / Light Theme" title="Toggle Dark/Light Mode">
               <span class="theme-icon-sun">☀️</span>
               <span class="theme-icon-moon">🌙</span>
             </button>
@@ -374,7 +446,7 @@ function renderChrome() {
         <div class="wrap">
           <div>
             <div class="brand" style="margin-bottom:10px;">
-              <span class="brand-mark">DK</span>
+              <span class="brand-mark notranslate">DK</span>
               <span class="brand-text" style="color:#fff;">DK Enterprise Kudlu New Franchise<small>Courier &amp; Cargo</small></span>
             </div>
             <p style="max-width:280px;font-size:13.5px;">Kudlu Gate, Bengaluru, Karnataka. Booking, tracking and delivery for local, state and national shipments.</p>
@@ -1130,13 +1202,19 @@ document.addEventListener('DOMContentLoaded', () => {
   renderChrome();
   initRecaptchaWidgets();
   initLocationPickerModal();
-  applyLanguage(getCurrentLang());
+  initWholeSiteTranslator();
+
+  const initLang = getCurrentLang();
+  if (initLang && initLang !== 'en') {
+    setGoogleTransCookie(initLang);
+  }
+  applyLanguage(initLang, false);
 
   // Global delegation for lang switcher, theme toggle, and PWA install
   document.addEventListener('click', (e) => {
     const langBtn = e.target.closest('.lang-btn');
     if (langBtn && langBtn.dataset.lang) {
-      applyLanguage(langBtn.dataset.lang);
+      applyLanguage(langBtn.dataset.lang, true);
       return;
     }
     const themeBtn = e.target.closest('#theme-toggle');
