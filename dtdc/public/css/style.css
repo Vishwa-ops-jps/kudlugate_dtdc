@@ -392,6 +392,110 @@ section { padding: 56px 0; }
   50% { transform: rotate(8deg); }
 }
 
+/* ============================================================
+   ROBOT COMPANION FLOATING SPEECH / THOUGHT CLOUD BUBBLE
+   ============================================================ */
+.robot-cloud-bubble {
+  position: fixed;
+  left: 88px;
+  bottom: 86px;
+  z-index: 9998;
+  background: #FFFFFF;
+  border: 1.5px solid #0C2340;
+  border-radius: 16px 16px 16px 3px;
+  padding: 8px 13px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #0C2340;
+  box-shadow: 0 6px 20px rgba(12, 35, 64, 0.18);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  animation: cloudFloat 3.2s ease-in-out infinite;
+  transition: opacity 0.3s ease, transform 0.3s ease, background 0.25s ease, border-color 0.25s ease;
+}
+
+.robot-cloud-bubble:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 24px rgba(12, 35, 64, 0.25);
+  border-color: #E31837;
+}
+
+/* Speech Bubble Tail Pointing towards Robot Head */
+.robot-cloud-bubble::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  bottom: 6px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 8px solid #0C2340;
+}
+
+.robot-cloud-bubble::after {
+  content: "";
+  position: absolute;
+  left: -6px;
+  bottom: 6px;
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-right: 6px solid #FFFFFF;
+}
+
+@keyframes cloudFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.robot-cloud-bubble .cloud-text {
+  display: inline-block;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  line-height: 1.25;
+}
+
+.robot-cloud-bubble.cloud-hidden {
+  opacity: 0 !important;
+  transform: translateY(18px) scale(0.8) !important;
+  pointer-events: none !important;
+}
+
+[data-theme="dark"] .robot-cloud-bubble {
+  background: #162032;
+  border-color: #38BDF8;
+  color: #F8FAFC;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="dark"] .robot-cloud-bubble::before {
+  border-right-color: #38BDF8;
+}
+
+[data-theme="dark"] .robot-cloud-bubble::after {
+  border-right-color: #162032;
+}
+
+@media (max-width: 600px) {
+  .robot-cloud-bubble {
+    left: 74px;
+    bottom: 74px;
+    font-size: 11px;
+    padding: 6px 10px;
+    max-width: 200px;
+    white-space: normal;
+  }
+}
+
 /* ---------- Floating WhatsApp Quick Action Widget ---------- */
 .wa-float-btn {
   position: fixed;
