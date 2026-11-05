@@ -268,6 +268,8 @@ function applyLanguage(lang, userInitiated = false) {
   const pwaLabel = document.getElementById('pwa-btn-label');
   if (pwaLabel) pwaLabel.textContent = dict.installApp;
 
+  try { if (window.__updateAiCloudMsg) window.__updateAiCloudMsg(0); } catch(e){}
+
   // Execute whole-site full DOM translation
   if (lang === 'en') {
     setGoogleTransCookie('en');
@@ -647,22 +649,32 @@ function renderChrome() {
     };
 
     let cloudIdx = 0;
-    function updateCloudMessage() {
+    function updateCloudMessage(forceIdx) {
       const lang = getCurrentLang() || 'en';
       const list = CLOUD_PROMPTS[lang] || CLOUD_PROMPTS.en;
-      cloudIdx = (cloudIdx + 1) % list.length;
-      cloud.style.opacity = '0';
-      cloud.style.transform = 'translateY(4px)';
-      setTimeout(() => {
-        cloud.innerHTML = `<span class="cloud-text">${list[cloudIdx]}</span>`;
-        cloud.style.opacity = '1';
-        cloud.style.transform = 'translateY(0)';
-      }, 250);
+      if (typeof forceIdx === 'number') {
+        cloudIdx = forceIdx % list.length;
+      } else {
+        cloudIdx = (cloudIdx + 1) % list.length;
+      }
+      const textEl = cloud.querySelector('.cloud-text');
+      if (textEl) {
+        textEl.style.opacity = '0';
+        textEl.style.transform = 'translateY(3px)';
+        setTimeout(() => {
+          textEl.textContent = list[cloudIdx];
+          textEl.style.opacity = '1';
+          textEl.style.transform = 'translateY(0)';
+        }, 220);
+      } else {
+        cloud.innerHTML = `<span class="cloud-text">${list[cloudIdx]}</span><span class="cloud-tail"><span class="cloud-dot dot-1"></span><span class="cloud-dot dot-2"></span><span class="cloud-dot dot-3"></span></span>`;
+      }
     }
     const initialLang = getCurrentLang() || 'en';
     const initList = CLOUD_PROMPTS[initialLang] || CLOUD_PROMPTS.en;
-    cloud.innerHTML = `<span class="cloud-text">${initList[0]}</span>`;
+    cloud.innerHTML = `<span class="cloud-text">${initList[0]}</span><span class="cloud-tail"><span class="cloud-dot dot-1"></span><span class="cloud-dot dot-2"></span><span class="cloud-dot dot-3"></span></span>`;
     setInterval(updateCloudMessage, 3800);
+    window.__updateAiCloudMsg = updateCloudMessage;
 
     const panel = document.createElement('div');
     panel.id = 'ai-panel';
