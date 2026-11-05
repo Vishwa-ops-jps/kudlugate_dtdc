@@ -231,6 +231,25 @@ function setGoogleTransCookie(lang) {
   }
 }
 
+function updateKannadaLayoutState(lang) {
+  const isKn = lang === 'kn' || (document.documentElement.lang && document.documentElement.lang.startsWith('kn')) || (document.cookie && document.cookie.includes('/en/kn')) || (localStorage.getItem('dtdc_lang') === 'kn');
+  const targetLang = isKn ? 'kn' : (lang || localStorage.getItem('dtdc_lang') || 'en');
+  document.documentElement.setAttribute('data-lang', targetLang);
+  if (document.body) document.body.setAttribute('data-lang', targetLang);
+  document.documentElement.classList.toggle('lang-kn', isKn);
+  if (document.body) document.body.classList.toggle('lang-kn', isKn);
+}
+
+function initLanguageObserver() {
+  updateKannadaLayoutState(getCurrentLang());
+  try {
+    const observer = new MutationObserver(() => {
+      updateKannadaLayoutState(getCurrentLang());
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['lang', 'class'] });
+  } catch(e){}
+}
+
 function applyLanguage(lang, userInitiated = false) {
   try { localStorage.setItem('dtdc_lang', lang); } catch(e){}
 
@@ -239,6 +258,7 @@ function applyLanguage(lang, userInitiated = false) {
   });
 
   document.documentElement.lang = lang === 'kn' ? 'kn-IN' : (lang === 'hi' ? 'hi-IN' : 'en-IN');
+  updateKannadaLayoutState(lang);
 
   // Instant pre-fill for prominent header labels for 0ms visual responsiveness
   const dict = I18N[lang] || I18N.en;
@@ -1203,6 +1223,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initRecaptchaWidgets();
   initLocationPickerModal();
   initWholeSiteTranslator();
+  initLanguageObserver();
 
   const initLang = getCurrentLang();
   if (initLang && initLang !== 'en') {
