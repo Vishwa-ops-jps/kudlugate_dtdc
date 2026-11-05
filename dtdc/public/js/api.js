@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (user && user.role === 'customer') {
       authSlot.innerHTML = `<a href="/dashboard.html">My Account</a><a href="#" data-logout class="cta">Log Out</a>`;
     } else if (user) {
-      authSlot.innerHTML = `<a href="/admin/dashboard.html">Staff Panel</a><a href="#" data-logout class="cta">Log Out</a>`;
+      authSlot.innerHTML = `<a href="#" data-logout class="cta">Log Out</a>`;
     } else {
       authSlot.innerHTML = `<a href="/login.html">Log In</a><a href="/register.html" class="cta">Sign Up</a>`;
     }

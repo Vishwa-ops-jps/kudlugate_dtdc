@@ -493,7 +493,6 @@ function renderChrome() {
               <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;">
                 <a href="tel:+916366118850">Call Support</a>
                 <a href="https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise, I need assistance.')}" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-                <a href="/admin/login.html" style="color:#8A94A6;">Staff login</a>
               </div>
             </div>
           </div>
