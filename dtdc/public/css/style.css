@@ -1214,7 +1214,7 @@ tr:hover td { background: rgba(232,163,61,0.06); }
 #site-footer {
   margin: 0;
   padding: 0;
-  background: var(--ink);
+  background: #0C2340;
   margin-top: auto;
   flex-grow: 1;
   display: flex;
@@ -1223,7 +1223,7 @@ tr:hover td { background: rgba(232,163,61,0.06); }
 }
 
 footer {
-  background: var(--ink);
+  background: #0C2340;
   color: #CBD5E1;
   padding: 56px 0 24px;
   margin-top: 0;
@@ -2664,6 +2664,130 @@ footer .fine {
 
 [data-theme="dark"] .btn.outline:hover {
   background: #1E293B;
+}
+
+/* Base Light Mode Styles for Specialized Logistics Cards */
+.specialized-container {
+  background: #FFFFFF;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+.specialized-card-b2b,
+.specialized-card-relocation {
+  background: #F8FAFC;
+  transition: all 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.specialized-card-b2b p,
+.specialized-card-relocation p {
+  color: #475569;
+}
+.specialized-card-b2b ul,
+.specialized-card-relocation ul {
+  color: #334155;
+}
+.specialized-card-b2b:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(12, 35, 64, 0.16);
+}
+.specialized-card-relocation:hover {
+  border-color: #D97706;
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(245, 158, 11, 0.2);
+}
+
+/* ============================================================
+   DARK MODE HIGH-CONTRAST PALETTE (CRYSTAL CLEAR READABILITY)
+   ============================================================ */
+/* Specialized Logistics Section in Dark Mode */
+[data-theme="dark"] .specialized-container {
+  background: #111C2E !important;
+  border-color: #24344D !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45) !important;
+}
+[data-theme="dark"] .specialized-container h3 {
+  color: #FFFFFF !important;
+}
+[data-theme="dark"] .specialized-container p {
+  color: #94A3B8 !important;
+}
+[data-theme="dark"] .specialized-card-b2b,
+[data-theme="dark"] .specialized-card-relocation {
+  background: #162032 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35) !important;
+}
+[data-theme="dark"] .specialized-card-b2b {
+  border-color: #2563EB !important;
+}
+[data-theme="dark"] .specialized-card-relocation {
+  border-color: #F59E0B !important;
+}
+[data-theme="dark"] .specialized-card-b2b h4,
+[data-theme="dark"] .specialized-card-relocation h4 {
+  color: #FFFFFF !important;
+}
+[data-theme="dark"] .specialized-card-b2b p,
+[data-theme="dark"] .specialized-card-relocation p {
+  color: #CBD5E1 !important;
+}
+[data-theme="dark"] .specialized-card-b2b ul,
+[data-theme="dark"] .specialized-card-relocation ul {
+  color: #94A3B8 !important;
+}
+[data-theme="dark"] .specialized-card-b2b .btn {
+  background: #2563EB !important;
+  color: #FFFFFF !important;
+}
+
+/* Footer in Dark Mode (Pure Midnight Slate, NOT White) */
+[data-theme="dark"] #site-footer,
+[data-theme="dark"] footer {
+  background: #060B14 !important;
+  color: #CBD5E1 !important;
+}
+[data-theme="dark"] footer h4 {
+  color: #FFFFFF !important;
+}
+[data-theme="dark"] footer p {
+  color: #94A3B8 !important;
+}
+[data-theme="dark"] footer a {
+  color: #94A3B8 !important;
+}
+[data-theme="dark"] footer a:hover {
+  color: #FFFFFF !important;
+}
+[data-theme="dark"] footer .fine {
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+  color: #64748B !important;
+}
+
+/* Customer Reviews & Hero Pages in Dark Mode */
+[data-theme="dark"] .reviews-hero,
+[data-theme="dark"] .b2b-hero,
+[data-theme="dark"] .relocation-hero {
+  background: #0B1120 !important;
+  border-bottom-color: #24344D !important;
+}
+[data-theme="dark"] .rich-review-card {
+  background: #162032 !important;
+  border-color: #24344D !important;
+  color: #F8FAFC !important;
+}
+[data-theme="dark"] .rich-review-card p {
+  color: #CBD5E1 !important;
+}
+[data-theme="dark"] .rich-review-card .reviewer-name {
+  color: #FFFFFF !important;
+}
+[data-theme="dark"] .b2b-feature-card {
+  background: #162032 !important;
+  border-color: #24344D !important;
+  color: #F8FAFC !important;
+}
+[data-theme="dark"] .b2b-feature-card h4 {
+  color: #FFFFFF !important;
+}
+[data-theme="dark"] .b2b-feature-card p {
+  color: #CBD5E1 !important;
 }
 
 /* Theme Toggle Button */
