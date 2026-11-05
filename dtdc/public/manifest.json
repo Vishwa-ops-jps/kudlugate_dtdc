@@ -1,0 +1,27 @@
+{
+  "name": "DK DTDC Courier Kudlu Gate",
+  "short_name": "DK DTDC",
+  "description": "Official DK Enterprise Kudlu New Franchise — Courier & Cargo, Doorstep Pickup, Bengaluru",
+  "start_url": "/?pwa=1",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0C2340",
+  "theme_color": "#0C2340",
+  "lang": "en-IN",
+  "categories": ["business", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/og-card.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

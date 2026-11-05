@@ -76,8 +76,46 @@ function getSmartFallbackReply(userText) {
   const q = userText.toLowerCase().trim();
 
   // 1. Greetings
-  if (/^(hi|hello|hey|namaste|namaskara|good\s*(morning|afternoon|evening)|hlo)\b/i.test(q)) {
+  if (/^(hi|hello|hey|namaste|namaskara|good\s*(morning|afternoon|evening)|hlo)\b/i.test(q) || q.includes('ನಮಸ್ಕಾರ') || q.includes('नमस्ते')) {
+    if (q.includes('ನಮಸ್ಕಾರ') || /[\u0C80-\u0CFF]/.test(q)) {
+      return 'ನಮಸ್ಕಾರ! ಡಿಕೆ ಎಂಟರ್‌ಪ್ರೈಸ್ ಕುಡ್ಲು ಹೊಸ ಫ್ರಾಂಚೈಸಿಗೆ ಸ್ವಾಗತ. ಕೊರಿಯರ್ ದರ, ಮನೆ ಬಾಗಿಲ ಪಿಕಪ್ ಅಥವಾ ವಿಳಾಸದ ಬಗ್ಗೆ ನಿಮಗೆ ಹೇಗೆ ಸಹಾಯ ಮಾಡಬಹುದು?';
+    }
+    if (q.includes('नमस्ते') || /[\u0900-\u097F]/.test(q)) {
+      return 'नमस्ते! डीके एंटरप्राइज कुडलू न्यू फ्रैंचाइज़ी में आपका स्वागत है। कूरियर रेट्स, डोरस्टेप पिकअप या समय के बारे में आप क्या जानना चाहते हैं?';
+    }
     return 'Hello! Welcome to DK Enterprise Kudlu New Franchise. How can I assist you with your courier or parcel today? You can ask about rates, doorstep pickup, packing, or branch location.';
+  }
+
+  // Kannada specific intent triggers
+  if (/[\u0C80-\u0CFF]/.test(q)) {
+    if (q.includes('ದರ') || q.includes('ಬೆಲೆ') || q.includes('ಖರ್ಚು') || q.includes('ಎಷ್ಟು')) {
+      return 'ನಮ್ಮ ಕೊರಿಯರ್ ದರಗಳು ಕೈಗೆಟುಕುವ ಬೆಲೆಯಲ್ಲಿವೆ. ಸ್ಥಳೀಯ ಡಾಕ್ಯುಮೆಂಟ್ ಕೊರಿಯರ್ ಕನಿಷ್ಠ ದರದಿಂದ ಪ್ರಾರಂಭವಾಗುತ್ತದೆ. ಪಾರ್ಸೆಲ್ ತೂಕ ಮತ್ತು ಡೆಸ್ಟಿನೇಶನ್ ಪಿನ್‌ಕೋಡ್ ಅನ್ನು ನಮ್ಮ ವಾಟ್ಸಾಪ್‌ಗೆ (+91 63661 18850) ಕಳುಹಿಸಿ ತಕ್ಷಣ ಅಂದಾಜು ದರ ಪಡೆಯಿರಿ.';
+    }
+    if (q.includes('ಸಮಯ') || q.includes('ತೆರೆ') || q.includes('ಮುಚ್ಚ')) {
+      return 'ನಮ್ಮ ಶಾಖೆಯು ಸೋಮವಾರದಿಂದ ಶನಿವಾರದವರೆಗೆ ಬೆಳಿಗ್ಗೆ 9:30 ರಿಂದ ರಾತ್ರಿ 8:30 ರವರೆಗೆ ತೆರೆದಿರುತ್ತದೆ. ಭಾನುವಾರ ರಜೆ ಇರುತ್ತದೆ (ತುರ್ತು ಪಿಕಪ್‌ಗಾಗಿ ವಾಟ್ಸಾಪ್ +91 63661 18850 ಸಂಪರ್ಕಿಸಿ).';
+    }
+    if (q.includes('ಎಲ್ಲಿದೆ') || q.includes('ವಿಳಾಸ') || q.includes('ಶಾಖೆ') || q.includes('ಸ್ಥಳ')) {
+      return 'ನಮ್ಮ ಶಾಖೆ: ಶಾಪ್ ನಂ 3, 1ನೇ ಮಹಡಿ, ಬ್ರೆನ್ ಪಾಮ್ಸ್, ಮೆಡ್ ಪ್ಲಸ್ ಮೇಲ್ಭಾಗ, ಕುಡ್ಲು ಮುಖ್ಯ ರಸ್ತೆ, ಬೆಂಗಳೂರು 560068. ಗೂಗಲ್ ಮ್ಯಾಪ್: https://maps.app.goo.gl/Bp4kTUK2omVuxT347';
+    }
+    if (q.includes('ಪಿಕಪ್') || q.includes('ಮನೆ')) {
+      return 'ಹೌದು! ಕುಡ್ಲು, ಸಿಂಗಸಂದ್ರ, ಎಲೆಕ್ಟ್ರಾನಿಕ್ ಸಿಟಿ ಮತ್ತು ಎಚ್‌ಎಸ್‌ಆರ್ ಲೇಔಟ್ ಸುತ್ತಮುತ್ತ ಉಚಿತ ಮನೆ ಬಾಗಿಲ ಪಿಕಪ್ ಲಭ್ಯವಿದೆ. ವಾಟ್ಸಾಪ್ ಮೂಲಕ ಬುಕ್ ಮಾಡಲು: +91 63661 18850.';
+    }
+  }
+
+  // Hindi specific intent triggers
+  if (/[\u0900-\u097F]/.test(q)) {
+    if (q.includes('रेट') || q.includes('दाम') || q.includes('कीमत') || q.includes('कितना') || q.includes('खर्च')) {
+      return 'हमारे कूरियर रेट्स बहुत ही किफायती हैं। लोकल डॉक्यूमेंट कूरियर कम से कम दरों से शुरू होता है। सटीक रेट कोटेशन के लिए अपने पार्सल का वजन और पिनकोड हमारे व्हाट्सएप (+91 63661 18850) पर भेजें।';
+    }
+    if (q.includes('समय') || q.includes('टाइम') || q.includes('खुला') || q.includes('बंद') || q.includes('कब')) {
+      return 'हमारी दुकान सोमवार से शनिवार सुबह 9:30 बजे से रात 8:30 बजे तक खुली रहती है। रविवार को शाखा बंद रहती है (व्हाट्सएप +91 63661 18850 पर संदेश भेज सकते हैं)।';
+    }
+    if (q.includes('कहाँ') || q.includes('पता') || q.includes('लोकेशन') || q.includes('रास्ता')) {
+      return 'हमारी शाखा का पता: शॉप नं. 3, पहली मंज़िल, ब्रेन पाल्म्स, मेड प्लस के ऊपर, कुडलू मेन रोड, बेंगलुरु 560068। मैप लिंक: https://maps.app.goo.gl/Bp4kTUK2omVuxT347';
+    }
+    if (q.includes('पिकअप') || q.includes('घर')) {
+      return 'हाँ! कुडलू गेट, इलेक्ट्रॉनिक सिटी, सिंगसंद्रा और एचएसआर लेआउट में डोरस्टेप पिकअप उपलब्ध है। व्हाट्सएप (+91 63661 18850) पर अपना पता भेजकर राइडर बुक करें।';
+    }
   }
 
   // 2. Location / Address / Landmark / Directions

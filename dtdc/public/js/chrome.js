@@ -42,6 +42,213 @@
   }
 })();
 
+/* ============================================================
+   MULTI-LANGUAGE (i18n): Kannada, Hindi, English
+   ============================================================ */
+const I18N = {
+  en: {
+    callUs: "Call Us Now",
+    openNow: "Open Now",
+    closed: "Closed",
+    closesAt: "Closes at 8:30 PM",
+    officialSite: "Official Franchise Site: DK Enterprise Kudlu New Franchise",
+    navHome: "Home",
+    navTrack: "Track",
+    navReviews: "Reviews",
+    navWhatsApp: "WhatsApp",
+    servicesHead: "Our Services",
+    servicesOffer: "What we offer",
+    heroEyebrow: "Kudlu · Bengaluru",
+    heroLead: "Domestic & national courier services — fast, safe, and fully tracked from booking to doorstep.",
+    safeDelivery: "Safe Delivery",
+    onTimeService: "On-Time Service",
+    responsiveSupport: "Responsive Support",
+    trackYourParcel: "Track Your Parcel",
+    trackLead: "Track your shipment live with your booking ID.",
+    trackBtn: "Track Now",
+    reqPickupPin: "Request Pickup by Map Pin",
+    storeHours: "Store Hours",
+    phoneSupport: "Phone Support",
+    emailSupport: "Email Support",
+    branchAddress: "Branch Address",
+    whyChooseUs: "Why Choose Us?",
+    trustedPartner: "Trusted Courier & Cargo Partner",
+    quickDelivery: "Quick & Safe Delivery",
+    realtimeTracking: "Real-Time Tracking",
+    affordablePricing: "Affordable Pricing",
+    b2bTitle: "Corporate & E-Commerce B2B",
+    b2bSub: "Daily Doorstep Evening Pickups",
+    relocationTitle: "Student & IT Luggage Relocation",
+    relocationSub: "Cheap Per-Kg Surface Cargo",
+    exploreB2B: "Explore B2B Solutions →",
+    bookLuggage: "Book Luggage Pickup →",
+    chatGreeting: "Hi! I’m the DK Enterprise AI assistant. Ask me about booking, rates or services.",
+    installApp: "Install App"
+  },
+  kn: {
+    callUs: "ಈಗಲೇ ಕರೆ ಮಾಡಿ",
+    openNow: "ತೆರೆದಿದೆ",
+    closed: "ಮುಚ್ಚಲಾಗಿದೆ",
+    closesAt: "ರಾತ್ರಿ 8:30 ಕ್ಕೆ ಮುಕ್ತಾಯ",
+    officialSite: "ಅಧಿಕೃತ ಫ್ರಾಂಚೈಸಿ: ಡಿಕೆ ಎಂಟರ್‌ಪ್ರೈಸ್ ಕುಡ್ಲು ಹೊಸ ಫ್ರಾಂಚೈಸಿ",
+    navHome: "ಮುಖಪುಟ",
+    navTrack: "ಟ್ರ್ಯಾಕ್ ಮಾಡಿ",
+    navReviews: "ವಿಮರ್ಶೆಗಳು",
+    navWhatsApp: "ವಾಟ್ಸಾಪ್",
+    servicesHead: "ನಮ್ಮ ಸೇವೆಗಳು",
+    servicesOffer: "ನಾವು ಒದಗಿಸುವ ಸೇವೆಗಳು",
+    heroEyebrow: "ಕುಡ್ಲು ಗೇಟ್ · ಬೆಂಗಳೂರು",
+    heroLead: "ದೇಶೀಯ ಮತ್ತು ರಾಷ್ಟ್ರೀಯ ಕೊರಿಯರ್ ಸೇವೆಗಳು — ವೇಗ, ಸುರಕ್ಷಿತ ಮತ್ತು ನೇರ ಮನೆ ಬಾಗಿಲಿಗೆ ವಿತರಣೆ.",
+    safeDelivery: "ಸುರಕ್ಷಿತ ವಿತರಣೆ",
+    onTimeService: "ಸಮಯಕ್ಕೆ ಸರಿಯಾಗಿ ಸೇವೆ",
+    responsiveSupport: "ತ್ವರಿತ ಗ್ರಾಹಕ ಬೆಂಬಲ",
+    trackYourParcel: "ಪಾರ್ಸೆಲ್ ಟ್ರ್ಯಾಕ್ ಮಾಡಿ",
+    trackLead: "ಬುಕಿಂಗ್ ಐಡಿ ಬಳಸಿ ನಿಮ್ಮ ಪಾರ್ಸೆಲ್ ಲೈವ್ ಸ್ಥಿತಿಯನ್ನು ಪರಿಶೀಲಿಸಿ.",
+    trackBtn: "ಈಗ ಟ್ರ್ಯಾಕ್ ಮಾಡಿ",
+    reqPickupPin: "ಮ್ಯಾಪ್ ಪಿನ್ ಮೂಲಕ ಪಿಕಪ್ ಕೋರಿಕೆ",
+    storeHours: "ಶಾಖೆಯ ಸಮಯ",
+    phoneSupport: "ದೂರವಾಣಿ ಬೆಂಬಲ",
+    emailSupport: "ಇಮೇಲ್ ಬೆಂಬಲ",
+    branchAddress: "ಶಾಖೆಯ ವಿಳಾಸ",
+    whyChooseUs: "ನಮ್ಮನ್ನೇಕೆ ಆಯ್ಕೆ ಮಾಡಬೇಕು?",
+    trustedPartner: "ವಿಶ್ವಾಸಾರ್ಹ ಕೊರಿಯರ್ ಮತ್ತು ಕಾರ್ಗೋ ಪಾಲುದಾರ",
+    quickDelivery: "ವೇಗವಾದ ಮತ್ತು ಸುರಕ್ಷಿತ ವಿತರಣೆ",
+    realtimeTracking: "ಲೈವ್ ಟ್ರ್ಯಾಕಿಂಗ್ ಲಭ್ಯವಿದೆ",
+    affordablePricing: "ಕೈಗೆಟುಕುವ ದರಗಳು",
+    b2bTitle: "ಕಾರ್ಪೊರೇಟ್ ಮತ್ತು ಇ-ಕಾಮರ್ಸ್ B2B",
+    b2bSub: "ದೈನಂದಿನ ಸಂಜೆ ಮನೆ ಬಾಗಿಲ ಸಂಗ್ರಹ",
+    relocationTitle: "ವಿದ್ಯಾರ್ಥಿ ಮತ್ತು ಐಟಿ ಲಗೇಜ್ ಸ್ಥಳಾಂತರ",
+    relocationSub: "ಕಡಿಮೆ ದರದ ಮೇಲ್ಮೈ ಸರಕು ಸಾಗಣೆ",
+    exploreB2B: "B2B ಸೇವೆಗಳನ್ನು ವೀಕ್ಷಿಸಿ →",
+    bookLuggage: "ಲಗೇಜ್ ಪಿಕಪ್ ಬುಕ್ ಮಾಡಿ →",
+    chatGreeting: "ನಮಸ್ಕಾರ! ನಾನು ಡಿಕೆ ಎಂಟರ್‌ಪ್ರೈಸ್ ಎಐ ಸಹಾಯಕ. ಕೊರಿಯರ್ ದರ, ಸಮಯ ಅಥವಾ ಬುಕಿಂಗ್ ಬಗ್ಗೆ ಕೇಳಿ.",
+    installApp: "ಆ್ಯಪ್ ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡಿ"
+  },
+  hi: {
+    callUs: "अभी कॉल करें",
+    openNow: "खुला है",
+    closed: "बंद है",
+    closesAt: "रात 8:30 बजे तक खुला",
+    officialSite: "आधिकारिक फ्रैंचाइज़ी: डीके एंटरप्राइज कुडलू न्यू फ्रैंचाइज़ी",
+    navHome: "होम",
+    navTrack: "ट्रैक करें",
+    navReviews: "समीक्षाएं",
+    navWhatsApp: "व्हाट्सएप",
+    servicesHead: "हमारी सेवाएं",
+    servicesOffer: "हम क्या प्रदान करते हैं",
+    heroEyebrow: "कुडलू · बेंगलुरु",
+    heroLead: "घरेलू और राष्ट्रीय कूरियर सेवाएं — तेज़, सुरक्षित और डोरस्टेप डिलीवरी।",
+    safeDelivery: "सुरक्षित डिलीवरी",
+    onTimeService: "समय पर सेवा",
+    responsiveSupport: "त्वरित सहायता",
+    trackYourParcel: "अपना पार्सल ट्रैक करें",
+    trackLead: "बुकिंग आईडी से पार्सल का लाइव स्टेटस देखें।",
+    trackBtn: "अभी ट्रैक करें",
+    reqPickupPin: "मैप पिन से पिकअप अनुरोध",
+    storeHours: "दुकान का समय",
+    phoneSupport: "फ़ोन सहायता",
+    emailSupport: "ईमेल सहायता",
+    branchAddress: "शाखा का पता",
+    whyChooseUs: "हमें क्यों चुनें?",
+    trustedPartner: "विश्वसनीय कूरियर एवं कार्गो पार्टनर",
+    quickDelivery: "तेज़ और सुरक्षित डिलीवरी",
+    realtimeTracking: "रियल-टाइम लाइव ट्रैकिंग",
+    affordablePricing: "किफायती दरें",
+    b2bTitle: "कॉर्पोरेट और ई-कॉमर्स B2B",
+    b2bSub: "दैनिक शाम डोरस्टेप पिकअप",
+    relocationTitle: "विद्यार्थी एवं आईटी लगेज शिफ्टिंग",
+    relocationSub: "सस्ता प्रति-किलो सरफेस कार्गो",
+    exploreB2B: "B2B समाधान देखें →",
+    bookLuggage: "लगेज पिकअप बुक करें →",
+    chatGreeting: "नमस्ते! मैं डीके एंटरप्राइज का एआई सहायक हूँ। कूरियर दरें, पिकअप या समय के बारे में पूछें।",
+    installApp: "ऐप इंस्टॉल करें"
+  }
+};
+
+function getCurrentLang() {
+  try {
+    return localStorage.getItem('dtdc_lang') || 'en';
+  } catch(e) {
+    return 'en';
+  }
+}
+
+function applyLanguage(lang) {
+  const dict = I18N[lang] || I18N.en;
+  document.documentElement.lang = lang === 'kn' ? 'kn-IN' : (lang === 'hi' ? 'hi-IN' : 'en-IN');
+  try { localStorage.setItem('dtdc_lang', lang); } catch(e){}
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+
+  const callText = document.querySelector('.call-text');
+  if (callText) callText.textContent = dict.callUs;
+
+  const navLinks = document.querySelector('.nav-links');
+  if (navLinks) {
+    const links = navLinks.querySelectorAll('a:not(.whatsapp-contact)');
+    if (links[0]) links[0].textContent = dict.navHome;
+    if (links[1]) links[1].textContent = dict.navTrack;
+    if (links[2]) links[2].textContent = dict.navReviews;
+    const waLink = navLinks.querySelector('.whatsapp-contact');
+    if (waLink) waLink.innerHTML = `<span class="whatsapp-dot" aria-hidden="true"></span>${dict.navWhatsApp}`;
+  }
+
+  const pwaLabel = document.getElementById('pwa-btn-label');
+  if (pwaLabel) pwaLabel.textContent = dict.installApp;
+
+  const heroEyebrow = document.querySelector('.hero .eyebrow');
+  if (heroEyebrow) heroEyebrow.textContent = dict.heroEyebrow;
+  const heroLead = document.querySelector('.hero .lead');
+  if (heroLead) heroLead.textContent = dict.heroLead;
+
+  const tidLabel = document.querySelector('.tid-label');
+  if (tidLabel) tidLabel.textContent = dict.trackYourParcel;
+  const trackBtn = document.querySelector('.waybill a.btn');
+  if (trackBtn) trackBtn.textContent = dict.trackBtn;
+
+  const badges = document.querySelectorAll('.trust-badges .badge-item');
+  if (badges[0] && badges[0].childNodes[2]) badges[0].childNodes[2].textContent = ' ' + dict.safeDelivery;
+  if (badges[1] && badges[1].childNodes[2]) badges[1].childNodes[2].textContent = ' ' + dict.onTimeService;
+  if (badges[2] && badges[2].childNodes[2]) badges[2].childNodes[2].textContent = ' ' + dict.responsiveSupport;
+}
+
+/* ============================================================
+   DARK / LIGHT THEME CONTROLLER
+   ============================================================ */
+function initTheme() {
+  let savedTheme = 'light';
+  try {
+    savedTheme = localStorage.getItem('dtdc_theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  } catch(e){}
+  document.documentElement.setAttribute('data-theme', savedTheme);
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') || 'light';
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  try { localStorage.setItem('dtdc_theme', next); } catch(e){}
+}
+
+/* ============================================================
+   PWA (PROGRESSIVE WEB APP) INSTALLATION
+   ============================================================ */
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const pwaBtn = document.getElementById('pwa-install-btn');
+  if (pwaBtn) pwaBtn.style.display = 'inline-flex';
+});
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+
 /**
  * Calculates live store status in Indian Standard Time (IST, UTC+05:30).
  * Store hours: Monday to Saturday, 9:30 AM to 8:30 PM (Sunday closed).
@@ -98,12 +305,18 @@ function renderChrome() {
             <span style="opacity:0.35;margin:0 4px;">|</span>
             <strong>DK Enterprise Kudlu New Franchise</strong> · Kudlu Gate, Bengaluru
           </div>
-          <div class="call-cta">
-            <span class="phone-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="#ffffff" aria-hidden="true"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-2.2 2.2a15.053 15.053 0 0 1-6.59-6.59l2.2-2.21a.96.96 0 0 0 .25-1A11.36 11.36 0 0 1 8.57 3.99c0-.55-.45-1-1-1H4.01c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.61c0-.55-.45-1-1-1z"/></svg></span>
-            <span>
-              <span class="call-text">Call Us Now</span><br>
-              <a href="tel:+916366118850" class="call-number">+91 63661 18850</a>
-            </span>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <button type="button" id="pwa-install-btn" class="pwa-install-pill" style="display:none;" title="Install DK DTDC App">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+              <span id="pwa-btn-label">Install App</span>
+            </button>
+            <div class="call-cta">
+              <span class="phone-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="#ffffff" aria-hidden="true"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-2.2 2.2a15.053 15.053 0 0 1-6.59-6.59l2.2-2.21a.96.96 0 0 0 .25-1A11.36 11.36 0 0 1 8.57 3.99c0-.55-.45-1-1-1H4.01c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.61c0-.55-.45-1-1-1z"/></svg></span>
+              <span>
+                <span class="call-text">Call Us Now</span><br>
+                <a href="tel:+916366118850" class="call-number">+91 63661 18850</a>
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -119,6 +332,18 @@ function renderChrome() {
             <a href="https://www.dtdc.com/track-your-shipment/" target="_blank" rel="noopener noreferrer">Track</a>
             <a href="/reviews.html">Reviews</a>
             <a class="whatsapp-contact" href="https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise Kudlu New Franchise, I need help with a courier.')}" target="_blank" rel="noopener noreferrer"><span class="whatsapp-dot" aria-hidden="true"></span>WhatsApp</a>
+            
+            <div class="lang-switcher" id="lang-switcher" title="Language / ಭಾಷೆ / भाषा">
+              <button type="button" class="lang-btn active" data-lang="en">EN</button>
+              <button type="button" class="lang-btn" data-lang="kn">ಕನ್ನಡ</button>
+              <button type="button" class="lang-btn" data-lang="hi">हिन्दी</button>
+            </div>
+
+            <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Dark / Light Theme" title="Toggle Dark/Light Mode">
+              <span class="theme-icon-sun">☀️</span>
+              <span class="theme-icon-moon">🌙</span>
+            </button>
+
             <span data-auth-slot style="display:flex;gap:6px;align-items:center;"></span>
           </div>
         </div>
@@ -303,6 +528,14 @@ function renderChrome() {
     panel.style.cssText = 'position:fixed;left:24px;right:auto;bottom:90px;z-index:9999;width:340px;max-width:calc(100vw - 36px);height:440px;max-height:calc(100vh - 110px);background:#fff;border-radius:14px;box-shadow:0 8px 30px rgba(12,35,64,.3);display:none;flex-direction:column;overflow:hidden;font-family:inherit;border:1px solid #e2e8f0;';
     panel.innerHTML = '<div style="background:#e31837;color:#fff;padding:12px 14px;font-weight:600;display:flex;justify-content:space-between;align-items:center;"><span>DK Enterprise Assistant</span><button type="button" id="ai-close" aria-label="Close" style="background:none;border:0;color:#fff;font-size:20px;cursor:pointer;">&times;</button></div>'
       + '<div id="ai-msgs" style="flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:#f8fafc;"></div>'
+      + '<div class="ai-quick-chips">'
+      + '<button type="button" class="ai-chip" data-q="What are your courier rates and pricing?">💰 Rates</button>'
+      + '<button type="button" class="ai-chip" data-q="What are your store hours and opening timings?">🕒 Timings</button>'
+      + '<button type="button" class="ai-chip" data-q="How can I book a doorstep parcel pickup?">📦 Pickup</button>'
+      + '<button type="button" class="ai-chip" data-q="Where is your branch located and how do I reach?">📍 Location</button>'
+      + '<button type="button" class="ai-chip" data-q="Tell me about B2B corporate monthly billing">🏢 B2B Account</button>'
+      + '<button type="button" class="ai-chip" data-q="What are your student luggage relocation rates?">🎒 Luggage</button>'
+      + '</div>'
       + '<div style="display:flex;gap:6px;padding:10px;border-top:1px solid #e2e8f0;background:#fff;"><input id="ai-input" type="text" maxlength="1000" placeholder="Ask about booking, rates..." style="flex:1;padding:9px 10px;border:1.5px solid #cbd5e1;border-radius:8px;font-size:14px;"><button type="button" id="ai-send" style="background:#e31837;color:#fff;border:0;border-radius:8px;padding:0 14px;cursor:pointer;font-weight:600;">Send</button></div>';
     
     document.body.appendChild(panel);
@@ -343,6 +576,13 @@ function renderChrome() {
     }
     panel.querySelector('#ai-send').addEventListener('click', send);
     input.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
+
+    panel.querySelectorAll('.ai-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        input.value = chip.getAttribute('data-q');
+        send();
+      });
+    });
     btn.addEventListener('click', () => {
       const isOpen = panel.style.display === 'flex';
       panel.style.display = isOpen ? 'none' : 'flex';
@@ -886,8 +1126,34 @@ window.verifyRecaptcha = function(cardOrFormId) {
 
 // Global bootstrap
 document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
   renderChrome();
   initRecaptchaWidgets();
   initLocationPickerModal();
+  applyLanguage(getCurrentLang());
+
+  // Global delegation for lang switcher, theme toggle, and PWA install
+  document.addEventListener('click', (e) => {
+    const langBtn = e.target.closest('.lang-btn');
+    if (langBtn && langBtn.dataset.lang) {
+      applyLanguage(langBtn.dataset.lang);
+      return;
+    }
+    const themeBtn = e.target.closest('#theme-toggle');
+    if (themeBtn) {
+      toggleTheme();
+      return;
+    }
+    const pwaBtn = e.target.closest('#pwa-install-btn');
+    if (pwaBtn && deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          pwaBtn.style.display = 'none';
+        }
+        deferredPrompt = null;
+      });
+    }
+  });
 }, { once: true });
 

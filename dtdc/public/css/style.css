@@ -2516,3 +2516,302 @@ footer .fine {
   font-family: sans-serif;
 }
 
+/* ============================================================
+   4. DARK / LIGHT THEME TOGGLE & PALETTE
+   ============================================================ */
+[data-theme="dark"] {
+  --ink: #F8FAFC;
+  --ink-deep: #060B14;
+  --ink-soft: #CBD5E1;
+  --kraft: #0B1120;     /* Deep slate background */
+  --paper: #162032;     /* Surface card dark */
+  --grey: #94A3B8;
+  --grey-line: #223249;
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="dark"] body {
+  background-color: var(--kraft);
+  color: var(--ink);
+}
+
+[data-theme="dark"] .site-nav {
+  background: rgba(11, 17, 32, 0.94);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .brand-text {
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .brand-text small {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .nav-links a {
+  color: #E2E8F0;
+}
+
+[data-theme="dark"] .service-bullet-item {
+  background: #162032;
+  border-color: #24344D;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .service-bullet-item:hover {
+  background: #1C2A42;
+  border-color: #38BDF8;
+}
+
+[data-theme="dark"] .service-bullet-item h4 {
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .waybill {
+  background: #162032;
+  border-color: #24344D;
+  color: #F8FAFC;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .waybill .tid-label {
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .contact-item-card {
+  background: #162032;
+  border-color: #24344D;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .contact-item-card:hover {
+  background: #1C2A42;
+  border-color: var(--amber);
+}
+
+[data-theme="dark"] .contact-val {
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .field input,
+[data-theme="dark"] .field textarea,
+[data-theme="dark"] .field select {
+  background: #0F172A;
+  border-color: #334155;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .field input:focus,
+[data-theme="dark"] .field textarea:focus,
+[data-theme="dark"] .field select:focus {
+  border-color: #38BDF8;
+}
+
+[data-theme="dark"] .field label {
+  color: #CBD5E1;
+}
+
+[data-theme="dark"] .loc-modal-card {
+  background: #162032;
+  border-color: #24344D;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .loc-coords-box {
+  background: #0F172A;
+  border-color: #24344D;
+  color: #E2E8F0;
+}
+
+[data-theme="dark"] .loc-coords-box strong {
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .loc-chip-btn {
+  background: #1E293B;
+  border-color: #334155;
+  color: #CBD5E1;
+}
+
+[data-theme="dark"] .recaptcha-widget-card {
+  background: #162032;
+  border-color: #334155;
+}
+
+[data-theme="dark"] .recaptcha-label-text {
+  color: #E2E8F0;
+}
+
+[data-theme="dark"] .recaptcha-custom-box {
+  background: #0F172A;
+  border-color: #475569;
+}
+
+[data-theme="dark"] .form-security-seal {
+  background: rgba(15, 23, 42, 0.85);
+  border-color: #334155;
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .form-security-seal strong {
+  color: #F1F5F9;
+}
+
+[data-theme="dark"] .btn.outline {
+  border-color: #334155;
+  color: #E2E8F0;
+}
+
+[data-theme="dark"] .btn.outline:hover {
+  background: #1E293B;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #FFFFFF;
+  border-radius: 20px;
+  width: 34px;
+  height: 30px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  padding: 0;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+.theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: scale(1.06);
+}
+.theme-icon-sun { display: none; }
+.theme-icon-moon { display: inline-block; }
+[data-theme="dark"] .theme-icon-sun { display: inline-block; }
+[data-theme="dark"] .theme-icon-moon { display: none; }
+
+/* ============================================================
+   5. MULTI-LANGUAGE SWITCHER (EN | ಕನ್ನಡ | हिन्दी)
+   ============================================================ */
+.lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
+  padding: 2px;
+  gap: 2px;
+  user-select: none;
+}
+.lang-btn {
+  background: none;
+  border: none;
+  color: #CBD5E1;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.2;
+}
+.lang-btn:hover {
+  color: #FFFFFF;
+}
+.lang-btn.active {
+  background: #E31837;
+  color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(227, 24, 55, 0.4);
+}
+
+/* ============================================================
+   6. PWA INSTALL PILL BUTTON
+   ============================================================ */
+.pwa-install-pill {
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  color: #FFFFFF;
+  border: none;
+  padding: 4px 11px;
+  border-radius: 18px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+  transition: all 0.2s ease;
+  animation: pulsePwa 2.5s infinite;
+}
+.pwa-install-pill:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.5);
+}
+@keyframes pulsePwa {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.88; }
+}
+
+/* ============================================================
+   7. AI CHATBOT QUICK QUESTION CHIPS
+   ============================================================ */
+.ai-quick-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 8px 12px;
+  background: #F1F5F9;
+  border-top: 1px solid #E2E8F0;
+  scrollbar-width: none;
+}
+.ai-quick-chips::-webkit-scrollbar { display: none; }
+[data-theme="dark"] .ai-quick-chips {
+  background: #0F172A;
+  border-top-color: #24344D;
+}
+.ai-chip {
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  color: #1E293B;
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.ai-chip:hover {
+  background: #0C2340;
+  color: #FFFFFF;
+  border-color: #0C2340;
+}
+[data-theme="dark"] .ai-chip {
+  background: #1E293B;
+  border-color: #334155;
+  color: #E2E8F0;
+}
+[data-theme="dark"] .ai-chip:hover {
+  background: #E31837;
+  border-color: #E31837;
+  color: #FFFFFF;
+}
+
+/* ============================================================
+   8. CWV & FAST LOADING OPTIMIZATIONS
+   ============================================================ */
+.info-band,
+.customer-thought-band,
+#site-footer {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 360px;
+}
+
+
