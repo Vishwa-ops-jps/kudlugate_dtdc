@@ -393,84 +393,83 @@ section { padding: 56px 0; }
 }
 
 /* ============================================================
-   ROBOT COMPANION FLOATING SPEECH / THOUGHT CLOUD BUBBLE
+   ROBOT COMPANION FLOATING SPEECH / THOUGHT CLOUD BUBBLE (FULL CLOUD DESIGN)
    ============================================================ */
 .robot-cloud-bubble {
   position: fixed;
   left: 88px;
   bottom: 84px;
   z-index: 9998;
-  background: #FFFFFF;
-  border: 2px solid #0C2340;
-  border-radius: 26px;
-  padding: 8px 18px 9px 18px;
-  font-size: 12.5px;
-  font-weight: 700;
-  color: #0C2340;
-  box-shadow: 0 6px 18px rgba(12, 35, 64, 0.16);
-  display: inline-flex;
+  width: 250px;
+  height: 82px;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0;
+  display: flex;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
-  white-space: nowrap;
   user-select: none;
   animation: cloudFloat 3.2s ease-in-out infinite;
-  transition: opacity 0.3s ease, transform 0.3s ease, background 0.25s ease, border-color 0.25s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease, filter 0.25s ease;
+  filter: drop-shadow(0 6px 16px rgba(12, 35, 64, 0.16));
 }
 
 .robot-cloud-bubble:hover {
-  transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 8px 24px rgba(12, 35, 64, 0.24);
-  border-color: #E31837;
+  transform: translateY(-3px) scale(1.03);
+  filter: drop-shadow(0 8px 22px rgba(12, 35, 64, 0.25));
 }
 
-/* Authentic Cloud Top Puffs */
-.robot-cloud-bubble::before {
-  content: "";
+.robot-cloud-bubble .cloud-svg {
   position: absolute;
-  top: -11px;
-  left: 20px;
-  width: 28px;
-  height: 20px;
-  background: #FFFFFF;
-  border-top: 2px solid #0C2340;
-  border-left: 2px solid #0C2340;
-  border-right: none;
-  border-bottom: none;
-  border-radius: 16px 16px 0 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
   z-index: 1;
 }
 
-.robot-cloud-bubble::after {
-  content: "";
-  position: absolute;
-  top: -15px;
-  left: 44px;
-  width: 34px;
-  height: 24px;
-  background: #FFFFFF;
-  border-top: 2px solid #0C2340;
-  border-right: 2px solid #0C2340;
-  border-left: none;
-  border-bottom: none;
-  border-radius: 20px 20px 0 0;
-  z-index: 1;
+.robot-cloud-bubble .cloud-path {
+  fill: #FFFFFF;
+  stroke: #0C2340;
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+  transition: stroke 0.25s ease, fill 0.25s ease;
 }
 
-.robot-cloud-bubble:hover::before,
-.robot-cloud-bubble:hover::after {
-  border-color: #E31837;
+.robot-cloud-bubble:hover .cloud-path {
+  stroke: #E31837;
+}
+
+.robot-cloud-bubble .cloud-text {
+  position: relative;
+  z-index: 2;
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #0C2340;
+  text-align: center;
+  line-height: 1.35;
+  padding: 0 26px;
+  max-width: 100%;
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.22s ease, color 0.25s ease;
 }
 
 /* Trailing Thought Dots Leading towards Robot Head */
 .robot-cloud-bubble .cloud-tail {
   position: absolute;
-  bottom: -18px;
-  left: -6px;
+  bottom: -16px;
+  left: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
   pointer-events: none;
-  gap: 2px;
+  gap: 2.5px;
   z-index: 1;
 }
 
@@ -479,24 +478,25 @@ section { padding: 56px 0; }
   border: 2px solid #0C2340;
   border-radius: 50%;
   display: block;
+  transition: border-color 0.25s ease, background 0.25s ease;
 }
 
 .robot-cloud-bubble .cloud-dot.dot-1 {
   width: 10px;
   height: 10px;
-  margin-left: 8px;
+  margin-left: 6px;
 }
 
 .robot-cloud-bubble .cloud-dot.dot-2 {
   width: 6.5px;
   height: 6.5px;
-  margin-left: 0px;
+  margin-left: -1px;
 }
 
 .robot-cloud-bubble .cloud-dot.dot-3 {
   width: 4px;
   height: 4px;
-  margin-left: -6px;
+  margin-left: -7px;
 }
 
 .robot-cloud-bubble:hover .cloud-dot {
@@ -512,31 +512,24 @@ section { padding: 56px 0; }
   }
 }
 
-.robot-cloud-bubble .cloud-text {
-  position: relative;
-  z-index: 2;
-  display: inline-block;
-  transition: opacity 0.25s ease, transform 0.25s ease;
-  line-height: 1.25;
-}
-
 .robot-cloud-bubble.cloud-hidden {
   opacity: 0 !important;
   transform: translateY(18px) scale(0.8) !important;
   pointer-events: none !important;
 }
 
+/* Dark Theme Support */
 [data-theme="dark"] .robot-cloud-bubble {
-  background: #162032;
-  border-color: #38BDF8;
-  color: #F8FAFC;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.55);
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.6));
 }
 
-[data-theme="dark"] .robot-cloud-bubble::before,
-[data-theme="dark"] .robot-cloud-bubble::after {
-  background: #162032;
-  border-color: #38BDF8;
+[data-theme="dark"] .robot-cloud-bubble .cloud-path {
+  fill: #162032;
+  stroke: #38BDF8;
+}
+
+[data-theme="dark"] .robot-cloud-bubble .cloud-text {
+  color: #F8FAFC;
 }
 
 [data-theme="dark"] .robot-cloud-bubble .cloud-dot {
@@ -544,26 +537,27 @@ section { padding: 56px 0; }
   border-color: #38BDF8;
 }
 
+[data-theme="dark"] .robot-cloud-bubble:hover .cloud-path,
+[data-theme="dark"] .robot-cloud-bubble:hover .cloud-dot {
+  stroke: #60A5FA;
+  border-color: #60A5FA;
+}
+
+/* Mobile Screens */
 @media (max-width: 600px) {
   .robot-cloud-bubble {
-    left: 74px;
-    bottom: 74px;
-    font-size: 11px;
-    padding: 6px 12px;
-    max-width: 210px;
-    white-space: normal;
+    left: 70px;
+    bottom: 72px;
+    width: 215px;
+    height: 72px;
   }
-  .robot-cloud-bubble::before {
-    left: 12px;
-    width: 22px;
-    height: 16px;
-    top: -9px;
+  .robot-cloud-bubble .cloud-text {
+    font-size: 10.5px;
+    padding: 0 18px;
   }
-  .robot-cloud-bubble::after {
-    left: 32px;
-    width: 26px;
-    height: 18px;
-    top: -12px;
+  .robot-cloud-bubble .cloud-tail {
+    left: 4px;
+    bottom: -14px;
   }
 }
 

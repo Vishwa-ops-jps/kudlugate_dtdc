@@ -648,6 +648,20 @@ function renderChrome() {
       ]
     };
 
+    const CLOUD_SVG_PATH = "M 35 30 A 26 24 0 0 1 75 14 A 34 28 0 0 1 130 8 A 34 28 0 0 1 185 12 A 26 24 0 0 1 228 26 A 20 20 0 0 1 252 48 A 22 22 0 0 1 234 68 A 26 24 0 0 1 195 78 A 34 28 0 0 1 140 82 A 34 28 0 0 1 85 78 A 26 24 0 0 1 45 68 A 22 22 0 0 1 16 48 A 20 20 0 0 1 35 30 Z";
+
+    function buildCloudHtml(text) {
+      return '<svg class="cloud-svg" viewBox="0 0 270 90" preserveAspectRatio="none" aria-hidden="true">' +
+        '<path class="cloud-path" d="' + CLOUD_SVG_PATH + '"/>' +
+        '</svg>' +
+        '<span class="cloud-text">' + text + '</span>' +
+        '<div class="cloud-tail">' +
+        '<span class="cloud-dot dot-1"></span>' +
+        '<span class="cloud-dot dot-2"></span>' +
+        '<span class="cloud-dot dot-3"></span>' +
+        '</div>';
+    }
+
     let cloudIdx = 0;
     function updateCloudMessage(forceIdx) {
       const lang = getCurrentLang() || 'en';
@@ -667,12 +681,12 @@ function renderChrome() {
           textEl.style.transform = 'translateY(0)';
         }, 220);
       } else {
-        cloud.innerHTML = `<span class="cloud-text">${list[cloudIdx]}</span><span class="cloud-tail"><span class="cloud-dot dot-1"></span><span class="cloud-dot dot-2"></span><span class="cloud-dot dot-3"></span></span>`;
+        cloud.innerHTML = buildCloudHtml(list[cloudIdx]);
       }
     }
     const initialLang = getCurrentLang() || 'en';
     const initList = CLOUD_PROMPTS[initialLang] || CLOUD_PROMPTS.en;
-    cloud.innerHTML = `<span class="cloud-text">${initList[0]}</span><span class="cloud-tail"><span class="cloud-dot dot-1"></span><span class="cloud-dot dot-2"></span><span class="cloud-dot dot-3"></span></span>`;
+    cloud.innerHTML = buildCloudHtml(initList[0]);
     setInterval(updateCloudMessage, 3800);
     window.__updateAiCloudMsg = updateCloudMessage;
 
