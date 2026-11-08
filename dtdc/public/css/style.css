@@ -294,16 +294,16 @@ section { padding: 56px 0; }
   margin-bottom: 0;
 }
 
-/* ---------- Standalone 3D Floating AI Companion Robot (No Circle Button) ---------- */
+/* ---------- Standalone 3D Floating AI Companion Robot ---------- */
 
 .robot-ai-btn {
   position: fixed;
-  left: 24px;
+  left: 20px;
   right: auto;
-  bottom: 24px;
+  bottom: 18px;
   z-index: 9999;
-  width: 70px;
-  height: 82px;
+  width: 86px;
+  height: 130px;
   background: transparent !important;
   border: none !important;
   border-radius: 0 !important;
@@ -311,8 +311,9 @@ section { padding: 56px 0; }
   cursor: pointer;
   padding: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   animation: robotFloat 3.2s ease-in-out infinite;
   transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
   will-change: transform, opacity;
@@ -320,39 +321,57 @@ section { padding: 56px 0; }
 }
 
 .robot-ai-btn:hover {
-  transform: scale(1.15) translateY(-6px);
+  transform: scale(1.08) translateY(-5px);
 }
 
 .robot-ai-btn:active {
-  transform: scale(0.94);
+  transform: scale(0.95);
 }
 
 .robot-ai-btn.robot-hidden {
   animation: none !important;
-  transform: translateY(120px) scale(0.65) !important;
+  transform: translateY(140px) scale(0.65) !important;
   opacity: 0 !important;
   pointer-events: none !important;
 }
 
 @keyframes robotFloat {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  50% { transform: translateY(-7px); }
 }
 
-.robot-svg {
+.robot-img {
   width: 100%;
   height: 100%;
-  overflow: visible;
-  filter: drop-shadow(0 6px 14px rgba(12, 35, 64, 0.22));
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 18px rgba(12, 35, 64, 0.28));
+  transition: filter 0.3s ease;
+}
+
+.robot-ai-btn:hover .robot-img {
+  filter: drop-shadow(0 12px 24px rgba(227, 24, 55, 0.35)) drop-shadow(0 0 10px rgba(56, 189, 248, 0.4));
+}
+
+[data-theme="dark"] .robot-img {
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 12px rgba(56, 189, 248, 0.3));
 }
 
 .robot-shadow {
+  position: absolute;
+  bottom: 0px;
+  width: 54px;
+  height: 8px;
+  background: radial-gradient(ellipse at center, rgba(12, 35, 64, 0.35) 0%, rgba(12, 35, 64, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
   animation: shadowScale 3.2s ease-in-out infinite;
-  transform-origin: 50px 110px;
 }
+
 @keyframes shadowScale {
-  0%, 100% { transform: scale(1); opacity: 0.28; }
-  50% { transform: scale(0.72); opacity: 0.14; }
+  0%, 100% { transform: scale(1); opacity: 0.35; }
+  50% { transform: scale(0.75); opacity: 0.15; }
 }
 
 .robot-head-bob {
@@ -397,8 +416,8 @@ section { padding: 56px 0; }
    ============================================================ */
 .robot-cloud-bubble {
   position: fixed;
-  left: 88px;
-  bottom: 84px;
+  left: 108px;
+  bottom: 88px;
   z-index: 9998;
   width: 250px;
   height: 82px;
@@ -545,9 +564,15 @@ section { padding: 56px 0; }
 
 /* Mobile Screens */
 @media (max-width: 600px) {
+  .robot-ai-btn {
+    left: 12px;
+    bottom: 12px;
+    width: 68px;
+    height: 104px;
+  }
   .robot-cloud-bubble {
-    left: 70px;
-    bottom: 72px;
+    left: 82px;
+    bottom: 74px;
     width: 215px;
     height: 72px;
   }
@@ -836,10 +861,10 @@ section { padding: 56px 0; }
 
 @media (max-width: 480px) {
   .robot-ai-btn {
-    left: 12px;
-    bottom: 16px;
-    width: 62px;
-    height: 72px;
+    left: 10px;
+    bottom: 12px;
+    width: 64px;
+    height: 98px;
   }
   .wa-float-btn {
     right: 14px;

@@ -272,17 +272,17 @@ function applyLanguage(lang, userInitiated = false) {
   const diwaliTexts = {
     en: {
       badge: "✨ HAPPY DEEPAVALI / DIWALI ✨",
-      msg: "Festival Express Courier: Sending sweets, dry fruits & gifts to family? Fast doorstep pickup in Kudlu & E-City!",
+      msg: "Festival Express Courier: Sending sweets, dry fruits & gifts to family? Fast doorstep pickup in Kudlu!",
       cta: "Book Festival Pickup →"
     },
     kn: {
       badge: "✨ ದೀಪಾವಳಿ ಹಬ್ಬದ ಹಾರ್ದಿಕ ಶುಭಾಶಯಗಳು ✨",
-      msg: "ಹಬ್ಬದ ಎಕ್ಸ್‌ಪ್ರೆಸ್ ಕೊರಿಯರ್: ಸಿಹಿ ತಿಂಡಿಗಳು ಮತ್ತು ಉಡುಗೊರೆಗಳನ್ನು ಕುಟುಂಬಕ್ಕೆ ಕಳುಹಿಸಿ! ಕುಡ್ಲು ಮತ್ತು ಇ-ಸಿಟಿಯಲ್ಲಿ ಮನೆ ಬಾಗಿಲಿಗೆ ಪಿಕಪ್!",
+      msg: "ಹಬ್ಬದ ಎಕ್ಸ್‌ಪ್ರೆಸ್ ಕೊರಿಯರ್: ಸಿಹಿ ತಿಂಡಿಗಳು ಮತ್ತು ಉಡುಗೊರೆಗಳನ್ನು ಕುಟುಂಬಕ್ಕೆ ಕಳುಹಿಸಿ! ಕುಡ್ಲುನಲ್ಲಿ ಮನೆ ಬಾಗಿಲಿಗೆ ಪಿಕಪ್!",
       cta: "ಹಬ್ಬದ ಪಿಕಪ್ ಬುಕ್ ಮಾಡಿ →"
     },
     hi: {
       badge: "✨ दीपावली की हार्दिक शुभकामनाएँ ✨",
-      msg: "फेस्टिवल एक्सप्रेस कूरियर: घर की बनी मिठाइयाँ और उपहार अपनों तक पहुँचाएँ! कुडलू और ई-सिटी में डोरस्टेप पिकअप उपलब्ध!",
+      msg: "फेस्टिवल एक्सप्रेस कूरियर: घर की बनी मिठाइयाँ और उपहार अपनों तक पहुँचाएँ! कुडलू में डोरस्टेप पिकअप उपलब्ध!",
       cta: "त्योहार पिकअप बुक करें →"
     }
   };
@@ -302,17 +302,17 @@ function applyLanguage(lang, userInitiated = false) {
   if (dCardTitle && lang === 'kn') {
     if (dCardBadge) dCardBadge.textContent = "ದೀಪಾವಳಿ ಹಬ್ಬದ ವಿಶೇಷ · ೨೦೨೬";
     dCardTitle.textContent = "ಮನೆಯಲ್ಲಿ ತಯಾರಿಸಿದ ಸಿಹಿ ತಿಂಡಿಗಳು, ಡ್ರೈ ಫ್ರೂಟ್ಸ್ & ಹಬ್ಬದ ಉಡುಗೊರೆಗಳನ್ನು ಭಾರತದಾದ್ಯಂತ ಕಳುಹಿಸಿ";
-    if (dCardDesc) dCardDesc.textContent = "ಕುಟುಂಬದೊಂದಿಗೆ ದೀಪಾವಳಿ ಆಚರಿಸಿ! ಉಚಿತ ವಾಟರ್‌ಪ್ರೂಫ್ ಪ್ಯಾಕಿಂಗ್, ಬಬಲ್ ರಾಪ್ ಮತ್ತು ಕುಡ್ಲು ಗೇಟ್ ಹಾಗೂ ಇ-ಸಿಟಿಯಲ್ಲಿ ಮನೆ ಬಾಗಿಲಿಗೆ ಪಿಕಪ್‌ನೊಂದಿಗೆ ಎಕ್ಸ್‌ಪ್ರೆಸ್ ವಿತರಣೆ!";
+    if (dCardDesc) dCardDesc.textContent = "ಕುಟುಂಬದೊಂದಿಗೆ ದೀಪಾವಳಿ ಆಚರಿಸಿ! ಉಚಿತ ವಾಟರ್‌ಪ್ರೂಫ್ ಪ್ಯಾಕಿಂಗ್, ಬಬಲ್ ರಾಪ್ ಮತ್ತು ಕುಡ್ಲು ಗೇಟ್ ಸುತ್ತಮುತ್ತ ಮನೆ ಬಾಗಿಲಿಗೆ ಪಿಕಪ್‌ನೊಂದಿಗೆ ಎಕ್ಸ್‌ಪ್ರೆಸ್ ವಿತರಣೆ!";
     if (dCardCta) dCardCta.innerHTML = "<span>🪔</span> ಹಬ್ಬದ ಪಿಕಪ್ ಬುಕ್ ಮಾಡಿ";
   } else if (dCardTitle && lang === 'hi') {
     if (dCardBadge) dCardBadge.textContent = "दीपावली स्पेशल · 2026";
     dCardTitle.textContent = "घर की बनी मिठाइयाँ, ड्राय फ्रूट्स और उपहार अपनों तक पहुँचाएँ";
-    if (dCardDesc) dCardDesc.textContent = "अपनों के साथ मनाएँ दीपोत्सव! वाटरप्रूफ श्रिंक रैप और मजबूत क्रश-प्रूफ पैकेजिंग के साथ कुडलू गेट और ई-सिटी में फास्ट डोरस्टेप पिकअप!";
+    if (dCardDesc) dCardDesc.textContent = "अपनों के साथ मनाएँ दीपोत्सव! वाटरप्रूफ श्रिंक रैप और मजबूत क्रश-प्रूफ पैकेजिंग के साथ कुडलू गेट में फास्ट डोरस्टेप पिकअप!";
     if (dCardCta) dCardCta.innerHTML = "<span>🪔</span> दिवाली पिकअप बुक करें";
   } else if (dCardTitle) {
     if (dCardBadge) dCardBadge.textContent = "DIWALI FESTIVAL SPECIAL · 2026";
     dCardTitle.textContent = "Send Homemade Sweets, Dry Fruits & Festival Gifts Across India";
-    if (dCardDesc) dCardDesc.textContent = "Celebrating Deepavali away from home? Ship sweets, snacks, festival attire & gift hampers to your loved ones with tamper-proof packaging, waterproof bubble wrap & express doorstep collection across Kudlu Gate & Electronic City!";
+    if (dCardDesc) dCardDesc.textContent = "Celebrating Deepavali away from home? Ship sweets, snacks, festival attire & gift hampers to your loved ones with tamper-proof packaging, waterproof bubble wrap & express doorstep collection across Kudlu Gate & Kudlu Main Road!";
     if (dCardCta) dCardCta.innerHTML = "<span>🪔</span> Book Diwali Sweets Pickup";
   }
 
@@ -441,7 +441,7 @@ function renderChrome() {
           <span class="diwali-diya" aria-hidden="true">🪔</span>
           <span class="diwali-banner-badge">✨ HAPPY DEEPAVALI / DIWALI ✨</span>
           <span class="diwali-banner-text" id="diwali-banner-text">
-            Festival Express Courier: Sending sweets, dry fruits &amp; gifts to family? Fast doorstep pickup in Kudlu &amp; E-City!
+            Festival Express Courier: Sending sweets, dry fruits &amp; gifts to family? Fast doorstep pickup in Kudlu!
           </span>
           <a href="https://wa.me/916366118850?text=Hello%20DK%20Enterprise%2C%20I%20want%20to%20send%20Diwali%20festival%20parcels" target="_blank" rel="noopener noreferrer" class="diwali-banner-cta">Book Festival Pickup &rarr;</a>
           <span class="diwali-diya" aria-hidden="true">🪔</span>
@@ -569,136 +569,8 @@ function renderChrome() {
     btn.className = 'robot-ai-btn';
     btn.setAttribute('aria-label', 'Chat with AI Assistant');
     btn.innerHTML = `
-      <svg class="robot-svg" viewBox="0 0 100 115" aria-hidden="true">
-        <defs>
-          <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#FFFFFF"/>
-            <stop offset="60%" stop-color="#F1F5F9"/>
-            <stop offset="100%" stop-color="#CBD5E1"/>
-          </linearGradient>
-          <linearGradient id="blueCapGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#2563EB"/>
-            <stop offset="100%" stop-color="#1D4ED8"/>
-          </linearGradient>
-          <linearGradient id="visorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#1E3A8A"/>
-            <stop offset="100%" stop-color="#0F172A"/>
-          </linearGradient>
-          <radialGradient id="eyeGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#38BDF8"/>
-            <stop offset="65%" stop-color="#0284C7"/>
-            <stop offset="100%" stop-color="#0F172A"/>
-          </radialGradient>
-          <linearGradient id="redBallGrad" x1="30%" y1="20%" x2="80%" y2="80%">
-            <stop offset="0%" stop-color="#FF4D4D"/>
-            <stop offset="40%" stop-color="#E31837"/>
-            <stop offset="100%" stop-color="#880000"/>
-          </linearGradient>
-          <radialGradient id="flameGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#FEF08A" stop-opacity="0.9"/>
-            <stop offset="40%" stop-color="#F59E0B" stop-opacity="0.6"/>
-            <stop offset="100%" stop-color="#EA580C" stop-opacity="0"/>
-          </radialGradient>
-          <linearGradient id="flameGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#FFFFFF"/>
-            <stop offset="25%" stop-color="#FEF08A"/>
-            <stop offset="60%" stop-color="#F59E0B"/>
-            <stop offset="100%" stop-color="#DC2626"/>
-          </linearGradient>
-          <linearGradient id="diyaClay" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#D97706"/>
-            <stop offset="60%" stop-color="#B45309"/>
-            <stop offset="100%" stop-color="#78350F"/>
-          </linearGradient>
-        </defs>
-
-        <!-- Ground Hover Shadow -->
-        <ellipse cx="50" cy="110" rx="22" ry="4" fill="#0C2340" class="robot-shadow"/>
-
-        <!-- Dual Antennas with Red Glossy Spheres -->
-        <path d="M28 26 L19 12" stroke="#CBD5E1" stroke-width="2.5" stroke-linecap="round"/>
-        <circle cx="18" cy="11" r="5" fill="url(#redBallGrad)"/>
-        <circle cx="16.5" cy="9.5" r="1.5" fill="#FFFFFF" opacity="0.85"/>
-
-        <path d="M72 26 L81 12" stroke="#CBD5E1" stroke-width="2.5" stroke-linecap="round"/>
-        <circle cx="82" cy="11" r="5" fill="url(#redBallGrad)"/>
-        <circle cx="80.5" cy="9.5" r="1.5" fill="#FFFFFF" opacity="0.85"/>
-
-        <!-- Earphone modules with red trim -->
-        <rect x="14" y="27" width="9" height="19" rx="4.5" fill="url(#bodyGrad)" stroke="#CBD5E1" stroke-width="1.2"/>
-        <path d="M16 32 L16 41" stroke="#E31837" stroke-width="2" stroke-linecap="round"/>
-        
-        <rect x="77" y="27" width="9" height="19" rx="4.5" fill="url(#bodyGrad)" stroke="#CBD5E1" stroke-width="1.2"/>
-        <path d="M84 32 L84 41" stroke="#E31837" stroke-width="2" stroke-linecap="round"/>
-
-        <!-- Head Group with subtle bob -->
-        <g class="robot-head-bob">
-          <!-- Helmet -->
-          <rect x="21" y="16" width="58" height="46" rx="23" fill="url(#bodyGrad)" stroke="#CBD5E1" stroke-width="1.3"/>
-          
-          <!-- Blue Top Crest -->
-          <path d="M30 25 C30 17, 70 17, 70 25 C66 31, 34 31, 30 25 Z" fill="url(#blueCapGrad)"/>
-          <!-- White Forehead Plate -->
-          <path d="M43 16.5 L57 16.5 L54 27 L46 27 Z" fill="#FFFFFF"/>
-
-          <!-- Blue Visor Mask -->
-          <rect x="25" y="26" width="50" height="24" rx="11" fill="url(#visorGrad)" stroke="#1D4ED8" stroke-width="1.4"/>
-
-          <!-- Eyebrows -->
-          <path d="M31 23 Q36 20 42 23" stroke="#0F172A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-          <path d="M58 23 Q64 20 69 23" stroke="#0F172A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-
-          <!-- Left Anime Eye -->
-          <ellipse cx="37" cy="38" rx="6.5" ry="8" fill="url(#eyeGlow)"/>
-          <ellipse cx="37" cy="38.5" rx="5" ry="6.5" fill="#061224"/>
-          <circle cx="35" cy="35.5" r="2.2" fill="#FFFFFF" class="robot-eye-shine"/>
-          <circle cx="39" cy="41.5" r="1.1" fill="#FFFFFF"/>
-
-          <!-- Right Anime Eye -->
-          <ellipse cx="63" cy="38" rx="6.5" ry="8" fill="url(#eyeGlow)"/>
-          <ellipse cx="63" cy="38.5" rx="5" ry="6.5" fill="#061224"/>
-          <circle cx="61" cy="35.5" r="2.2" fill="#FFFFFF" class="robot-eye-shine"/>
-          <circle cx="65" cy="41.5" r="1.1" fill="#FFFFFF"/>
-
-          <!-- Chin Speaker Accent -->
-          <rect x="47" y="54" width="6" height="2" rx="1" fill="#E31837"/>
-        </g>
-
-        <!-- Neck Joint -->
-        <rect x="45" y="60" width="10" height="4" rx="2" fill="#64748B"/>
-
-        <!-- Glossy Hover Pod Torso -->
-        <path d="M30 63 C30 59, 70 59, 70 63 C74 78, 62 100, 50 104 C38 100, 26 78, 30 63 Z" fill="url(#bodyGrad)" stroke="#CBD5E1" stroke-width="1.3"/>
-        
-        <!-- Chest Red Trim Curve -->
-        <path d="M35 67 Q50 77 65 67" stroke="#E31837" stroke-width="2" stroke-linecap="round" fill="none"/>
-
-        <!-- Red Triangular DTDC Chest Core -->
-        <polygon points="50,71 44,80 56,80" fill="url(#redBallGrad)"/>
-
-        <!-- Left Articulated Arm (Magnetic Shoulder) -->
-        <g class="robot-arm-left">
-          <circle cx="27" cy="69" r="4.5" fill="url(#redBallGrad)"/>
-          <path d="M26 70 Q16 75 18 88" stroke="url(#bodyGrad)" stroke-width="7" stroke-linecap="round" fill="none"/>
-          <circle cx="18" cy="88" r="3.8" fill="#1D4ED8"/>
-        </g>
-
-        <!-- Right Articulated Arm (Magnetic Shoulder) -->
-        <g class="robot-arm-right">
-          <circle cx="73" cy="69" r="4.5" fill="url(#redBallGrad)"/>
-          <path d="M74 70 Q84 75 82 88" stroke="url(#bodyGrad)" stroke-width="7" stroke-linecap="round" fill="none"/>
-          <circle cx="82" cy="88" r="3.8" fill="#1D4ED8"/>
-        </g>
-
-        <!-- Glowing Diwali Clay Diya near Robot Hand -->
-        <g class="robot-festive-diya" transform="translate(73, 76)">
-          <circle cx="12" cy="5" r="9" fill="url(#flameGlow)" class="diwali-aura"/>
-          <path d="M 4 11 Q 12 17 20 11 Q 22 7 15 7 Q 12 8 4 11 Z" fill="url(#diyaClay)" stroke="#78350F" stroke-width="0.8"/>
-          <ellipse cx="12" cy="9" rx="6.5" ry="1.8" fill="#FDE047"/>
-          <circle cx="12" cy="7.5" r="0.8" fill="#78350F"/>
-          <path d="M 9.5 7.5 Q 12 2 12 0 Q 12 2 14.5 7.5 Q 12 9.5 9.5 7.5 Z" fill="url(#flameGrad)" class="diwali-flame"/>
-        </g>
-      </svg>`;
+      <img src="/images/robot-courier.png" alt="DK AI Assistant" class="robot-img" width="86" height="130" loading="eager">
+      <div class="robot-shadow" aria-hidden="true"></div>`;
 
     // Speech / Thought Cloud Bubble above Robot Head
     const cloud = document.createElement('div');
