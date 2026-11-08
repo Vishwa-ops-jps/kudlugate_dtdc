@@ -53,7 +53,7 @@ BRANCH SPECIFICATIONS & LOGISTICS FACTS
    - Standard Ground Surface: 3 to 5 business days economical cargo.
    - Document Courier: High-priority legal papers, passports, certificates in tamper-evident envelopes.
    - Student & IT Luggage Relocation (/relocation.html): Cheap per-kg surface cargo, free waterproof shrink wrap, flat/PG pickup.
-   - B2B Corporate Shipping (/b2b.html): Daily 5 PM van pickup, consolidated monthly GST invoice, bulk discounts.
+   - B2B Corporate Shipping (/b2b.html): Daily 8 PM van dispatch, consolidated monthly GST invoice, bulk discounts.
    - International Shipping: 200+ countries (USA, UK, UAE, Canada, Australia, Europe). Requires standard invoice & KYC (Aadhaar/Passport).
 
 7. PRICING & VOLUMETRIC FORMULA:
@@ -98,7 +98,7 @@ function runAgentActionEngine(userText) {
       `• **HSR Layout & Electronic City**\n\n` +
       `🛵 **Pickup Schedule:**\n` +
       `• Daytime Rider: On-demand pickup\n` +
-      `• Evening Van: Daily 5:00 PM collection\n\n` +
+      `• Evening Van: Daily 8:00 PM dispatch\n\n` +
       `👉 **Tap to Book Rider on WhatsApp:**\n` +
       `https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise, I want to book a doorstep parcel pickup. My address is: ')}\n` +
       `📞 Or call branch helpline: +91 63661 18850`;
@@ -196,11 +196,12 @@ function runAgentActionEngine(userText) {
   }
 
   // 8. STORE TIMINGS & SUNDAY
-  if (q.includes('time') || q.includes('timing') || q.includes('hour') || q.includes('open') || q.includes('close') || q.includes('sunday') || q.includes('working')) {
-    return `🕒 **Official Operating Hours:**\n\n` +
+  if (q.includes('time') || q.includes('timing') || q.includes('hour') || q.includes('open') || q.includes('close') || q.includes('sunday') || q.includes('working') || q.includes('van') || q.includes('dispatch')) {
+    return `🕒 **Official Operating & Dispatch Hours:**\n\n` +
       `• **Monday – Saturday:** 9:30 AM – 8:30 PM (Counter Open)\n` +
-      `• **Sunday:** Counter Closed (WhatsApp urgent pickup scheduling active: +91 63661 18850)\n` +
-      `• **Daily Van Dispatch:** Evening 5:00 PM`;
+      `• **Daily Van Dispatch:** Evening 8:00 PM Sharp\n` +
+      `• **Sunday:** Counter Closed (WhatsApp urgent pickup scheduling active: +91 63661 18850)\n\n` +
+      `📦 All parcels booked before 8:00 PM are dispatched on the same-day outbound logistics connection!`;
   }
 
   // 9. STUDENT & IT LUGGAGE RELOCATION
@@ -219,7 +220,7 @@ function runAgentActionEngine(userText) {
   if (q.includes('b2b') || q.includes('corporate') || q.includes('seller') || q.includes('business account') || q.includes('monthly bill') || q.includes('gst invoice') || q.includes('daily pickup') || q.includes('ecommerce')) {
     return `🏢 **B2B & Corporate Logistics Accounts**\n\n` +
       `Designed for online brands, startups, e-commerce sellers & local offices:\n` +
-      `• **Scheduled 5 PM Daily Doorstep Van Collection**\n` +
+      `• **Scheduled 8 PM Daily Doorstep Van Dispatch**\n` +
       `• **Consolidated Monthly Statement & ITC Tax GST Invoicing**\n` +
       `• **Commercial Volume Slab Discounts**\n` +
       `• **Protective Laptop & Fragile Packaging**\n\n` +
