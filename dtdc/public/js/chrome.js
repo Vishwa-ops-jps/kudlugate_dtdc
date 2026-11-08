@@ -694,19 +694,19 @@ function renderChrome() {
     panel.innerHTML = '<div style="background:linear-gradient(135deg,#0c2340 0%,#1e3a8a 55%,#e31837 100%);color:#fff;padding:12px 14px;font-weight:600;display:flex;justify-content:space-between;align-items:center;">'
       + '<div style="display:flex;align-items:center;gap:9px;">'
       + '<div style="width:28px;height:28px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 10px rgba(56,189,248,0.5);"><span style="font-size:16px;">⚡</span></div>'
-      + '<div><div style="font-size:14px;font-weight:700;letter-spacing:-0.2px;line-height:1.2;">DK Courier AI Agent</div>'
-      + '<div style="font-size:10.5px;color:#34d399;display:flex;align-items:center;gap:4px;font-weight:600;"><span style="width:5px;height:5px;border-radius:50%;background:#34d399;display:inline-block;"></span>Autonomous Logistics Agent</div></div></div>'
+      + '<div><div style="font-size:14px;font-weight:700;letter-spacing:-0.2px;line-height:1.2;">DK Courier AI Assistant</div>'
+      + '<div style="font-size:10.5px;color:#34d399;display:flex;align-items:center;gap:4px;font-weight:600;"><span style="width:5px;height:5px;border-radius:50%;background:#34d399;display:inline-block;"></span>Support & Tracking Assistant</div></div></div>'
       + '<button type="button" id="ai-close" aria-label="Close" style="background:none;border:0;color:#fff;font-size:24px;cursor:pointer;line-height:1;">&times;</button></div>'
       + '<div id="ai-msgs" style="flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;background:#f8fafc;"></div>'
       + '<div class="ai-quick-chips">'
       + '<button type="button" class="ai-chip" data-q="Track my shipment consignment">🔍 Track Parcel</button>'
-      + '<button type="button" class="ai-chip" data-q="Get official rate quote for my parcel">💰 Official Rates</button>'
       + '<button type="button" class="ai-chip" data-q="Schedule doorstep parcel pickup in Kudlu">📦 Schedule Pickup</button>'
       + '<button type="button" class="ai-chip" data-q="What are your counter timings and working hours?">🕒 Store Hours</button>'
+      + '<button type="button" class="ai-chip" data-q="Where is your branch located and how do I reach?">📍 Branch Location</button>'
+      + '<button type="button" class="ai-chip" data-q="Get official rate quote for my parcel">💰 Official Rates</button>'
       + '<button type="button" class="ai-chip" data-q="Tell me about student & IT luggage relocation rates">🎒 Luggage Shifting</button>'
-      + '<button type="button" class="ai-chip" data-q="Tell me about B2B corporate shipping account">🏢 B2B Account</button>'
       + '</div>'
-      + '<div style="display:flex;gap:6px;padding:10px;border-top:1px solid #e2e8f0;background:#fff;"><input id="ai-input" type="text" maxlength="1000" placeholder="Ask AI Agent: track, rates, pickup..." style="flex:1;padding:9px 12px;border:1.5px solid #cbd5e1;border-radius:8px;font-size:14px;"><button type="button" id="ai-send" style="background:#e31837;color:#fff;border:0;border-radius:8px;padding:0 14px;cursor:pointer;font-weight:700;">Send</button></div>';
+      + '<div style="display:flex;gap:6px;padding:10px;border-top:1px solid #e2e8f0;background:#fff;"><input id="ai-input" type="text" maxlength="1000" placeholder="Ask about timings, tracking, pickup..." style="flex:1;padding:9px 12px;border:1.5px solid #cbd5e1;border-radius:8px;font-size:14px;"><button type="button" id="ai-send" style="background:#e31837;color:#fff;border:0;border-radius:8px;padding:0 14px;cursor:pointer;font-weight:700;">Send</button></div>';
     
     document.body.appendChild(panel);
     document.body.appendChild(btn);
@@ -753,7 +753,7 @@ function renderChrome() {
       return d;
     }
 
-    addMsg('⚡ **DK Courier AI Agent Online**\n\nHello! I am your logistics support agent for DK Enterprise Kudlu Gate. I can execute actions directly:\n\n• 🔍 **Live Tracking:** Paste your tracking ID or waybill\n• 💰 **Official Rates:** Direct 100% accurate DTDC tariff quote via WhatsApp/phone\n• 📦 **Doorstep Rider:** Schedule free pickup in Kudlu\n• 🎒 **Luggage Relocation & B2B GST accounts**\n\nWhat would you like to do right now?', 'bot');
+    addMsg('⚡ **DK Courier AI Assistant Online**\n\nHello! I am your AI support assistant for DK Enterprise Kudlu Gate. I can help you with:\n\n• 🔍 **Live Tracking:** Paste your tracking ID or waybill\n• 📦 **Doorstep Rider:** Schedule free pickup in Kudlu Gate\n• 🕒 **Store Timings & Location:** Bren Palms, Kudlu Main Road\n• 💰 **Official Rates:** Direct 100% accurate DTDC counter quotes via WhatsApp\n• 🎒 **Luggage Relocation & B2B GST accounts**\n\nWhat would you like to know today?', 'bot');
 
     let busy = false;
     async function send() {
@@ -761,7 +761,7 @@ function renderChrome() {
       if (!text || busy) return;
       busy = true; input.value = '';
       addMsg(text, 'user'); history.push({ role: 'user', content: text });
-      const typing = addMsg('⚡ AI Agent processing request\u2026', 'bot');
+      const typing = addMsg('AI Assistant processing\u2026', 'bot');
       try {
         const res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: history }) });
         const data = await res.json().catch(() => ({}));
