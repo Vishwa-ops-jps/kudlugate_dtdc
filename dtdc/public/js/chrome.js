@@ -268,6 +268,54 @@ function applyLanguage(lang, userInitiated = false) {
   const pwaLabel = document.getElementById('pwa-btn-label');
   if (pwaLabel) pwaLabel.textContent = dict.installApp;
 
+  // Update Diwali banner multilingual text
+  const diwaliTexts = {
+    en: {
+      badge: "✨ HAPPY DEEPAVALI / DIWALI ✨",
+      msg: "Festival Express Courier: Sending sweets, dry fruits & gifts to family? Fast doorstep pickup in Kudlu & E-City!",
+      cta: "Book Festival Pickup →"
+    },
+    kn: {
+      badge: "✨ ದೀಪಾವಳಿ ಹಬ್ಬದ ಹಾರ್ದಿಕ ಶುಭಾಶಯಗಳು ✨",
+      msg: "ಹಬ್ಬದ ಎಕ್ಸ್‌ಪ್ರೆಸ್ ಕೊರಿಯರ್: ಸಿಹಿ ತಿಂಡಿಗಳು ಮತ್ತು ಉಡುಗೊರೆಗಳನ್ನು ಕುಟುಂಬಕ್ಕೆ ಕಳುಹಿಸಿ! ಕುಡ್ಲು ಮತ್ತು ಇ-ಸಿಟಿಯಲ್ಲಿ ಮನೆ ಬಾಗಿಲಿಗೆ ಪಿಕಪ್!",
+      cta: "ಹಬ್ಬದ ಪಿಕಪ್ ಬುಕ್ ಮಾಡಿ →"
+    },
+    hi: {
+      badge: "✨ दीपावली की हार्दिक शुभकामनाएँ ✨",
+      msg: "फेस्टिवल एक्सप्रेस कूरियर: घर की बनी मिठाइयाँ और उपहार अपनों तक पहुँचाएँ! कुडलू और ई-सिटी में डोरस्टेप पिकअप उपलब्ध!",
+      cta: "त्योहार पिकअप बुक करें →"
+    }
+  };
+  const dText = diwaliTexts[lang] || diwaliTexts.en;
+  const dBadge = document.querySelector('.diwali-banner-badge');
+  const dMsg = document.getElementById('diwali-banner-text');
+  const dCta = document.querySelector('.diwali-banner-cta');
+  if (dBadge) dBadge.textContent = dText.badge;
+  if (dMsg) dMsg.textContent = dText.msg;
+  if (dCta) dCta.textContent = dText.cta;
+
+  // Also update Diwali card on index.html if present
+  const dCardTitle = document.querySelector('.diwali-card-title');
+  const dCardDesc = document.querySelector('.diwali-card-desc');
+  const dCardBadge = document.querySelector('.diwali-badge-text');
+  const dCardCta = document.querySelector('.diwali-cta-btn');
+  if (dCardTitle && lang === 'kn') {
+    if (dCardBadge) dCardBadge.textContent = "ದೀಪಾವಳಿ ಹಬ್ಬದ ವಿಶೇಷ · ೨೦೨೬";
+    dCardTitle.textContent = "ಮನೆಯಲ್ಲಿ ತಯಾರಿಸಿದ ಸಿಹಿ ತಿಂಡಿಗಳು, ಡ್ರೈ ಫ್ರೂಟ್ಸ್ & ಹಬ್ಬದ ಉಡುಗೊರೆಗಳನ್ನು ಭಾರತದಾದ್ಯಂತ ಕಳುಹಿಸಿ";
+    if (dCardDesc) dCardDesc.textContent = "ಕುಟುಂಬದೊಂದಿಗೆ ದೀಪಾವಳಿ ಆಚರಿಸಿ! ಉಚಿತ ವಾಟರ್‌ಪ್ರೂಫ್ ಪ್ಯಾಕಿಂಗ್, ಬಬಲ್ ರಾಪ್ ಮತ್ತು ಕುಡ್ಲು ಗೇಟ್ ಹಾಗೂ ಇ-ಸಿಟಿಯಲ್ಲಿ ಮನೆ ಬಾಗಿಲಿಗೆ ಪಿಕಪ್‌ನೊಂದಿಗೆ ಎಕ್ಸ್‌ಪ್ರೆಸ್ ವಿತರಣೆ!";
+    if (dCardCta) dCardCta.innerHTML = "<span>🪔</span> ಹಬ್ಬದ ಪಿಕಪ್ ಬುಕ್ ಮಾಡಿ";
+  } else if (dCardTitle && lang === 'hi') {
+    if (dCardBadge) dCardBadge.textContent = "दीपावली स्पेशल · 2026";
+    dCardTitle.textContent = "घर की बनी मिठाइयाँ, ड्राय फ्रूट्स और उपहार अपनों तक पहुँचाएँ";
+    if (dCardDesc) dCardDesc.textContent = "अपनों के साथ मनाएँ दीपोत्सव! वाटरप्रूफ श्रिंक रैप और मजबूत क्रश-प्रूफ पैकेजिंग के साथ कुडलू गेट और ई-सिटी में फास्ट डोरस्टेप पिकअप!";
+    if (dCardCta) dCardCta.innerHTML = "<span>🪔</span> दिवाली पिकअप बुक करें";
+  } else if (dCardTitle) {
+    if (dCardBadge) dCardBadge.textContent = "DIWALI FESTIVAL SPECIAL · 2026";
+    dCardTitle.textContent = "Send Homemade Sweets, Dry Fruits & Festival Gifts Across India";
+    if (dCardDesc) dCardDesc.textContent = "Celebrating Deepavali away from home? Ship sweets, snacks, festival attire & gift hampers to your loved ones with tamper-proof packaging, waterproof bubble wrap & express doorstep collection across Kudlu Gate & Electronic City!";
+    if (dCardCta) dCardCta.innerHTML = "<span>🪔</span> Book Diwali Sweets Pickup";
+  }
+
   try { if (window.__updateAiCloudMsg) window.__updateAiCloudMsg(0); } catch(e){}
 
   // Execute whole-site full DOM translation
@@ -388,6 +436,17 @@ function renderChrome() {
   const header = document.getElementById('site-header');
   if (header) {
     header.innerHTML = `
+      <div class="diwali-top-banner notranslate" id="diwali-top-banner">
+        <div class="wrap diwali-banner-wrap">
+          <span class="diwali-diya" aria-hidden="true">🪔</span>
+          <span class="diwali-banner-badge">✨ HAPPY DEEPAVALI / DIWALI ✨</span>
+          <span class="diwali-banner-text" id="diwali-banner-text">
+            Festival Express Courier: Sending sweets, dry fruits &amp; gifts to family? Fast doorstep pickup in Kudlu &amp; E-City!
+          </span>
+          <a href="https://wa.me/916366118850?text=Hello%20DK%20Enterprise%2C%20I%20want%20to%20send%20Diwali%20festival%20parcels" target="_blank" rel="noopener noreferrer" class="diwali-banner-cta">Book Festival Pickup &rarr;</a>
+          <span class="diwali-diya" aria-hidden="true">🪔</span>
+        </div>
+      </div>
       <div class="topbar">
         <div class="wrap">
           <div class="topbar-ticker">
@@ -535,6 +594,22 @@ function renderChrome() {
             <stop offset="40%" stop-color="#E31837"/>
             <stop offset="100%" stop-color="#880000"/>
           </linearGradient>
+          <radialGradient id="flameGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FEF08A" stop-opacity="0.9"/>
+            <stop offset="40%" stop-color="#F59E0B" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#EA580C" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="flameGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="25%" stop-color="#FEF08A"/>
+            <stop offset="60%" stop-color="#F59E0B"/>
+            <stop offset="100%" stop-color="#DC2626"/>
+          </linearGradient>
+          <linearGradient id="diyaClay" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#D97706"/>
+            <stop offset="60%" stop-color="#B45309"/>
+            <stop offset="100%" stop-color="#78350F"/>
+          </linearGradient>
         </defs>
 
         <!-- Ground Hover Shadow -->
@@ -614,6 +689,15 @@ function renderChrome() {
           <path d="M74 70 Q84 75 82 88" stroke="url(#bodyGrad)" stroke-width="7" stroke-linecap="round" fill="none"/>
           <circle cx="82" cy="88" r="3.8" fill="#1D4ED8"/>
         </g>
+
+        <!-- Glowing Diwali Clay Diya near Robot Hand -->
+        <g class="robot-festive-diya" transform="translate(73, 76)">
+          <circle cx="12" cy="5" r="9" fill="url(#flameGlow)" class="diwali-aura"/>
+          <path d="M 4 11 Q 12 17 20 11 Q 22 7 15 7 Q 12 8 4 11 Z" fill="url(#diyaClay)" stroke="#78350F" stroke-width="0.8"/>
+          <ellipse cx="12" cy="9" rx="6.5" ry="1.8" fill="#FDE047"/>
+          <circle cx="12" cy="7.5" r="0.8" fill="#78350F"/>
+          <path d="M 9.5 7.5 Q 12 2 12 0 Q 12 2 14.5 7.5 Q 12 9.5 9.5 7.5 Z" fill="url(#flameGrad)" class="diwali-flame"/>
+        </g>
       </svg>`;
 
     // Speech / Thought Cloud Bubble above Robot Head
@@ -625,6 +709,8 @@ function renderChrome() {
 
     const CLOUD_PROMPTS = {
       en: [
+        "🪔 Happy Diwali! Sending sweets & gifts?",
+        "🎁 Express courier for Diwali hampers!",
         "📦 Need to book a parcel?",
         "🔍 Need to find your parcel?",
         "⚡ Doorstep pickup in Kudlu?",
@@ -633,6 +719,8 @@ function renderChrome() {
         "💬 Tap me to chat anytime!"
       ],
       kn: [
+        "🪔 ದೀಪಾವಳಿ ಹಬ್ಬದ ಶುಭಾಶಯಗಳು!",
+        "🎁 ಸಿಹಿ ತಿಂಡಿ & ಗಿಫ್ಟ್ ಕೊರಿಯರ್ ಮಾಡಿ!",
         "📦 ಪಾರ್ಸೆಲ್ ಬುಕ್ ಮಾಡಬೇಕೇ?",
         "🔍 ನಿಮ್ಮ ಪಾರ್ಸೆಲ್ ಟ್ರ್ಯಾಕ್ ಮಾಡಿ!",
         "⚡ ಮನೆ ಬಾಗಿಲಿಗೆ ಪಿಕಪ್ ಬೇಕೇ?",
@@ -640,6 +728,8 @@ function renderChrome() {
         "💬 ಸಹಾಯಕ್ಕಾಗಿ ನನ್ನನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ!"
       ],
       hi: [
+        "🪔 दीपावली की हार्दिक शुभकामनाएँ!",
+        "🎁 त्योहार की मिठाइयाँ और गिफ्ट्स भेजें!",
         "📦 पार्सल बुक करना है?",
         "🔍 अपना पार्सल ट्रैक करें!",
         "⚡ डोरस्टेप पिकअप चाहिए?",
@@ -1310,10 +1400,96 @@ window.verifyRecaptcha = function(cardOrFormId) {
   return false;
 };
 
+/**
+ * Ambient Diwali Golden Sparkles Atmosphere
+ * Floating warm diya light motes, sparkles, and festival embers.
+ */
+function initDiwaliAtmosphere() {
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
+  if (document.getElementById('diwali-ambient-canvas')) return;
+
+  const canvas = document.createElement('canvas');
+  canvas.id = 'diwali-ambient-canvas';
+  canvas.setAttribute('aria-hidden', 'true');
+  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9990;';
+  document.body.appendChild(canvas);
+
+  const ctx = canvas.getContext('2d');
+  let width = 0, height = 0;
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  const count = Math.min(36, Math.max(16, Math.floor(window.innerWidth / 36)));
+  const particles = [];
+  const COLORS = ['#FFD700', '#F59E0B', '#FBBF24', '#F43F5E', '#FFFFFF', '#FFA500', '#FEF08A'];
+
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      r: Math.random() * 2.2 + 0.8,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      vx: (Math.random() - 0.5) * 0.45,
+      vy: -(Math.random() * 0.55 + 0.25),
+      alpha: Math.random() * 0.7 + 0.2,
+      dAlpha: (Math.random() * 0.015 + 0.005) * (Math.random() < 0.5 ? 1 : -1),
+      sparklePhase: Math.random() * Math.PI * 2
+    });
+  }
+
+  let animId = null;
+  let isPageVisible = !document.hidden;
+
+  document.addEventListener('visibilitychange', () => {
+    isPageVisible = !document.hidden;
+    if (isPageVisible && !animId) loop();
+  });
+
+  function loop() {
+    if (!isPageVisible) { animId = null; return; }
+    ctx.clearRect(0, 0, width, height);
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.sparklePhase += 0.04;
+      p.alpha += p.dAlpha;
+      if (p.alpha <= 0.15 || p.alpha >= 0.85) p.dAlpha = -p.dAlpha;
+
+      if (p.y < -10) {
+        p.y = height + 10;
+        p.x = Math.random() * width;
+      }
+      if (p.x < -10) p.x = width + 10;
+      if (p.x > width + 10) p.x = -10;
+
+      const currentAlpha = Math.max(0.1, Math.min(0.85, p.alpha * (0.8 + 0.2 * Math.sin(p.sparklePhase))));
+      ctx.save();
+      ctx.globalAlpha = currentAlpha;
+      ctx.fillStyle = p.color;
+      ctx.shadowColor = '#F59E0B';
+      ctx.shadowBlur = 6;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+    animId = requestAnimationFrame(loop);
+  }
+  loop();
+}
+
 // Global bootstrap
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   renderChrome();
+  initDiwaliAtmosphere();
   initRecaptchaWidgets();
   initLocationPickerModal();
   initWholeSiteTranslator();
