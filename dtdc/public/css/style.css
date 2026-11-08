@@ -294,26 +294,25 @@ section { padding: 56px 0; }
   margin-bottom: 0;
 }
 
-/* ---------- Standalone 3D Floating AI Companion Robot ---------- */
+/* ---------- Modern Floating Live Courier Support Assistant ---------- */
 
 .robot-ai-btn {
   position: fixed;
   left: 20px;
   right: auto;
-  bottom: 18px;
+  bottom: 20px;
   z-index: 9999;
-  width: 86px;
-  height: 130px;
+  width: 64px;
+  height: 64px;
   background: transparent !important;
   border: none !important;
-  border-radius: 0 !important;
+  border-radius: 50% !important;
   box-shadow: none !important;
   cursor: pointer;
   padding: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   animation: robotFloat 3.2s ease-in-out infinite;
   transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
   will-change: transform, opacity;
@@ -321,7 +320,7 @@ section { padding: 56px 0; }
 }
 
 .robot-ai-btn:hover {
-  transform: scale(1.08) translateY(-5px);
+  transform: scale(1.08) translateY(-4px);
 }
 
 .robot-ai-btn:active {
@@ -337,7 +336,7 @@ section { padding: 56px 0; }
 
 @keyframes robotFloat {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
+  50% { transform: translateY(-5px); }
 }
 
 .robot-img {
@@ -346,27 +345,20 @@ section { padding: 56px 0; }
   object-fit: contain;
   display: block;
   pointer-events: none;
-  filter: drop-shadow(0 8px 18px rgba(12, 35, 64, 0.28));
+  filter: drop-shadow(0 8px 22px rgba(12, 35, 64, 0.32));
   transition: filter 0.3s ease;
 }
 
 .robot-ai-btn:hover .robot-img {
-  filter: drop-shadow(0 12px 24px rgba(227, 24, 55, 0.35)) drop-shadow(0 0 10px rgba(56, 189, 248, 0.4));
+  filter: drop-shadow(0 12px 28px rgba(227, 24, 55, 0.45));
 }
 
 [data-theme="dark"] .robot-img {
-  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 12px rgba(56, 189, 248, 0.3));
+  filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 12px rgba(56, 189, 248, 0.35));
 }
 
 .robot-shadow {
-  position: absolute;
-  bottom: 0px;
-  width: 54px;
-  height: 8px;
-  background: radial-gradient(ellipse at center, rgba(12, 35, 64, 0.35) 0%, rgba(12, 35, 64, 0) 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  animation: shadowScale 3.2s ease-in-out infinite;
+  display: none !important;
 }
 
 @keyframes shadowScale {
@@ -416,11 +408,11 @@ section { padding: 56px 0; }
    ============================================================ */
 .robot-cloud-bubble {
   position: fixed;
-  left: 108px;
-  bottom: 88px;
+  left: 96px;
+  bottom: 20px;
   z-index: 9998;
   width: 250px;
-  height: 82px;
+  height: 76px;
   background: transparent !important;
   border: none !important;
   border-radius: 0 !important;
@@ -479,16 +471,16 @@ section { padding: 56px 0; }
   transition: opacity 0.22s ease, transform 0.22s ease, color 0.25s ease;
 }
 
-/* Trailing Thought Dots Leading towards Robot Head */
+/* Trailing Thought Dots Leading towards Floating Support Button */
 .robot-cloud-bubble .cloud-tail {
   position: absolute;
-  bottom: -16px;
-  left: 8px;
+  bottom: 26px;
+  left: -12px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse;
   align-items: center;
   pointer-events: none;
-  gap: 2.5px;
+  gap: 3px;
   z-index: 1;
 }
 
@@ -501,21 +493,21 @@ section { padding: 56px 0; }
 }
 
 .robot-cloud-bubble .cloud-dot.dot-1 {
-  width: 10px;
-  height: 10px;
-  margin-left: 6px;
+  width: 9px;
+  height: 9px;
+  margin: 0;
 }
 
 .robot-cloud-bubble .cloud-dot.dot-2 {
-  width: 6.5px;
-  height: 6.5px;
-  margin-left: -1px;
+  width: 6px;
+  height: 6px;
+  margin: 0;
 }
 
 .robot-cloud-bubble .cloud-dot.dot-3 {
   width: 4px;
   height: 4px;
-  margin-left: -7px;
+  margin: 0;
 }
 
 .robot-cloud-bubble:hover .cloud-dot {
@@ -565,24 +557,24 @@ section { padding: 56px 0; }
 /* Mobile Screens */
 @media (max-width: 600px) {
   .robot-ai-btn {
-    left: 12px;
-    bottom: 12px;
-    width: 68px;
-    height: 104px;
+    left: 14px;
+    bottom: 16px;
+    width: 54px;
+    height: 54px;
   }
   .robot-cloud-bubble {
-    left: 82px;
-    bottom: 74px;
+    left: 78px;
+    bottom: 14px;
     width: 215px;
-    height: 72px;
+    height: 68px;
   }
   .robot-cloud-bubble .cloud-text {
     font-size: 10.5px;
     padding: 0 18px;
   }
   .robot-cloud-bubble .cloud-tail {
-    left: 4px;
-    bottom: -14px;
+    left: -10px;
+    bottom: 22px;
   }
 }
 
@@ -861,10 +853,10 @@ section { padding: 56px 0; }
 
 @media (max-width: 480px) {
   .robot-ai-btn {
-    left: 10px;
-    bottom: 12px;
-    width: 64px;
-    height: 98px;
+    left: 12px;
+    bottom: 14px;
+    width: 50px;
+    height: 50px;
   }
   .wa-float-btn {
     right: 14px;

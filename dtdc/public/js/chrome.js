@@ -569,8 +569,7 @@ function renderChrome() {
     btn.className = 'robot-ai-btn';
     btn.setAttribute('aria-label', 'Chat with AI Assistant');
     btn.innerHTML = `
-      <img src="/images/robot-dk.svg" alt="DK AI Assistant" class="robot-img" width="86" height="130" loading="eager">
-      <div class="robot-shadow" aria-hidden="true"></div>`;
+      <img src="/images/support-float.svg" alt="DK Courier Support Assistant" class="robot-img" width="64" height="64" loading="eager">`;
 
     // Speech / Thought Cloud Bubble above Robot Head
     const cloud = document.createElement('div');

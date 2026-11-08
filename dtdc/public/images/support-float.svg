@@ -1,0 +1,121 @@
+<svg class="support-fab-svg" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-label="DK Courier Live Assistant">
+  <defs>
+    <!-- Background Gradient (DTDC Corporate Navy to Crimson Red) -->
+    <linearGradient id="fabBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0C2340"/>
+      <stop offset="50%" stop-color="#1E3A8A"/>
+      <stop offset="100%" stop-color="#E31837"/>
+    </linearGradient>
+
+    <!-- Metallic Gold Gradient for Festive Diwali Ribbon -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+
+    <!-- Parcel Box Gradients -->
+    <linearGradient id="boxFront" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="100%" stop-color="#E2E8F0"/>
+    </linearGradient>
+    <linearGradient id="boxTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F1F5F9"/>
+    </linearGradient>
+    <linearGradient id="boxSide" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#CBD5E1"/>
+      <stop offset="100%" stop-color="#94A3B8"/>
+    </linearGradient>
+
+    <!-- Headset Metallic Gradient -->
+    <linearGradient id="headsetBand" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="50%" stop-color="#0284C7"/>
+      <stop offset="100%" stop-color="#0369A1"/>
+    </linearGradient>
+
+    <!-- Outer Shimmer Border -->
+    <linearGradient id="borderShimmer" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+
+    <filter id="cyanGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Outer Shimmer Ring -->
+  <circle cx="40" cy="40" r="38" fill="none" stroke="url(#borderShimmer)" stroke-width="2.5" opacity="0.9"/>
+
+  <!-- Main Floating Disc -->
+  <circle cx="40" cy="40" r="36" fill="url(#fabBg)"/>
+
+  <!-- Subtle Radial Inner Shimmer -->
+  <circle cx="40" cy="24" r="28" fill="#FFFFFF" opacity="0.1"/>
+
+  <!-- ===== Festive Diwali Golden Sparkles ===== -->
+  <path d="M16 22 L17.5 19 L19 22 L22 23.5 L19 25 L17.5 28 L16 25 L13 23.5 Z" fill="#FDE047" opacity="0.85"/>
+  <path d="M62 58 L63 56 L64 58 L66 59 L64 60 L63 62 L62 60 L60 59 Z" fill="#FDE047" opacity="0.75"/>
+
+  <!-- ===== 3D COURIER PARCEL BOX WITH HEADSET ===== -->
+  <g class="parcel-assembly" transform="translate(40, 42)">
+    
+    <!-- Top Face of Parcel Box -->
+    <polygon points="0,-16 16,-8 0,0 -16,-8" fill="url(#boxTop)" stroke="#CBD5E1" stroke-width="0.8"/>
+    <!-- Left Face of Parcel Box -->
+    <polygon points="-16,-8 0,0 0,16 -16,8" fill="url(#boxFront)" stroke="#CBD5E1" stroke-width="0.8"/>
+    <!-- Right Face of Parcel Box -->
+    <polygon points="0,0 16,-8 16,8 0,16" fill="url(#boxSide)" stroke="#94A3B8" stroke-width="0.8"/>
+
+    <!-- Festive Red & Gold Courier Ribbon / Tape -->
+    <!-- Top Tape -->
+    <polygon points="-2,-15 2,-13 2,-1 -2,-3" fill="url(#goldGrad)"/>
+    <!-- Front Tape -->
+    <polygon points="-2,-3 2,-1 2,15 -2,13" fill="url(#goldGrad)"/>
+
+    <!-- DK Brand Mark on Front of Parcel -->
+    <text x="-8" y="10" font-family="'Inter', sans-serif" font-weight="900" font-size="6.5" fill="#0C2340" text-anchor="middle">DK</text>
+    <!-- Mini Red Swoosh under DK -->
+    <path d="M-11 11 Q-8 9.5 -5 10.5" stroke="#E31837" stroke-width="0.9" fill="none"/>
+
+    <!-- Mini Diwali Diya Flame atop parcel -->
+    <path d="M0 -15 C-2 -18, -1 -22, 0 -24 C1 -22, 2 -18, 0 -15 Z" fill="#F59E0B" filter="url(#cyanGlow)"/>
+    <circle cx="0" cy="-18" r="1.5" fill="#FEF08A"/>
+
+    <!-- ===== OVER-EAR CUSTOMER SUPPORT HEADSET WRAPPED AROUND PARCEL ===== -->
+    <!-- Headset Band Arching over Parcel -->
+    <path d="M-22 -4 C-22 -22, 22 -22, 22 -4" stroke="url(#headsetBand)" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+    <path d="M-20 -5 C-20 -20, 20 -20, 20 -5" stroke="#BAE6FD" stroke-width="0.9" stroke-linecap="round" fill="none" opacity="0.7"/>
+
+    <!-- Left Ear Cushion Module -->
+    <rect x="-25" y="-9" width="6" height="12" rx="3" fill="#0F172A" stroke="#38BDF8" stroke-width="0.9"/>
+    <circle cx="-22" cy="-3" r="1.8" fill="#38BDF8" filter="url(#cyanGlow)"/>
+
+    <!-- Right Ear Cushion Module -->
+    <rect x="19" y="-9" width="6" height="12" rx="3" fill="#0F172A" stroke="#38BDF8" stroke-width="0.9"/>
+    <circle cx="22" cy="-3" r="1.8" fill="#38BDF8" filter="url(#cyanGlow)"/>
+
+    <!-- Headset Microphone curving down to center -->
+    <path d="M-22 0 Q-20 12, -7 11" stroke="#0F172A" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <circle cx="-6" cy="11" r="2" fill="#0F172A"/>
+    <circle cx="-6" cy="11" r="1.2" fill="#38BDF8" filter="url(#cyanGlow)"/>
+  </g>
+
+  <!-- ===== LIVE PULSING STATUS BEACON (Top-Right) ===== -->
+  <g class="live-status-dot">
+    <circle cx="65" cy="15" r="7.5" fill="#0C2340"/>
+    <circle cx="65" cy="15" r="5.5" fill="#059669"/>
+    <circle cx="65" cy="15" r="3.2" fill="#34D399"/>
+    <circle cx="65" cy="15" r="6" fill="none" stroke="#34D399" stroke-width="1.4" opacity="0.9">
+      <animate attributeName="r" values="5;10;5" dur="1.8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.9;0;0.9" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg>
