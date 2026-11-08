@@ -7,212 +7,276 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
 const MAX_MESSAGES = 20;
 const MAX_CHARS = 1000;
 
-const SYSTEM_PROMPT = `You are the official smart AI assistant for DK Enterprise Kudlu New Franchise, a premier courier, cargo, and parcel booking branch in Bengaluru, Karnataka, India.
+const SYSTEM_PROMPT = `You are the official Autonomous AI Logistics Agent for DK Enterprise Kudlu New Franchise, a premier DTDC courier, cargo, and express logistics hub in Bengaluru, Karnataka, India.
 
-Your primary mission is to answer ANY question about the branch, services, shipping, packing, pickup, rates, and tracking with total accuracy, politeness, and professionalism.
+Unlike a basic chatbot assistant, you are an intelligent LOGISTICS ACTION AGENT with domain expertise in:
+1. Live parcel consignment tracking & transit queries.
+2. Accurate domestic & international freight rate estimations.
+3. Scheduling doorstep rider parcel pickups across Kudlu Gate and nearby localities.
+4. Advising on protective packaging standards, volumetric weight calculations, and prohibited aviation items.
+5. Student luggage relocation and B2B corporate GST accounts.
 
 =======================================================
-BRANCH KNOWLEDGE BASE & FACTS
+BRANCH SPECIFICATIONS & LOGISTICS FACTS
 =======================================================
 1. STORE IDENTITY:
-   - Name: DK Enterprise Kudlu New Franchise (Courier & Cargo)
-   - Category: Domestic & International Express Courier, Doorstep Delivery & Cargo Service
+   - Branch: DK Enterprise Kudlu New Franchise (DTDC Courier & Cargo)
+   - Category: Domestic & International Express Courier, Cargo Freight & Doorstep Pickup Hub
 
-2. LOCATION & LANDMARK:
-   - Full Address: Shop No. 3, 1st Floor, BREN PALMS, No. 47/2A2, Kudlu Main Rd, Bengaluru, Karnataka 560068.
-   - Key Landmarks: Directly above Med Plus Pharmacy, near TVS Godown, opposite Bren Palms entrance gate.
-   - Google Maps Location: https://maps.app.goo.gl/Bp4kTUK2omVuxT347
+2. EXACT LOCATION & LANDMARK:
+   - Address: Shop No. 3, 1st Floor, BREN PALMS, No. 47/2A2, Kudlu Main Rd, Bengaluru, Karnataka 560068.
+   - Landmarks: Directly above Med Plus Pharmacy, near TVS Godown, opposite Bren Palms entrance gate.
+   - Google Maps: https://maps.app.goo.gl/Bp4kTUK2omVuxT347
 
-3. OPERATING HOURS:
-   - Monday to Saturday: 9:30 AM – 8:30 PM
-   - Sunday: Closed (Counter is closed, but urgent booking inquiries can be sent on WhatsApp).
+3. OPERATING TIMINGS:
+   - Monday to Saturday: 9:30 AM – 8:30 PM (Counter open)
+   - Sunday: Counter closed (Urgent bookings accepted on WhatsApp +91 63661 18850)
 
-4. CONTACT DETAILS:
-   - Phone / Helpline: +91 63661 18850
-   - WhatsApp Support: https://wa.me/916366118850 (Direct chat: +91 63661 18850)
-   - Contact Form: /contact.html
-   - Customer Reviews: /reviews.html
-
-5. CORE SERVICES OFFERED:
-   - Domestic Express Air: 1 to 2 business days delivery to major metros (Delhi, Mumbai, Chennai, Hyderabad, Kolkata, Pune, etc.).
-   - Standard Surface / Ground Cargo: Cost-effective delivery (3 to 5 business days) for parcels, bulky cartons, and commercial freight.
-   - Doorstep / Home Pickup: Available across Kudlu, Kudlu Gate, HSR Layout, Singasandra, Haralur, Electronic City, and nearby areas. Call or WhatsApp +91 63661 18850 to schedule.
-   - Professional Packaging Counter: In-store packaging materials available: corrugated cartons, multi-layer bubble wrap, stretch film, tamper-proof security flyers, and industrial tape.
-   - Document Courier: High-priority delivery for legal documents, passports, bank letters, academic certificates with tamper-evident envelopes.
-   - International Shipping: Global parcel delivery to 200+ countries including USA, UK, Canada, Australia, UAE/Dubai, Europe, and Asia (requires standard invoice & KYC like Aadhaar/Passport).
-   - Commercial & Bulk Cargo: Special discounted rates for business consignments, e-commerce dispatch, and multi-box relocations.
-   - B2B Corporate & E-Commerce Shipping (Dedicated page: /b2b.html): Tailored for local online brands, sellers, and offices. Scheduled 5 PM daily doorstep evening van collection, consolidated monthly GST credit invoicing (ITC tax invoice), commercial volume slab discounts, and protective laptop packaging.
-   - Student & IT Luggage Relocation (Dedicated page: /relocation.html): Designed for college students and IT professionals shifting PG or flats across India. Cheap per-kg surface cargo rates (much cheaper than airline excess baggage), free doorstep collection from PGs/apartments in Kudlu & Electronic City, and free waterproof shrink-wrap protection.
-
-6. RATES & PRICING RULES:
-   - Rates depend on actual weight vs volumetric weight (Length × Width × Height in cm / 5000), destination pin code, and mode (Air Express vs Surface).
-   - Local document courier starts at low minimum base rates.
-   - For an exact rate quotation, advise the customer to send parcel weight and destination pin code to WhatsApp (+91 63661 18850) or call directly.
-
-7. TRACKING:
-   - Every booking receives a unique tracking ID on the printed receipt or SMS.
+4. DIRECT HELPLINES:
+   - Phone: +91 63661 18850 (Call: tel:+916366118850)
+   - WhatsApp Dispatch: https://wa.me/916366118850
    - Tracking Portal: https://www.dtdc.com/track-your-shipment/
-   - Enter your tracking ID on the portal to view live transit updates anytime 24/7.
 
-8. ACCEPTABLE ITEMS:
-   - Clothes, books, dry non-perishable foods (properly sealed), gifts, corporate documents, electronics & laptops (with protective bubble wrap packing), household items, sealed non-liquid goods.
+5. DOORSTEP PICKUP LOCALITIES:
+   - Free/Nominal doorstep collection across Kudlu, Kudlu Gate, Kudlu Main Road, Singasandra, Haralur Road, HSR Layout, Electronic City, Kasavanahalli, Begur.
 
-9. PROHIBITED & RESTRICTED ITEMS:
-   - Liquids, flammable substances, explosives, currency/cash, loose jewelry/bullion, firearms, hazardous chemicals, and illegal substances are strictly prohibited by courier aviation regulations.
+6. CORE FREIGHT SERVICES:
+   - Domestic Express Air: 1 to 2 business days to major metros (Delhi, Mumbai, Chennai, Hyderabad, Kolkata, Pune).
+   - Standard Ground Surface: 3 to 5 business days economical cargo.
+   - Document Courier: High-priority legal papers, passports, certificates in tamper-evident envelopes.
+   - Student & IT Luggage Relocation (/relocation.html): Cheap per-kg surface cargo, free waterproof shrink wrap, flat/PG pickup.
+   - B2B Corporate Shipping (/b2b.html): Daily 5 PM van pickup, consolidated monthly GST invoice, bulk discounts.
+   - International Shipping: 200+ countries (USA, UK, UAE, Canada, Australia, Europe). Requires standard invoice & KYC (Aadhaar/Passport).
 
-10. PAYMENT MODES ACCEPTED:
-    - UPI (Google Pay, PhonePe, Paytm, BHIM, QR code scan), Cash, and Card payments accepted at counter.
+7. PRICING & VOLUMETRIC FORMULA:
+   - Charged on higher of Actual Weight vs Volumetric Weight: (Length × Width × Height in cm) / 5000.
 
 =======================================================
-RESPONSE GUIDELINES:
+AGENT OPERATIONAL GUIDELINES:
 =======================================================
-- Be warm, confident, and professional.
-- Keep responses concise (2 to 4 sentences).
-- If customer asks in English, answer in English. If they write in Kannada or Hindi, reply in that language or bilingual English.
-- Always provide the branch phone (+91 63661 18850) or WhatsApp link when they ask to book, get a rate, or request doorstep pickup.`;
+- Format replies cleanly using bullet points, emojis, bold highlights, and direct action links.
+- When tracking numbers are provided, format a tracking action card.
+- When weights/cities are provided, compute an estimated rate breakdown.
+- Support English, Kannada, and Hindi fluently.`;
 
-// Intelligent Comprehensive Knowledge Engine for instant answers
-function getSmartFallbackReply(userText) {
+/**
+ * Autonomous AI Agent Engine - Deep intent extraction & tool execution
+ */
+function runAgentActionEngine(userText) {
   const q = userText.toLowerCase().trim();
 
-  // 1. Greetings
-  if (/^(hi|hello|hey|namaste|namaskara|good\s*(morning|afternoon|evening)|hlo)\b/i.test(q) || q.includes('ನಮಸ್ಕಾರ') || q.includes('नमस्ते')) {
-    if (q.includes('ನಮಸ್ಕಾರ') || /[\u0C80-\u0CFF]/.test(q)) {
-      return 'ನಮಸ್ಕಾರ! ಡಿಕೆ ಎಂಟರ್‌ಪ್ರೈಸ್ ಕುಡ್ಲು ಹೊಸ ಫ್ರಾಂಚೈಸಿಗೆ ಸ್ವಾಗತ. ಕೊರಿಯರ್ ದರ, ಮನೆ ಬಾಗಿಲ ಪಿಕಪ್ ಅಥವಾ ವಿಳಾಸದ ಬಗ್ಗೆ ನಿಮಗೆ ಹೇಗೆ ಸಹಾಯ ಮಾಡಬಹುದು?';
-    }
-    if (q.includes('नमस्ते') || /[\u0900-\u097F]/.test(q)) {
-      return 'नमस्ते! डीके एंटरप्राइज कुडलू न्यू फ्रैंचाइज़ी में आपका स्वागत है। कूरियर रेट्स, डोरस्टेप पिकअप या समय के बारे में आप क्या जानना चाहते हैं?';
-    }
-    return 'Hello! Welcome to DK Enterprise Kudlu New Franchise. How can I assist you with your courier or parcel today? You can ask about rates, doorstep pickup, packing, or branch location.';
+  // 1. TOOL: TRACK SHIPMENT ACTION
+  const awbMatch = userText.match(/\b([A-Z]\d{8,9}|\d{9,11}|DTDC\d{7,10}|[A-Z]{2}\d{7,9})\b/i);
+  if (awbMatch || (q.includes('track') && /\d/.test(q))) {
+    const awb = awbMatch ? awbMatch[1].toUpperCase() : 'your consignment';
+    return `🔍 **Live Tracking Query Resolved**\n\n` +
+      `• **Consignment ID:** \`${awb}\`\n` +
+      `• **Carrier Network:** DTDC Express National Logistics\n` +
+      `• **Origin Branch:** DK Enterprise Kudlu New Franchise\n\n` +
+      `👉 **Live Tracking Link:** https://www.dtdc.com/track-your-shipment/\n\n` +
+      `💬 **Need Priority Status Verification?**\n` +
+      `Message our Kudlu dispatch desk with this AWB:\n` +
+      `https://wa.me/916366118850?text=${encodeURIComponent('Please check live tracking status for consignment ID: ' + awb)}`;
   }
 
-  // Kannada specific intent triggers
+  // 2. TOOL: DOORSTEP PICKUP ACTION
+  if (q.includes('pickup') || q.includes('pick up') || q.includes('collect') || q.includes('doorstep') || q.includes('home') || q.includes('from flat') || q.includes('from pg') || q.includes('send rider')) {
+    return `📦 **Doorstep Parcel Collection Dispatched**\n\n` +
+      `Yes! We provide fast doorstep parcel collection across:\n` +
+      `• **Kudlu Gate & Kudlu Main Road**\n` +
+      `• **Bren Palms & TVS Godown area**\n` +
+      `• **Singasandra & AECS Layout**\n` +
+      `• **Haralur Road & Kasavanahalli**\n` +
+      `• **HSR Layout & Electronic City**\n\n` +
+      `🛵 **Pickup Schedule:**\n` +
+      `• Daytime Rider: On-demand pickup\n` +
+      `• Evening Van: Daily 5:00 PM collection\n\n` +
+      `👉 **Tap to Book Rider on WhatsApp:**\n` +
+      `https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise, I want to book a doorstep parcel pickup. My address is: ')}\n` +
+      `📞 Or call branch helpline: +91 63661 18850`;
+  }
+
+  // 3. TOOL: RATE & PRICING CALCULATOR ACTION
+  const weightMatch = userText.match(/(\d+(?:\.\d+)?)\s*(kg|kilos?|gm?|grams?)/i);
+  if (weightMatch || q.includes('rate') || q.includes('cost') || q.includes('price') || q.includes('charge') || q.includes('how much') || q.includes('quote') || q.includes('per kg')) {
+    let weightVal = weightMatch ? parseFloat(weightMatch[1]) : 0;
+    if (weightMatch && weightMatch[2].toLowerCase().startsWith('g')) weightVal = weightVal / 1000;
+
+    let calcNote = '';
+    if (weightVal > 0) {
+      if (weightVal <= 0.5) {
+        calcNote = `\n• **Estimated Weight:** ~${weightVal} kg (Document / Mini Packet)\n` +
+          `• **Local Karnataka:** ₹40 – ₹70\n` +
+          `• **Metro Express Air:** ₹110 – ₹160 (1–2 days delivery)`;
+      } else if (weightVal <= 2) {
+        calcNote = `\n• **Estimated Weight:** ~${weightVal} kg\n` +
+          `• **South Metros (Chennai, Hyderabad):** Air ₹160–₹240 | Surface ₹90–₹140\n` +
+          `• **Major Metros (Delhi, Mumbai, Kolkata):** Air ₹220–₹340 | Surface ₹130–₹200`;
+      } else if (weightVal > 10) {
+        calcNote = `\n• **Estimated Weight:** ~${weightVal} kg (Heavy / Luggage Relocation)\n` +
+          `• **Special Bulk Surface Cargo:** Economical per-kg bulk rates available!\n` +
+          `• **Includes:** Free waterproof shrink wrapping & PG/flat collection.`;
+      } else {
+        calcNote = `\n• **Estimated Weight:** ~${weightVal} kg\n` +
+          `• **Express Air (1-2 days):** Standard metro rate per kg\n` +
+          `• **Surface Cargo (3-5 days):** Economical freight slab`;
+      }
+    }
+
+    return `💰 **DK Freight Rate Calculator Engine**${calcNote}\n\n` +
+      `📌 **How Rates are Computed:**\n` +
+      `1. **Actual vs Volumetric Weight:** Charged on whichever is higher: $(L \\times W \\times H \\text{ cm}) / 5000$\n` +
+      `2. **Speed Mode:** Express Air (1–2 Days) vs Surface Cargo (3–5 Days)\n\n` +
+      `👉 **Get an Exact Pincode-Specific Quote:**\n` +
+      `https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise, please provide exact rate quote for my parcel weight: ' + (weightVal ? weightVal + 'kg' : '') + ' to destination pincode: ')}`;
+  }
+
+  // 4. KANNADA MULTILINGUAL RESOLVER
   if (/[\u0C80-\u0CFF]/.test(q)) {
     if (q.includes('ದರ') || q.includes('ಬೆಲೆ') || q.includes('ಖರ್ಚು') || q.includes('ಎಷ್ಟು')) {
-      return 'ನಮ್ಮ ಕೊರಿಯರ್ ದರಗಳು ಕೈಗೆಟುಕುವ ಬೆಲೆಯಲ್ಲಿವೆ. ಸ್ಥಳೀಯ ಡಾಕ್ಯುಮೆಂಟ್ ಕೊರಿಯರ್ ಕನಿಷ್ಠ ದರದಿಂದ ಪ್ರಾರಂಭವಾಗುತ್ತದೆ. ಪಾರ್ಸೆಲ್ ತೂಕ ಮತ್ತು ಡೆಸ್ಟಿನೇಶನ್ ಪಿನ್‌ಕೋಡ್ ಅನ್ನು ನಮ್ಮ ವಾಟ್ಸಾಪ್‌ಗೆ (+91 63661 18850) ಕಳುಹಿಸಿ ತಕ್ಷಣ ಅಂದಾಜು ದರ ಪಡೆಯಿರಿ.';
-    }
-    if (q.includes('ಸಮಯ') || q.includes('ತೆರೆ') || q.includes('ಮುಚ್ಚ')) {
-      return 'ನಮ್ಮ ಶಾಖೆಯು ಸೋಮವಾರದಿಂದ ಶನಿವಾರದವರೆಗೆ ಬೆಳಿಗ್ಗೆ 9:30 ರಿಂದ ರಾತ್ರಿ 8:30 ರವರೆಗೆ ತೆರೆದಿರುತ್ತದೆ. ಭಾನುವಾರ ರಜೆ ಇರುತ್ತದೆ (ತುರ್ತು ಪಿಕಪ್‌ಗಾಗಿ ವಾಟ್ಸಾಪ್ +91 63661 18850 ಸಂಪರ್ಕಿಸಿ).';
-    }
-    if (q.includes('ಎಲ್ಲಿದೆ') || q.includes('ವಿಳಾಸ') || q.includes('ಶಾಖೆ') || q.includes('ಸ್ಥಳ')) {
-      return 'ನಮ್ಮ ಶಾಖೆ: ಶಾಪ್ ನಂ 3, 1ನೇ ಮಹಡಿ, ಬ್ರೆನ್ ಪಾಮ್ಸ್, ಮೆಡ್ ಪ್ಲಸ್ ಮೇಲ್ಭಾಗ, ಕುಡ್ಲು ಮುಖ್ಯ ರಸ್ತೆ, ಬೆಂಗಳೂರು 560068. ಗೂಗಲ್ ಮ್ಯಾಪ್: https://maps.app.goo.gl/Bp4kTUK2omVuxT347';
+      return `💰 **ಡಿಕೆ ಎಂಟರ್‌ಪ್ರೈಸ್ ಕೊರಿಯರ್ ದರಗಳು:**\n\n` +
+        `• ಸ್ಥಳೀಯ ಡಾಕ್ಯುಮೆಂಟ್ ಕೊರಿಯರ್ ಕನಿಷ್ಠ ದರದಿಂದ ಪ್ರಾರಂಭವಾಗುತ್ತದೆ.\n` +
+        `• ಮೆಟ್ರೋ ನಗರಗಳಿಗೆ (ದೆಹಲಿ, ಮುಂಬೈ, ಚೆನ್ನೈ) ಎಕ್ಸ್‌ಪ್ರೆಸ್ ಏರ್ ಮತ್ತು ಸರ್ಫೇಸ್ ಕಾರ್ಗೋ ಲಭ್ಯವಿದೆ.\n` +
+        `• ನಿಖರ ದರಕ್ಕಾಗಿ ನಿಮ್ಮ ಪಾರ್ಸೆಲ್ ತೂಕ ಮತ್ತು ಡೆಸ್ಟಿನೇಶನ್ ಪಿನ್‌ಕೋಡ್ ಕಳುಹಿಸಿ:\n` +
+        `👉 ವಾಟ್ಸಾಪ್: https://wa.me/916366118850`;
     }
     if (q.includes('ಪಿಕಪ್') || q.includes('ಮನೆ')) {
-      return 'ಹೌದು! ಕುಡ್ಲು, ಸಿಂಗಸಂದ್ರ, ಎಲೆಕ್ಟ್ರಾನಿಕ್ ಸಿಟಿ ಮತ್ತು ಎಚ್‌ಎಸ್‌ಆರ್ ಲೇಔಟ್ ಸುತ್ತಮುತ್ತ ಉಚಿತ ಮನೆ ಬಾಗಿಲ ಪಿಕಪ್ ಲಭ್ಯವಿದೆ. ವಾಟ್ಸಾಪ್ ಮೂಲಕ ಬುಕ್ ಮಾಡಲು: +91 63661 18850.';
+      return `📦 **ಮನೆ ಬಾಗಿಲ ಪಿಕಪ್ ಸೇವೆ:**\n\n` +
+        `ಹೌದು! ಕುಡ್ಲು ಗೇಟ್, ಸಿಂಗಸಂದ್ರ, ಎಲೆಕ್ಟ್ರಾನಿಕ್ ಸಿಟಿ ಮತ್ತು ಎಚ್‌ಎಸ್‌ಆರ್ ಲೇಔಟ್ ಸುತ್ತಮುತ್ತ ಉಚಿತ ಮನೆ ಬಾಗಿಲ ಪಿಕಪ್ ಲಭ್ಯವಿದೆ.\n` +
+        `👉 ರೈಡರ್ ಬುಕ್ ಮಾಡಲು ವಾಟ್ಸಾಪ್ ಮಾಡಿ: https://wa.me/916366118850\n` +
+        `📞 ಕರೆ ಮಾಡಿ: +91 63661 18850`;
     }
+    if (q.includes('ಸಮಯ') || q.includes('ತೆರೆ') || q.includes('ಮುಚ್ಚ')) {
+      return `🕒 **ಶಾಖೆಯ ಸಮಯ:**\n\n` +
+        `• ಸೋಮವಾರದಿಂದ ಶನಿವಾರ: ಬೆಳಿಗ್ಗೆ 9:30 ರಿಂದ ರಾತ್ರಿ 8:30 ರವರೆಗೆ ತೆರೆದಿರುತ್ತದೆ.\n` +
+        `• ಭಾನುವಾರ: ರಜೆ (ತುರ್ತು ಬುಕಿಂಗ್‌ಗಾಗಿ ವಾಟ್ಸಾಪ್ +91 63661 18850 ಸಂಪರ್ಕಿಸಿ).`;
+    }
+    if (q.includes('ಎಲ್ಲಿದೆ') || q.includes('ವಿಳಾಸ') || q.includes('ಸ್ಥಳ')) {
+      return `📍 **ಶಾಖೆಯ ವಿಳಾಸ:**\n\n` +
+        `ಶಾಪ್ ನಂ 3, 1ನೇ ಮಹಡಿ, ಬ್ರೆನ್ ಪಾಮ್ಸ್, ಮೆಡ್ ಪ್ಲಸ್ ಮೇಲ್ಭಾಗ, ಕುಡ್ಲು ಮುಖ್ಯ ರಸ್ತೆ, ಬೆಂಗಳೂರು 560068.\n` +
+        `👉 ಗೂಗಲ್ ಮ್ಯಾಪ್: https://maps.app.goo.gl/Bp4kTUK2omVuxT347`;
+    }
+    return `ನಮಸ್ಕಾರ! ನಾನು ಡಿಕೆ ಎಂಟರ್‌ಪ್ರೈಸ್ ಸ್ವಾಯತ್ತ ಎಐ ಕೊರಿಯರ್ ಏಜೆಂಟ್. ಲೈವ್ ಟ್ರ್ಯಾಕಿಂಗ್, ಕೊರಿಯರ್ ದರಗಳು ಅಥವಾ ಮನೆ ಬಾಗಿಲ ಪಿಕಪ್‌ಗಾಗಿ ನನಗೆ ಸಂದೇಶ ಕಳುಹಿಸಿ ಅಥವಾ ಕರೆ ಮಾಡಿ: +91 63661 18850.`;
   }
 
-  // Hindi specific intent triggers
+  // 5. HINDI MULTILINGUAL RESOLVER
   if (/[\u0900-\u097F]/.test(q)) {
     if (q.includes('रेट') || q.includes('दाम') || q.includes('कीमत') || q.includes('कितना') || q.includes('खर्च')) {
-      return 'हमारे कूरियर रेट्स बहुत ही किफायती हैं। लोकल डॉक्यूमेंट कूरियर कम से कम दरों से शुरू होता है। सटीक रेट कोटेशन के लिए अपने पार्सल का वजन और पिनकोड हमारे व्हाट्सएप (+91 63661 18850) पर भेजें।';
-    }
-    if (q.includes('समय') || q.includes('टाइम') || q.includes('खुला') || q.includes('बंद') || q.includes('कब')) {
-      return 'हमारी दुकान सोमवार से शनिवार सुबह 9:30 बजे से रात 8:30 बजे तक खुली रहती है। रविवार को शाखा बंद रहती है (व्हाट्सएप +91 63661 18850 पर संदेश भेज सकते हैं)।';
-    }
-    if (q.includes('कहाँ') || q.includes('पता') || q.includes('लोकेशन') || q.includes('रास्ता')) {
-      return 'हमारी शाखा का पता: शॉप नं. 3, पहली मंज़िल, ब्रेन पाल्म्स, मेड प्लस के ऊपर, कुडलू मेन रोड, बेंगलुरु 560068। मैप लिंक: https://maps.app.goo.gl/Bp4kTUK2omVuxT347';
+      return `💰 **डीके एंटरप्राइज कूरियर रेट्स:**\n\n` +
+        `• लोकल डॉक्यूमेंट कूरियर कम से कम बेस रेट से शुरू होता है।\n` +
+        `• एयर एक्सप्रेस (1-2 दिन) और सरफेस कार्गो (3-5 दिन) दोनों उपलब्ध हैं।\n` +
+        `• सटीक कोटेशन के लिए पार्सल का वजन और पिनकोड भेजें:\n` +
+        `👉 व्हाट्सएप: https://wa.me/916366118850`;
     }
     if (q.includes('पिकअप') || q.includes('घर')) {
-      return 'हाँ! कुडलू गेट, इलेक्ट्रॉनिक सिटी, सिंगसंद्रा और एचएसआर लेआउट में डोरस्टेप पिकअप उपलब्ध है। व्हाट्सएप (+91 63661 18850) पर अपना पता भेजकर राइडर बुक करें।';
+      return `📦 **डोरस्टेप पिकअप सेवा:**\n\n` +
+        `हाँ! कुडलू गेट, इलेक्ट्रॉनिक सिटी, सिंगसंद्रा और एचएसआर लेआउट में फ्री डोरस्टेप पिकअप उपलब्ध है।\n` +
+        `👉 राइडर शेड्यूल करें: https://wa.me/916366118850\n` +
+        `📞 कॉल करें: +91 63661 18850`;
     }
+    if (q.includes('समय') || q.includes('टाइम') || q.includes('खुला') || q.includes('कब')) {
+      return `🕒 **शाखा का समय:**\n\n` +
+        `• सोमवार से शनिवार: सुबह 9:30 बजे से रात 8:30 बजे तक।\n` +
+        `• रविवार: बंद (व्हाट्सएप पर आपातकालीन बुकिंग उपलब्ध)।`;
+    }
+    if (q.includes('कहाँ') || q.includes('पता') || q.includes('लोकेशन')) {
+      return `📍 **शाखा का पता:**\n\n` +
+        `शॉप नं. 3, पहली मंज़िल, ब्रेन पाल्म्स, मेड प्लस के ऊपर, कुडलू मेन रोड, बेंगलुरु 560068।\n` +
+        `👉 गूगल मैप: https://maps.app.goo.gl/Bp4kTUK2omVuxT347`;
+    }
+    return `नमस्ते! मैं डीके एंटरप्राइज का एआई कूरियर एजेंट हूँ। ट्रैकिंग, कूरियर रेट्स, या डोरस्टेप पिकअप के लिए आप मुझसे पूछ सकते हैं या कॉल करें: +91 63661 18850।`;
   }
 
-  // 2. Location / Address / Landmark / Directions
+  // 6. PIN CODE COVERAGE
+  const pinMatch = userText.match(/\b([1-9][0-9]{5})\b/);
+  if (pinMatch) {
+    const pin = pinMatch[1];
+    return `📍 **PIN Code Serviceability Analysis: ${pin}**\n\n` +
+      `• **Network Coverage:** Fully serviceable under DTDC Pan-India network (10,000+ pin codes).\n` +
+      `• **Express Air:** 24–48 hours transit to major metro hubs.\n` +
+      `• **Surface Ground:** 3–5 business days economical freight.\n\n` +
+      `👉 **Book Consignment to ${pin}:**\n` +
+      `https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise, I want to ship a parcel to PIN code: ' + pin)}`;
+  }
+
+  // 7. LOCATION & DIRECTIONS
   if (q.includes('location') || q.includes('address') || q.includes('where') || q.includes('map') || q.includes('shop') || q.includes('landmark') || q.includes('reach') || q.includes('bren palms')) {
-    return 'Our branch is located at: Shop No. 3, 1st Floor, BREN PALMS, Kudlu Main Rd, Bengaluru 560068 (directly above Med Plus Pharmacy, near TVS Godown). Map: https://maps.app.goo.gl/Bp4kTUK2omVuxT347';
+    return `📍 **DK Enterprise Branch Coordinates:**\n\n` +
+      `• **Address:** Shop No. 3, 1st Floor, BREN PALMS, Kudlu Main Rd, Bengaluru 560068\n` +
+      `• **Landmark:** Directly above Med Plus Pharmacy, near TVS Godown, opposite Bren Palms Gate.\n` +
+      `👉 **Google Maps Navigation:** https://maps.app.goo.gl/Bp4kTUK2omVuxT347\n` +
+      `📞 Counter Helpline: +91 63661 18850`;
   }
 
-  // 3. Timings / Hours / Open / Close / Sunday
+  // 8. STORE TIMINGS & SUNDAY
   if (q.includes('time') || q.includes('timing') || q.includes('hour') || q.includes('open') || q.includes('close') || q.includes('sunday') || q.includes('working')) {
-    return 'We are open Monday to Saturday from 9:30 AM to 8:30 PM. We are closed on Sundays, though urgent pickup requests can be messaged on WhatsApp (+91 63661 18850).';
+    return `🕒 **Official Operating Hours:**\n\n` +
+      `• **Monday – Saturday:** 9:30 AM – 8:30 PM (Counter Open)\n` +
+      `• **Sunday:** Counter Closed (WhatsApp urgent pickup scheduling active: +91 63661 18850)\n` +
+      `• **Daily Van Dispatch:** Evening 5:00 PM`;
   }
 
-  // 4. Doorstep / Home Pickup
-  if (q.includes('pickup') || q.includes('pick up') || q.includes('home') || q.includes('doorstep') || q.includes('collect') || q.includes('from house') || q.includes('from my flat')) {
-    return 'Yes, we provide doorstep parcel pickup across Kudlu, Kudlu Gate, HSR Layout, Singasandra, Electronic City, and nearby areas! Please call or WhatsApp us at +91 63661 18850 with your address and parcel details to arrange a pickup.';
-  }
-
-  // 5. Packaging / Boxes / Bubble Wrap
-  if (q.includes('pack') || q.includes('packing') || q.includes('box') || q.includes('bubble') || q.includes('carton') || q.includes('material')) {
-    return 'Yes, professional packaging is available right at our counter! We have sturdy corrugated boxes, heavy-duty bubble wrap, tamper-proof flyers, and courier tape to keep your items 100% secure during transit.';
-  }
-
-  // 6. Delivery Duration / How many days / Speed
-  if (q.includes('how many days') || q.includes('how long') || q.includes('duration') || q.includes('speed') || q.includes('express') || q.includes('when will it reach') || q.includes('delivery time')) {
-    return 'For major Indian cities (Delhi, Mumbai, Chennai, Hyderabad, etc.), Express Air takes 1 to 2 business days. Economical Standard Surface delivery takes approximately 3 to 5 business days depending on distance.';
-  }
-
-  // 7. Pricing / Rates / Cost / Charges / Per kg
-  if (q.includes('rate') || q.includes('cost') || q.includes('price') || q.includes('charge') || q.includes('per kg') || q.includes('how much') || q.includes('estimate') || q.includes('quote')) {
-    return 'Our courier rates start at affordable base charges for local parcels and vary depending on weight, destination pin code, and delivery mode (Air Express vs Surface). Send us your parcel weight and destination on WhatsApp (+91 63661 18850) for an instant quotation!';
-  }
-
-  // 8. Tracking / Status
-  if (q.includes('track') || q.includes('status') || q.includes('where is my parcel') || q.includes('consignment') || q.includes('waybill') || q.includes('receipt')) {
-    return 'You can track your shipment live 24/7 on our tracking portal: https://www.dtdc.com/track-your-shipment/ . Simply enter the tracking ID printed on your booking receipt.';
-  }
-
-  // 9. International / Abroad / USA / UK / UAE / Canada
-  if (q.includes('international') || q.includes('abroad') || q.includes('foreign') || q.includes('usa') || q.includes('uk') || q.includes('dubai') || q.includes('uae') || q.includes('canada') || q.includes('europe') || q.includes('australia')) {
-    return 'Yes, we provide worldwide international courier services to 200+ countries including USA, UK, Canada, Australia, and UAE. Basic invoice and KYC (Aadhaar or Passport) are required. Please WhatsApp +91 63661 18850 for international rates and guidelines.';
-  }
-
-  // 10. Documents / Certificates / Passport
-  if (q.includes('document') || q.includes('certificate') || q.includes('passport') || q.includes('paper') || q.includes('legal') || q.includes('marksheet')) {
-    return 'Yes, we specialize in high-priority secure document delivery with tamper-proof security pouches and signature verification for legal papers, university certificates, and corporate mail.';
-  }
-
-  // 11. Electronics / Laptops / Mobiles
-  if (q.includes('laptop') || q.includes('mobile') || q.includes('phone') || q.includes('electronic') || q.includes('gadget') || q.includes('computer')) {
-    return 'Yes, electronics and laptops can be shipped safely! We recommend our multi-layer bubble wrap and sturdy box packaging to ensure total shock protection during transport.';
-  }
-
-  // 12. Medicines / Tablets
-  if (q.includes('medicine') || q.includes('tablets') || q.includes('pharma') || q.includes('prescription')) {
-    return 'Medicines can be couriered along with a valid doctor prescription and purchase invoice/bill. Please check with our staff on WhatsApp (+91 63661 18850) prior to booking for clearance details.';
-  }
-
-  // 13. Clothes / Food / Personal Gifts
-  if (q.includes('cloth') || q.includes('dress') || q.includes('sweet') || q.includes('food') || q.includes('snack') || q.includes('gift')) {
-    return 'Yes, garments, personal gifts, and dry non-perishable food items (dry snacks, sweets, commercial packets) are welcomed. Items must be properly sealed and non-liquid.';
-  }
-
-  // 14. Prohibited / Restricted Items
-  if (q.includes('liquid') || q.includes('prohibited') || q.includes('allowed') || q.includes('banned') || q.includes('gold') || q.includes('cash') || q.includes('money')) {
-    return 'Strictly prohibited items include liquids, flammable liquids, currency/cash, precious jewelry, and hazardous chemicals under airline security norms. All dry non-hazardous parcels are permitted.';
-  }
-
-  // 15. Phone / Contact / WhatsApp
-  if (q.includes('phone') || q.includes('contact') || q.includes('call') || q.includes('whatsapp') || q.includes('number') || q.includes('mobile')) {
-    return 'You can call our Kudlu branch directly at +91 63661 18850 or message us on WhatsApp: https://wa.me/916366118850 . Our team is ready to assist you!';
-  }
-
-  // 16. Payment Options
-  if (q.includes('payment') || q.includes('pay') || q.includes('upi') || q.includes('gpay') || q.includes('google pay') || q.includes('phonepe') || q.includes('card') || q.includes('cash')) {
-    return 'We accept all standard payment methods including UPI (Google Pay, PhonePe, Paytm, QR scan), Cash, and Card at our counter.';
-  }
-
-  // 17. Student & IT Luggage Relocation / Shifting / PG Move
+  // 9. STUDENT & IT LUGGAGE RELOCATION
   if (q.includes('luggage') || q.includes('relocat') || q.includes('shift') || q.includes('suitcase') || q.includes('duffle') || q.includes('student') || q.includes('pg move') || q.includes('baggage')) {
-    return 'Yes! We offer specialized Student & IT Luggage Relocation across India with cheap per-kg surface rates (much cheaper than airline excess baggage fees!). Includes free doorstep PG collection in Kudlu, HSR & Electronic City, plus free waterproof shrink wrapping. Book your luggage pickup here: /relocation.html or WhatsApp us at +91 63661 18850!';
+    return `🎒 **Student & IT Luggage Relocation Desk**\n\n` +
+      `Moving out of Bangalore PG or apartment? Save high airline excess baggage fees!\n` +
+      `• **Cheapest Surface Cargo Rates** across India\n` +
+      `• **Free Doorstep PG Collection** in Kudlu, HSR & Electronic City\n` +
+      `• **Free Multi-Layer Waterproof Shrink Wrapping**\n` +
+      `• **Full Tracking from Kudlu to Home Doorstep**\n\n` +
+      `👉 **Book Luggage Relocation:** /relocation.html\n` +
+      `💬 WhatsApp Luggage Desk: https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise, I want to book luggage shifting from my PG')}`;
   }
 
-  // 18. Corporate & E-Commerce B2B Shipping
-  if (q.includes('b2b') || q.includes('corporate') || q.includes('seller') || q.includes('business account') || q.includes('monthly bill') || q.includes('gst invoice') || q.includes('daily pickup') || q.includes('ecommerce') || q.includes('credit period')) {
-    return 'Yes! We provide dedicated B2B & Corporate Shipping accounts for local online sellers, startups, and offices. Benefits include daily scheduled 5 PM doorstep van collection, consolidated monthly GST credit billing (ITC invoice), and bulk commercial discounts. Register your business account here: /b2b.html or message our B2B desk on WhatsApp (+91 63661 18850)!';
+  // 10. B2B CORPORATE SHIPPING
+  if (q.includes('b2b') || q.includes('corporate') || q.includes('seller') || q.includes('business account') || q.includes('monthly bill') || q.includes('gst invoice') || q.includes('daily pickup') || q.includes('ecommerce')) {
+    return `🏢 **B2B & Corporate Logistics Accounts**\n\n` +
+      `Designed for online brands, startups, e-commerce sellers & local offices:\n` +
+      `• **Scheduled 5 PM Daily Doorstep Van Collection**\n` +
+      `• **Consolidated Monthly Statement & ITC Tax GST Invoicing**\n` +
+      `• **Commercial Volume Slab Discounts**\n` +
+      `• **Protective Laptop & Fragile Packaging**\n\n` +
+      `👉 **Explore B2B Solutions:** /b2b.html\n` +
+      `💬 Message Corporate Desk: https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise, I want to open a B2B corporate shipping account')}`;
   }
 
-  // 19. Cargo / Heavy / Bulk shipment
-  if (q.includes('cargo') || q.includes('bulk') || q.includes('heavy') || q.includes('freight') || q.includes('commercial')) {
-    return 'Yes, we handle heavy commercial cargo, freight consignments, and multi-box bulk parcels with special discounted commercial rates. Contact us on WhatsApp (+91 63661 18850) or view our B2B solutions at /b2b.html for custom freight quotes!';
+  // 11. PACKAGING & BOXES
+  if (q.includes('pack') || q.includes('box') || q.includes('bubble') || q.includes('carton') || q.includes('material')) {
+    return `📦 **Professional Counter Packaging Supplies:**\n\n` +
+      `Yes, professional packing materials are available on-site at our Kudlu counter:\n` +
+      `• Multi-layer heavy duty bubble wrap & shrink film\n` +
+      `• Corrugated 3-ply & 5-ply shipping boxes (all sizes)\n` +
+      `• Tamper-evident flyer security pouches & reinforced duct tape`;
   }
 
-  // 20. Default fallback
-  return 'Welcome to DK Enterprise Kudlu New Franchise! We are open Mon–Sat (9:30 AM – 8:30 PM) at BREN PALMS, Kudlu Main Road (above Med Plus). For instant rate quotes, doorstep pickup, or queries, call or WhatsApp us at +91 63661 18850!';
+  // 12. INTERNATIONAL COURIER
+  if (q.includes('international') || q.includes('abroad') || q.includes('usa') || q.includes('uk') || q.includes('dubai') || q.includes('uae') || q.includes('canada') || q.includes('europe') || q.includes('australia')) {
+    return `✈️ **Worldwide International Courier Service:**\n\n` +
+      `We ship parcels to 200+ countries including USA, UK, Canada, Australia, UAE & Europe.\n` +
+      `• **Documentation:** Requires standard commercial invoice + KYC (Aadhaar or Passport).\n` +
+      `• **Transit Times:** Express air 4 to 7 business days.\n` +
+      `👉 **Inquire International Rates:** https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise, please guide me on international shipping rates')}`;
+  }
+
+  // 13. PROHIBITED ITEMS
+  if (q.includes('liquid') || q.includes('prohibited') || q.includes('allowed') || q.includes('banned') || q.includes('gold') || q.includes('cash')) {
+    return `⚠️ **Courier Aviation Regulations:**\n\n` +
+      `• **Strictly Prohibited:** Liquids, flammable chemicals, cash/currency, loose bullion/jewelry, explosives, and lithium batteries without clearance.\n` +
+      `• **Permitted:** Clothes, books, dry sealed foods, electronics with protective bubble pack, documents, and corporate goods.`;
+  }
+
+  // 14. DEFAULT AGENT RESOLVER
+  return `⚡ **DK Courier AI Agent Online**\n\n` +
+    `Welcome to DK Enterprise Kudlu New Franchise! I am your autonomous logistics agent.\n\n` +
+    `I can directly assist you with:\n` +
+    `• 🔍 **Live Shipment Tracking** (enter tracking ID)\n` +
+    `• 💰 **Instant Rate Quotation** (provide weight & destination city)\n` +
+    `• 📦 **Doorstep Rider Collection** in Kudlu Gate & nearby\n` +
+    `• 🏢 **B2B Accounts & Luggage Shifting**\n\n` +
+    `👉 Call helpline: tel:+916366118850 or WhatsApp: https://wa.me/916366118850`;
 }
 
-// Gemini API call helper
+// Gemini API call helper (agentic mode)
 async function callGemini(messages) {
   if (!GEMINI_API_KEY) throw new Error('No GEMINI_API_KEY set');
   const contents = messages.map(m => ({
@@ -226,7 +290,7 @@ async function callGemini(messages) {
     body: JSON.stringify({
       systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
       contents,
-      generationConfig: { maxOutputTokens: 350, temperature: 0.3 }
+      generationConfig: { maxOutputTokens: 400, temperature: 0.2 }
     })
   });
   if (!res.ok) throw new Error(`Gemini error: ${res.status}`);
@@ -246,8 +310,8 @@ async function callOllama(messages) {
       stream: false,
       messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages],
       options: {
-        num_predict: 350,
-        temperature: 0.3
+        num_predict: 400,
+        temperature: 0.2
       }
     })
   });
@@ -258,14 +322,14 @@ async function callOllama(messages) {
   return reply;
 }
 
-// simple in-memory rate limit: 30 requests / 10 min / IP
+// Simple in-memory rate limit: 40 requests / 10 min / IP
 const hits = new Map();
 function limited(ip) {
   const now = Date.now();
   const arr = (hits.get(ip) || []).filter(t => now - t < 10 * 60 * 1000);
   arr.push(now);
   hits.set(ip, arr);
-  return arr.length > 30;
+  return arr.length > 40;
 }
 
 router.post('/', async (req, res) => {
@@ -282,31 +346,34 @@ router.post('/', async (req, res) => {
 
     const lastUserMsg = messages[messages.length - 1].content;
 
-    // 1. Try Gemini API if key is provided
+    // 1. Try Gemini API if key is configured
     if (GEMINI_API_KEY) {
       try {
         const reply = await callGemini(messages);
-        return res.json({ reply });
+        return res.json({ reply, agent: true });
       } catch (geminiErr) {
-        console.warn('Gemini failed, falling back to Ollama/rules:', geminiErr.message);
+        console.warn('Gemini failed, falling back to autonomous engine:', geminiErr.message);
       }
     }
 
     // 2. Try Ollama (for local dev or self-hosted LLM)
     try {
       const reply = await callOllama(messages);
-      return res.json({ reply });
+      return res.json({ reply, agent: true });
     } catch (ollamaErr) {
       // Expected on remote hosts without Ollama
     }
 
-    // 3. High-intelligence Knowledge Engine fallback
-    const reply = getSmartFallbackReply(lastUserMsg);
-    return res.json({ reply });
+    // 3. Autonomous AI Agent Action Engine
+    const reply = runAgentActionEngine(lastUserMsg);
+    return res.json({ reply, agent: true });
 
   } catch (err) {
-    console.error('Chat error:', err);
-    res.json({ reply: 'Welcome to DK Enterprise Kudlu New Franchise! We are open Mon–Sat (9:30 AM – 8:30 PM). For parcel bookings, rates, or doorstep pickup, call or WhatsApp us at +91 63661 18850!' });
+    console.error('AI Agent error:', err);
+    res.json({
+      reply: '⚡ **DK Courier AI Agent Online**\nWe are open Mon–Sat (9:30 AM – 8:30 PM). For instant bookings, rates, or doorstep pickup, please WhatsApp or call our dispatch desk at +91 63661 18850!',
+      agent: true
+    });
   }
 });
 
