@@ -1,0 +1,300 @@
+<svg class="robot-svg" viewBox="0 0 160 250" xmlns="http://www.w3.org/2000/svg" aria-label="DK Courier Mecha Mascot">
+  <defs>
+    <!-- Metallic Armor Gradients -->
+    <linearGradient id="armorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="30%" stop-color="#F1F5F9"/>
+      <stop offset="65%" stop-color="#CBD5E1"/>
+      <stop offset="100%" stop-color="#94A3B8"/>
+    </linearGradient>
+
+    <linearGradient id="armorDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="50%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+
+    <!-- Navy Courier Cap Gradients -->
+    <linearGradient id="navyCapGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A8A"/>
+      <stop offset="55%" stop-color="#0F2454"/>
+      <stop offset="100%" stop-color="#0A1530"/>
+    </linearGradient>
+
+    <linearGradient id="capBrimGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2546A8"/>
+      <stop offset="60%" stop-color="#142B6A"/>
+      <stop offset="100%" stop-color="#091325"/>
+    </linearGradient>
+
+    <!-- Red Racing & Trim Accents -->
+    <linearGradient id="redAccentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EF4444"/>
+      <stop offset="50%" stop-color="#DC2626"/>
+      <stop offset="100%" stop-color="#991B1B"/>
+    </linearGradient>
+
+    <!-- Glowing Cyan Visor & Thrusters -->
+    <radialGradient id="cyanNeon" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E0F2FE"/>
+      <stop offset="40%" stop-color="#38BDF8"/>
+      <stop offset="85%" stop-color="#0284C7"/>
+      <stop offset="100%" stop-color="#0369A1"/>
+    </radialGradient>
+
+    <filter id="cyanGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <style>
+      @keyframes waveHand {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(14deg); }
+      }
+      .robot-waving-hand {
+        transform-origin: 135px 74px;
+        animation: waveHand 2.4s ease-in-out infinite;
+      }
+      @keyframes eyeBlink {
+        0%, 94%, 98%, 100% { transform: scaleY(1); opacity: 1; }
+        96% { transform: scaleY(0.15); opacity: 0.6; }
+      }
+      .robot-visor-eyes {
+        transform-origin: 80px 44px;
+        animation: eyeBlink 4.5s ease-in-out infinite;
+      }
+      @keyframes chestPulse {
+        0%, 100% { opacity: 0.85; }
+        50% { opacity: 1; filter: drop-shadow(0 0 4px #38BDF8); }
+      }
+      .robot-pulse-core {
+        animation: chestPulse 2.8s ease-in-out infinite;
+      }
+    </style>
+  </defs>
+
+  <!-- Ground Hover Shadow (Soft Ellipse) -->
+  <ellipse cx="80" cy="242" rx="42" ry="6" fill="#0C2340" opacity="0.28"/>
+
+  <!-- ===== ROBOT MECHA HUMAN BODY ===== -->
+  <g class="robot-mecha-group">
+
+    <!-- LEFT LEG (Robot's Right Leg) -->
+    <g class="robot-leg-left">
+      <!-- Thigh -->
+      <path d="M58 136 L70 136 L68 174 L56 174 Z" fill="url(#armorGrad)" stroke="#94A3B8" stroke-width="0.9"/>
+      <!-- Thigh Red Racing Stripe -->
+      <polygon points="59,145 64,145 62,165 57,165" fill="url(#redAccentGrad)"/>
+
+      <!-- Knee Joint -->
+      <circle cx="62" cy="177" r="5" fill="url(#armorDark)" stroke="#64748B" stroke-width="0.8"/>
+      <circle cx="62" cy="177" r="2.2" fill="#38BDF8" filter="url(#cyanGlow)"/>
+
+      <!-- Shin & Calf Armor -->
+      <path d="M57 182 L67 182 L68 218 L55 218 Z" fill="url(#armorGrad)" stroke="#94A3B8" stroke-width="0.9"/>
+      <!-- Shin Cyan Glow Slit -->
+      <rect x="60.5" y="190" width="2" height="18" rx="1" fill="#38BDF8" filter="url(#cyanGlow)"/>
+
+      <!-- Ankle Joint -->
+      <ellipse cx="61.5" cy="221" rx="4.5" ry="3.5" fill="url(#armorDark)"/>
+
+      <!-- Courier Boot -->
+      <path d="M52 224 L69 224 L72 237 L48 237 L48 232 Z" fill="url(#armorGrad)" stroke="#64748B" stroke-width="1"/>
+      <rect x="50" y="234" width="21" height="3" rx="1" fill="url(#armorDark)"/>
+      <rect x="54" y="227" width="4" height="2" fill="#38BDF8" filter="url(#cyanGlow)"/>
+    </g>
+
+    <!-- RIGHT LEG (Robot's Left Leg) -->
+    <g class="robot-leg-right">
+      <!-- Thigh -->
+      <path d="M90 136 L102 136 L104 174 L92 174 Z" fill="url(#armorGrad)" stroke="#94A3B8" stroke-width="0.9"/>
+      <!-- Thigh Red Racing Stripe -->
+      <polygon points="98,145 103,145 101,165 96,165" fill="url(#redAccentGrad)"/>
+
+      <!-- Knee Joint -->
+      <circle cx="98" cy="177" r="5" fill="url(#armorDark)" stroke="#64748B" stroke-width="0.8"/>
+      <circle cx="98" cy="177" r="2.2" fill="#38BDF8" filter="url(#cyanGlow)"/>
+
+      <!-- Shin & Calf Armor -->
+      <path d="M93 182 L103 182 L105 218 L92 218 Z" fill="url(#armorGrad)" stroke="#94A3B8" stroke-width="0.9"/>
+      <!-- Shin Cyan Glow Slit -->
+      <rect x="97.5" y="190" width="2" height="18" rx="1" fill="#38BDF8" filter="url(#cyanGlow)"/>
+
+      <!-- Ankle Joint -->
+      <ellipse cx="98.5" cy="221" rx="4.5" ry="3.5" fill="url(#armorDark)"/>
+
+      <!-- Courier Boot -->
+      <path d="M91 224 L108 224 L112 232 L112 237 L88 237 Z" fill="url(#armorGrad)" stroke="#64748B" stroke-width="1"/>
+      <rect x="89" y="234" width="22" height="3" rx="1" fill="url(#armorDark)"/>
+      <rect x="102" y="227" width="4" height="2" fill="#38BDF8" filter="url(#cyanGlow)"/>
+    </g>
+
+    <!-- PELVIS & WAIST -->
+    <g class="robot-waist">
+      <path d="M66 122 L94 122 L96 138 L80 144 L64 138 Z" fill="url(#armorDark)" stroke="#334155" stroke-width="1"/>
+      <rect x="74" y="126" width="12" height="4" rx="2" fill="#38BDF8" filter="url(#cyanGlow)"/>
+      <!-- Side Hip Guards -->
+      <path d="M60 126 L67 124 L65 138 L58 136 Z" fill="url(#armorGrad)" stroke="#94A3B8" stroke-width="0.8"/>
+      <path d="M93 124 L100 126 L102 136 L95 138 Z" fill="url(#armorGrad)" stroke="#94A3B8" stroke-width="0.8"/>
+    </g>
+
+    <!-- SPINE & MECHANICAL CORE -->
+    <g class="robot-spine">
+      <rect x="75" y="112" width="10" height="12" rx="2" fill="url(#armorDark)"/>
+      <rect x="77" y="114" width="6" height="8" rx="1" fill="#1E293B"/>
+      <!-- Spine Blue Core Glow -->
+      <circle cx="80" cy="118" r="2.2" fill="#38BDF8" filter="url(#cyanGlow)" class="robot-pulse-core"/>
+    </g>
+
+    <!-- TORSO & CHEST ARMOR -->
+    <g class="robot-torso">
+      <!-- Main Metallic Breastplate -->
+      <path d="M54 78 L106 78 L100 114 L80 120 L60 114 Z" fill="url(#armorGrad)" stroke="#94A3B8" stroke-width="1.1"/>
+      
+      <!-- Side Rib Accents -->
+      <polygon points="56,82 62,82 59,102 54,98" fill="url(#redAccentGrad)"/>
+      <polygon points="104,82 98,82 101,102 106,98" fill="url(#redAccentGrad)"/>
+
+      <!-- Center Chest Plate with DK Logo -->
+      <path d="M64 80 L96 80 L92 106 L80 112 L68 106 Z" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="0.9"/>
+      
+      <!-- DK Brand Mark on Chest -->
+      <text x="76" y="96" font-family="'Inter', -apple-system, sans-serif" font-weight="900" font-size="12" fill="#0C2340" text-anchor="middle" letter-spacing="-0.5">DK</text>
+      <!-- Red Swoosh Arc across Logo -->
+      <path d="M68 97 Q80 92 92 95 Q80 98 68 97 Z" fill="#E31837"/>
+
+      <!-- Neck Joint & Hydraulics -->
+      <rect x="74" y="68" width="12" height="11" rx="2" fill="url(#armorDark)"/>
+      <line x1="77" y1="70" x2="77" y2="78" stroke="#64748B" stroke-width="1.2"/>
+      <line x1="83" y1="70" x2="83" y2="78" stroke="#64748B" stroke-width="1.2"/>
+    </g>
+
+    <!-- RIGHT ARM (Viewer's Left: Hand Confidently on Hip) -->
+    <g class="robot-arm-hip">
+      <!-- Shoulder Joint -->
+      <circle cx="50" cy="80" r="7.5" fill="url(#armorDark)" stroke="#64748B" stroke-width="1"/>
+      <circle cx="49" cy="79" r="4.5" fill="url(#redAccentGrad)"/>
+
+      <!-- Upper Arm / Bicep -->
+      <path d="M48 85 L35 106 L41 109 L53 87 Z" fill="url(#armorGrad)" stroke="#94A3B8" stroke-width="0.9"/>
+      
+      <!-- Elbow Joint -->
+      <circle cx="38" cy="108" r="4.5" fill="url(#armorDark)"/>
+
+      <!-- Forearm -->
+      <path d="M38 111 L52 126 L55 122 L42 107 Z" fill="url(#armorGrad)" stroke="#94A3B8" stroke-width="0.9"/>
+      <!-- Red Forearm Stripe -->
+      <polygon points="40,111 44,115 48,111 44,108" fill="url(#redAccentGrad)"/>
+
+      <!-- Hand on Hip -->
+      <ellipse cx="54" cy="127" rx="4.5" ry="4" fill="url(#armorDark)"/>
+      <!-- Articulated Fingers Clenched on Hip -->
+      <rect x="52" y="129" width="3" height="6" rx="1.5" fill="url(#armorGrad)"/>
+      <rect x="56" y="129" width="3" height="6" rx="1.5" fill="url(#armorGrad)"/>
+    </g>
+
+    <!-- LEFT ARM (Viewer's Right: Warm Waving Hand 👋) -->
+    <g class="robot-arm-wave">
+      <!-- Shoulder Joint -->
+      <circle cx="110" cy="80" r="7.5" fill="url(#armorDark)" stroke="#64748B" stroke-width="1"/>
+      <circle cx="111" cy="79" r="4.5" fill="url(#redAccentGrad)"/>
+
+      <!-- Upper Arm / Bicep -->
+      <path d="M112 85 L124 102 L119 105 L107 88 Z" fill="url(#armorGrad)" stroke="#94A3B8" stroke-width="0.9"/>
+
+      <!-- Elbow Joint -->
+      <circle cx="122" cy="103" r="4.5" fill="url(#armorDark)"/>
+
+      <!-- Forearm Angled Upwards -->
+      <path d="M122 100 L134 76 L139 79 L126 103 Z" fill="url(#armorGrad)" stroke="#94A3B8" stroke-width="0.9"/>
+      <!-- Red Forearm Stripe -->
+      <polygon points="128,88 132,84 135,88 131,92" fill="url(#redAccentGrad)"/>
+
+      <!-- Waving Hand Assembly (With gentle animated wave) -->
+      <g class="robot-waving-hand">
+        <!-- Wrist Ring -->
+        <ellipse cx="135" cy="74" rx="4.5" ry="3" fill="url(#armorDark)"/>
+
+        <!-- Palm -->
+        <circle cx="137" cy="65" r="5.5" fill="url(#armorGrad)" stroke="#94A3B8" stroke-width="0.8"/>
+
+        <!-- Articulated Open Fingers Waving 👋 -->
+        <!-- Thumb -->
+        <rect x="129" y="63" width="2.8" height="6" rx="1.4" fill="url(#armorGrad)" transform="rotate(-30 129 63)"/>
+        <!-- Index Finger -->
+        <rect x="133" y="52" width="2.6" height="9" rx="1.3" fill="url(#armorGrad)" transform="rotate(-10 133 52)"/>
+        <!-- Middle Finger -->
+        <rect x="137" y="50" width="2.6" height="10" rx="1.3" fill="url(#armorGrad)"/>
+        <!-- Ring Finger -->
+        <rect x="141" y="52" width="2.6" height="9" rx="1.3" fill="url(#armorGrad)" transform="rotate(10 141 52)"/>
+        <!-- Little Finger -->
+        <rect x="145" y="55" width="2.5" height="7.5" rx="1.2" fill="url(#armorGrad)" transform="rotate(20 145 55)"/>
+      </g>
+    </g>
+
+    <!-- HEAD & HELMET WITH NAVY DK COURIER CAP -->
+    <g class="robot-head-group">
+      <!-- Side Earphones / Audio Comm Modules -->
+      <!-- Left Earphone -->
+      <g class="earphone-left">
+        <rect x="50" y="34" width="7" height="16" rx="3.5" fill="url(#armorDark)" stroke="#64748B" stroke-width="0.8"/>
+        <circle cx="53" cy="42" r="3.5" fill="#0C2340"/>
+        <circle cx="53" cy="42" r="2" fill="#38BDF8" filter="url(#cyanGlow)"/>
+        <!-- Headset Mic Boom -->
+        <path d="M52 46 Q54 58 66 58" stroke="#334155" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <circle cx="66" cy="58" r="1.8" fill="#38BDF8" filter="url(#cyanGlow)"/>
+      </g>
+
+      <!-- Right Earphone -->
+      <g class="earphone-right">
+        <rect x="103" y="34" width="7" height="16" rx="3.5" fill="url(#armorDark)" stroke="#64748B" stroke-width="0.8"/>
+        <circle cx="107" cy="42" r="3.5" fill="#0C2340"/>
+        <circle cx="107" cy="42" r="2" fill="#38BDF8" filter="url(#cyanGlow)"/>
+      </g>
+
+      <!-- Spherical Mecha Helmet Base -->
+      <circle cx="80" cy="44" r="25" fill="url(#armorGrad)" stroke="#94A3B8" stroke-width="1.2"/>
+
+      <!-- Dark Glossy Helmet Visor Screen -->
+      <rect x="62" y="31" width="36" height="26" rx="13" fill="#050B14" stroke="#1E293B" stroke-width="1.2"/>
+
+      <!-- Visor Specular Glass Reflection (Curved shine) -->
+      <path d="M66 35 Q80 32 94 35 Q80 37 66 35 Z" fill="#FFFFFF" opacity="0.3"/>
+
+      <!-- GLOWING CYAN ANIME EYES & SMILE (^ ^) -->
+      <g class="robot-visor-eyes">
+        <!-- Left Happy Eye -->
+        <path d="M68 44 Q72 38 76 44" stroke="#38BDF8" stroke-width="2.6" stroke-linecap="round" fill="none" filter="url(#cyanGlow)"/>
+        <!-- Right Happy Eye -->
+        <path d="M84 44 Q88 38 92 44" stroke="#38BDF8" stroke-width="2.6" stroke-linecap="round" fill="none" filter="url(#cyanGlow)"/>
+        <!-- Glowing Cyan Smiling Mouth (‿) -->
+        <path d="M76 50 Q80 54 84 50" stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round" fill="none" filter="url(#cyanGlow)"/>
+      </g>
+
+      <!-- ===== NAVY COURIER BASEBALL CAP ===== -->
+      <!-- Cap Crown -->
+      <path d="M57 32 C57 15, 103 15, 103 32 Z" fill="url(#navyCapGrad)" stroke="#0F172A" stroke-width="1.2"/>
+      
+      <!-- Cap Crown White Front Panel -->
+      <path d="M68 32 C68 20, 92 20, 92 32 Z" fill="#FFFFFF" opacity="0.95"/>
+
+      <!-- DK Logo on Cap -->
+      <text x="80" y="29" font-family="'Inter', -apple-system, sans-serif" font-weight="900" font-size="9" fill="#0C2340" text-anchor="middle" letter-spacing="-0.3">DK</text>
+      <!-- Red Swoosh on Cap -->
+      <path d="M73 30 Q80 27 87 29 Q80 31 73 30 Z" fill="#E31837"/>
+
+      <!-- Cap Button on Crown Top -->
+      <circle cx="80" cy="18" r="2.2" fill="url(#armorDark)"/>
+
+      <!-- Cap Curved Visor / Brim extending forward & over helmet -->
+      <path d="M54 31 Q80 25 106 31 Q110 38 80 40 Q50 38 54 31 Z" fill="url(#capBrimGrad)" stroke="#091224" stroke-width="1.2"/>
+      <!-- Brim Highlight -->
+      <path d="M58 32 Q80 27 102 32" stroke="#38BDF8" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.5"/>
+    </g>
+
+  </g>
+</svg>
