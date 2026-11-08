@@ -294,19 +294,19 @@ section { padding: 56px 0; }
   margin-bottom: 0;
 }
 
-/* ---------- Modern Floating Live Courier Support Assistant ---------- */
+/* ---------- Standalone 3D Floating AI Companion Robot (No Circle Button) ---------- */
 
 .robot-ai-btn {
   position: fixed;
-  left: 20px;
+  left: 24px;
   right: auto;
-  bottom: 20px;
+  bottom: 24px;
   z-index: 9999;
-  width: 64px;
-  height: 64px;
+  width: 70px;
+  height: 82px;
   background: transparent !important;
   border: none !important;
-  border-radius: 50% !important;
+  border-radius: 0 !important;
   box-shadow: none !important;
   cursor: pointer;
   padding: 0;
@@ -320,50 +320,39 @@ section { padding: 56px 0; }
 }
 
 .robot-ai-btn:hover {
-  transform: scale(1.08) translateY(-4px);
+  transform: scale(1.15) translateY(-6px);
 }
 
 .robot-ai-btn:active {
-  transform: scale(0.95);
+  transform: scale(0.94);
 }
 
 .robot-ai-btn.robot-hidden {
   animation: none !important;
-  transform: translateY(140px) scale(0.65) !important;
+  transform: translateY(120px) scale(0.65) !important;
   opacity: 0 !important;
   pointer-events: none !important;
 }
 
 @keyframes robotFloat {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+  50% { transform: translateY(-8px); }
 }
 
-.robot-img {
+.robot-svg {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  display: block;
-  pointer-events: none;
-  filter: drop-shadow(0 8px 22px rgba(12, 35, 64, 0.32));
-  transition: filter 0.3s ease;
-}
-
-.robot-ai-btn:hover .robot-img {
-  filter: drop-shadow(0 12px 28px rgba(227, 24, 55, 0.45));
-}
-
-[data-theme="dark"] .robot-img {
-  filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 12px rgba(56, 189, 248, 0.35));
+  overflow: visible;
+  filter: drop-shadow(0 6px 14px rgba(12, 35, 64, 0.22));
 }
 
 .robot-shadow {
-  display: none !important;
+  animation: shadowScale 3.2s ease-in-out infinite;
+  transform-origin: 50px 110px;
 }
-
 @keyframes shadowScale {
-  0%, 100% { transform: scale(1); opacity: 0.35; }
-  50% { transform: scale(0.75); opacity: 0.15; }
+  0%, 100% { transform: scale(1); opacity: 0.28; }
+  50% { transform: scale(0.72); opacity: 0.14; }
 }
 
 .robot-head-bob {
@@ -408,11 +397,11 @@ section { padding: 56px 0; }
    ============================================================ */
 .robot-cloud-bubble {
   position: fixed;
-  left: 96px;
-  bottom: 20px;
+  left: 88px;
+  bottom: 84px;
   z-index: 9998;
   width: 250px;
-  height: 76px;
+  height: 82px;
   background: transparent !important;
   border: none !important;
   border-radius: 0 !important;
@@ -471,16 +460,16 @@ section { padding: 56px 0; }
   transition: opacity 0.22s ease, transform 0.22s ease, color 0.25s ease;
 }
 
-/* Trailing Thought Dots Leading towards Floating Support Button */
+/* Trailing Thought Dots Leading towards Robot Head */
 .robot-cloud-bubble .cloud-tail {
   position: absolute;
-  bottom: 26px;
-  left: -12px;
+  bottom: -16px;
+  left: 8px;
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: column;
   align-items: center;
   pointer-events: none;
-  gap: 3px;
+  gap: 2.5px;
   z-index: 1;
 }
 
@@ -493,21 +482,21 @@ section { padding: 56px 0; }
 }
 
 .robot-cloud-bubble .cloud-dot.dot-1 {
-  width: 9px;
-  height: 9px;
-  margin: 0;
+  width: 10px;
+  height: 10px;
+  margin-left: 6px;
 }
 
 .robot-cloud-bubble .cloud-dot.dot-2 {
-  width: 6px;
-  height: 6px;
-  margin: 0;
+  width: 6.5px;
+  height: 6.5px;
+  margin-left: -1px;
 }
 
 .robot-cloud-bubble .cloud-dot.dot-3 {
   width: 4px;
   height: 4px;
-  margin: 0;
+  margin-left: -7px;
 }
 
 .robot-cloud-bubble:hover .cloud-dot {
@@ -559,22 +548,22 @@ section { padding: 56px 0; }
   .robot-ai-btn {
     left: 14px;
     bottom: 16px;
-    width: 54px;
-    height: 54px;
+    width: 58px;
+    height: 68px;
   }
   .robot-cloud-bubble {
-    left: 78px;
-    bottom: 14px;
+    left: 70px;
+    bottom: 72px;
     width: 215px;
-    height: 68px;
+    height: 72px;
   }
   .robot-cloud-bubble .cloud-text {
     font-size: 10.5px;
     padding: 0 18px;
   }
   .robot-cloud-bubble .cloud-tail {
-    left: -10px;
-    bottom: 22px;
+    left: 4px;
+    bottom: -14px;
   }
 }
 

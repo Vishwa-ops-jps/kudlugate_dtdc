@@ -580,69 +580,175 @@ function renderChrome() {
         <div class="fine">&copy; ${new Date().getFullYear()} DK Enterprise Kudlu New Franchise. Franchise site — independently operated.</div>
       </footer>`;
   }
-  // AI Courier Agent chat (bottom-left, all customer pages)
+  // AI assistant chat (bottom-left, all customer pages)
   if (!document.getElementById('ai-float')) {
     const btn = document.createElement('button');
     btn.id = 'ai-float';
     btn.type = 'button';
     btn.className = 'robot-ai-btn';
-    btn.setAttribute('aria-label', 'Chat with DK Courier AI Agent');
-    btn.setAttribute('title', 'DK Courier AI Agent — Live Booking & Tracking');
+    btn.setAttribute('aria-label', 'Chat with AI Assistant');
     btn.innerHTML = `
-      <img src="/images/support-float.svg" alt="DK Courier AI Agent" class="robot-img" width="64" height="64" loading="eager">`;
+      <svg class="robot-svg" viewBox="0 0 100 115" aria-hidden="true">
+        <defs>
+          <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="60%" stop-color="#F1F5F9"/>
+            <stop offset="100%" stop-color="#CBD5E1"/>
+          </linearGradient>
+          <linearGradient id="blueCapGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#2563EB"/>
+            <stop offset="100%" stop-color="#1D4ED8"/>
+          </linearGradient>
+          <linearGradient id="visorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#1E3A8A"/>
+            <stop offset="100%" stop-color="#0F172A"/>
+          </linearGradient>
+          <radialGradient id="eyeGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#38BDF8"/>
+            <stop offset="65%" stop-color="#0284C7"/>
+            <stop offset="100%" stop-color="#0F172A"/>
+          </radialGradient>
+          <linearGradient id="redBallGrad" x1="30%" y1="20%" x2="80%" y2="80%">
+            <stop offset="0%" stop-color="#FF4D4D"/>
+            <stop offset="40%" stop-color="#E31837"/>
+            <stop offset="100%" stop-color="#880000"/>
+          </linearGradient>
+        </defs>
 
-    // Speech / Thought Cloud Bubble above Support FAB
+        <!-- Ground Hover Shadow -->
+        <ellipse cx="50" cy="110" rx="22" ry="4" fill="#0C2340" class="robot-shadow"/>
+
+        <!-- Dual Antennas with Red Glossy Spheres -->
+        <path d="M28 26 L19 12" stroke="#CBD5E1" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="18" cy="11" r="5" fill="url(#redBallGrad)"/>
+        <circle cx="16.5" cy="9.5" r="1.5" fill="#FFFFFF" opacity="0.85"/>
+
+        <path d="M72 26 L81 12" stroke="#CBD5E1" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="82" cy="11" r="5" fill="url(#redBallGrad)"/>
+        <circle cx="80.5" cy="9.5" r="1.5" fill="#FFFFFF" opacity="0.85"/>
+
+        <!-- Earphone modules with red trim -->
+        <rect x="14" y="27" width="9" height="19" rx="4.5" fill="url(#bodyGrad)" stroke="#CBD5E1" stroke-width="1.2"/>
+        <path d="M16 32 L16 41" stroke="#E31837" stroke-width="2" stroke-linecap="round"/>
+        
+        <rect x="77" y="27" width="9" height="19" rx="4.5" fill="url(#bodyGrad)" stroke="#CBD5E1" stroke-width="1.2"/>
+        <path d="M84 32 L84 41" stroke="#E31837" stroke-width="2" stroke-linecap="round"/>
+
+        <!-- Head Group with subtle bob -->
+        <g class="robot-head-bob">
+          <!-- Helmet -->
+          <rect x="21" y="16" width="58" height="46" rx="23" fill="url(#bodyGrad)" stroke="#CBD5E1" stroke-width="1.3"/>
+          
+          <!-- Blue Top Crest -->
+          <path d="M30 25 C30 17, 70 17, 70 25 C66 31, 34 31, 30 25 Z" fill="url(#blueCapGrad)"/>
+          <!-- White Forehead Plate -->
+          <path d="M43 16.5 L57 16.5 L54 27 L46 27 Z" fill="#FFFFFF"/>
+
+          <!-- Blue Visor Mask -->
+          <rect x="25" y="26" width="50" height="24" rx="11" fill="url(#visorGrad)" stroke="#1D4ED8" stroke-width="1.4"/>
+
+          <!-- Eyebrows -->
+          <path d="M31 23 Q36 20 42 23" stroke="#0F172A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+          <path d="M58 23 Q64 20 69 23" stroke="#0F172A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+
+          <!-- Left Anime Eye -->
+          <ellipse cx="37" cy="38" rx="6.5" ry="8" fill="url(#eyeGlow)"/>
+          <ellipse cx="37" cy="38.5" rx="5" ry="6.5" fill="#061224"/>
+          <circle cx="35" cy="35.5" r="2.2" fill="#FFFFFF" class="robot-eye-shine"/>
+          <circle cx="39" cy="41.5" r="1.1" fill="#FFFFFF"/>
+
+          <!-- Right Anime Eye -->
+          <ellipse cx="63" cy="38" rx="6.5" ry="8" fill="url(#eyeGlow)"/>
+          <ellipse cx="63" cy="38.5" rx="5" ry="6.5" fill="#061224"/>
+          <circle cx="61" cy="35.5" r="2.2" fill="#FFFFFF" class="robot-eye-shine"/>
+          <circle cx="65" cy="41.5" r="1.1" fill="#FFFFFF"/>
+
+          <!-- Chin Speaker Accent -->
+          <rect x="47" y="54" width="6" height="2" rx="1" fill="#E31837"/>
+        </g>
+
+        <!-- Neck Joint -->
+        <rect x="45" y="60" width="10" height="4" rx="2" fill="#64748B"/>
+
+        <!-- Glossy Hover Pod Torso -->
+        <path d="M30 63 C30 59, 70 59, 70 63 C74 78, 62 100, 50 104 C38 100, 26 78, 30 63 Z" fill="url(#bodyGrad)" stroke="#CBD5E1" stroke-width="1.3"/>
+        
+        <!-- Chest Red Trim Curve -->
+        <path d="M35 67 Q50 77 65 67" stroke="#E31837" stroke-width="2" stroke-linecap="round" fill="none"/>
+
+        <!-- Red Triangular DTDC Chest Core -->
+        <polygon points="50,71 44,80 56,80" fill="url(#redBallGrad)"/>
+
+        <!-- Left Articulated Arm (Magnetic Shoulder) -->
+        <g class="robot-arm-left">
+          <circle cx="27" cy="69" r="4.5" fill="url(#redBallGrad)"/>
+          <path d="M26 70 Q16 75 18 88" stroke="url(#bodyGrad)" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <circle cx="18" cy="88" r="3.8" fill="#1D4ED8"/>
+        </g>
+
+        <!-- Right Articulated Arm (Magnetic Shoulder) -->
+        <g class="robot-arm-right">
+          <circle cx="73" cy="69" r="4.5" fill="url(#redBallGrad)"/>
+          <path d="M74 70 Q84 75 82 88" stroke="url(#bodyGrad)" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <circle cx="82" cy="88" r="3.8" fill="#1D4ED8"/>
+        </g>
+      </svg>`;
+
+    // Speech / Thought Cloud Bubble above Robot Head
     const cloud = document.createElement('div');
     cloud.id = 'ai-cloud-bubble';
     cloud.className = 'robot-cloud-bubble notranslate';
     cloud.setAttribute('role', 'button');
-    cloud.setAttribute('aria-label', 'DK Courier AI Agent suggestions');
+    cloud.setAttribute('aria-label', 'AI Assistant suggestions');
 
     const diwaliActive = isDiwaliThemeActive();
     const CLOUD_PROMPTS = {
       en: diwaliActive ? [
         "🪔 Happy Diwali! Sending sweets & gifts?",
         "🎁 Express courier for Diwali hampers!",
-        "⚡ Ask our AI Courier Agent anything!",
-        "📦 Need to book a parcel? Tap to chat!",
-        "🔍 Live track your shipment anytime",
-        "⚡ Fast doorstep pickup in Kudlu Gate",
-        "💰 Instant freight rate calculation"
+        "📦 Need to book a parcel?",
+        "🔍 Need to find your parcel?",
+        "⚡ Doorstep pickup in Kudlu?",
+        "💰 Check courier rates?",
+        "📍 Pin your location for rider!",
+        "💬 Tap me to chat anytime!"
       ] : [
-        "⚡ Ask our AI Courier Agent anything!",
-        "📦 Need to book a parcel? Tap to chat!",
-        "🔍 Live track your shipment anytime",
-        "⚡ Fast doorstep pickup in Kudlu Gate",
-        "💰 Instant freight rate calculation",
-        "📍 Rider pin-location ready"
+        "📦 Need to book a parcel?",
+        "🔍 Need to find your parcel?",
+        "⚡ Doorstep pickup in Kudlu?",
+        "💰 Check courier rates?",
+        "📍 Pin your location for rider!",
+        "💬 Tap me to chat anytime!"
       ],
       kn: diwaliActive ? [
         "🪔 ದೀಪಾವಳಿ ಹಬ್ಬದ ಶುಭಾಶಯಗಳು!",
         "🎁 ಸಿಹಿ ತಿಂಡಿ & ಗಿಫ್ಟ್ ಕೊರಿಯರ್ ಮಾಡಿ!",
-        "⚡ ನಮ್ಮ ಎಐ ಏಜೆಂಟ್ ಜೊತೆ ಚಾಟ್ ಮಾಡಿ!",
         "📦 ಪಾರ್ಸೆಲ್ ಬುಕ್ ಮಾಡಬೇಕೇ?",
-        "🔍 ಲೈವ್ ಟ್ರ್ಯಾಕಿಂಗ್ ಪರಿಶೀಲಿಸಿ",
-        "⚡ ಕುಡ್ಲು ಗೇಟ್ ಸುತ್ತಮುತ್ತ ಮನೆ ಬಾಗಿಲ ಪಿಕಪ್"
+        "🔍 ನಿಮ್ಮ ಪಾರ್ಸೆಲ್ ಟ್ರ್ಯಾಕ್ ಮಾಡಿ!",
+        "⚡ ಮನೆ ಬಾಗಿಲಿಗೆ ಪಿಕಪ್ ಬೇಕೇ?",
+        "💰 ಕೊರಿಯರ್ ದರ ತಿಳಿಯಿರಿ!",
+        "💬 ಸಹಾಯಕ್ಕಾಗಿ ನನ್ನನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ!"
       ] : [
-        "⚡ ನಮ್ಮ ಎಐ ಏಜೆಂಟ್ ಜೊತೆ ಚಾಟ್ ಮಾಡಿ!",
         "📦 ಪಾರ್ಸೆಲ್ ಬುಕ್ ಮಾಡಬೇಕೇ?",
-        "🔍 ಲೈವ್ ಟ್ರ್ಯಾಕಿಂಗ್ ಪರಿಶೀಲಿಸಿ",
-        "⚡ ಕುಡ್ಲು ಗೇಟ್ ಸುತ್ತಮುತ್ತ ಮನೆ ಬಾಗಿಲ ಪಿಕಪ್",
-        "💰 ಕೊರಿಯರ್ ದರಗಳನ್ನು ತಕ್ಷಣ ತಿಳಿಯಿರಿ"
+        "🔍 ನಿಮ್ಮ ಪಾರ್ಸೆಲ್ ಟ್ರ್ಯಾಕ್ ಮಾಡಿ!",
+        "⚡ ಮನೆ ಬಾಗಿಲಿಗೆ ಪಿಕಪ್ ಬೇಕೇ?",
+        "💰 ಕೊರಿಯರ್ ದರ ತಿಳಿಯಿರಿ!",
+        "💬 ಸಹಾಯಕ್ಕಾಗಿ ನನ್ನನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ!"
       ],
       hi: diwaliActive ? [
         "🪔 शुभ दीपावली! मिठाइयाँ और उपहार भेजें",
         "🎁 दिवाली स्पेशल एक्सप्रेस पार्सल",
-        "⚡ हमारे एआई एजेंट से तुरंत पूछें!",
-        "📦 पार्सल बुक करना चाहते हैं?",
-        "🔍 अपनी पार्सल ट्रैकिंग चेक करें",
-        "⚡ कुडलू गेट में फ्री डोरस्टेप पिकअप"
+        "📦 पार्सल बुक करना है?",
+        "🔍 अपना पार्सल ट्रैक करें!",
+        "⚡ डोरस्टेप पिकअप चाहिए?",
+        "💰 कूरियर रेट्स जानें!",
+        "💬 चैट करने के लिए मुझे टैप करें!"
       ] : [
-        "⚡ हमारे एआई एजेंट से तुरंत पूछें!",
-        "📦 पार्सल बुक करना चाहते हैं?",
-        "🔍 अपनी पार्सल ट्रैकिंग चेक करें",
-        "⚡ कुडलू गेट में फ्री डोरस्टेप पिकअप",
-        "💰 तुरंत कूरियर रेट्स कैलकुलेट करें"
+        "📦 पार्सल बुक करना है?",
+        "🔍 अपना पार्सल ट्रैक करें!",
+        "⚡ डोरस्टेप पिकअप चाहिए?",
+        "💰 कूरियर रेट्स जानें!",
+        "💬 चैट करने के लिए मुझे टैप करें!"
       ]
     };
 
@@ -690,23 +796,18 @@ function renderChrome() {
 
     const panel = document.createElement('div');
     panel.id = 'ai-panel';
-    panel.style.cssText = 'position:fixed;left:20px;right:auto;bottom:94px;z-index:9999;width:350px;max-width:calc(100vw - 32px);height:470px;max-height:calc(100vh - 110px);background:#fff;border-radius:16px;box-shadow:0 12px 36px rgba(12,35,64,.35);display:none;flex-direction:column;overflow:hidden;font-family:inherit;border:1px solid #cbd5e1;';
-    panel.innerHTML = '<div style="background:linear-gradient(135deg,#0c2340 0%,#1e3a8a 55%,#e31837 100%);color:#fff;padding:12px 14px;font-weight:600;display:flex;justify-content:space-between;align-items:center;">'
-      + '<div style="display:flex;align-items:center;gap:9px;">'
-      + '<div style="width:28px;height:28px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 10px rgba(56,189,248,0.5);"><span style="font-size:16px;">⚡</span></div>'
-      + '<div><div style="font-size:14px;font-weight:700;letter-spacing:-0.2px;line-height:1.2;">DK Courier AI Assistant</div>'
-      + '<div style="font-size:10.5px;color:#34d399;display:flex;align-items:center;gap:4px;font-weight:600;"><span style="width:5px;height:5px;border-radius:50%;background:#34d399;display:inline-block;"></span>Support & Tracking Assistant</div></div></div>'
-      + '<button type="button" id="ai-close" aria-label="Close" style="background:none;border:0;color:#fff;font-size:24px;cursor:pointer;line-height:1;">&times;</button></div>'
-      + '<div id="ai-msgs" style="flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;background:#f8fafc;"></div>'
+    panel.style.cssText = 'position:fixed;left:24px;right:auto;bottom:90px;z-index:9999;width:340px;max-width:calc(100vw - 36px);height:440px;max-height:calc(100vh - 110px);background:#fff;border-radius:14px;box-shadow:0 8px 30px rgba(12,35,64,.3);display:none;flex-direction:column;overflow:hidden;font-family:inherit;border:1px solid #e2e8f0;';
+    panel.innerHTML = '<div style="background:#e31837;color:#fff;padding:12px 14px;font-weight:600;display:flex;justify-content:space-between;align-items:center;"><span>DK Enterprise Assistant</span><button type="button" id="ai-close" aria-label="Close" style="background:none;border:0;color:#fff;font-size:20px;cursor:pointer;">&times;</button></div>'
+      + '<div id="ai-msgs" style="flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:#f8fafc;"></div>'
       + '<div class="ai-quick-chips">'
-      + '<button type="button" class="ai-chip" data-q="Track my shipment consignment">🔍 Track Parcel</button>'
-      + '<button type="button" class="ai-chip" data-q="Schedule doorstep parcel pickup in Kudlu">📦 Schedule Pickup</button>'
-      + '<button type="button" class="ai-chip" data-q="What are your counter timings and working hours?">🕒 Store Hours</button>'
-      + '<button type="button" class="ai-chip" data-q="Where is your branch located and how do I reach?">📍 Branch Location</button>'
-      + '<button type="button" class="ai-chip" data-q="Get official rate quote for my parcel">💰 Official Rates</button>'
-      + '<button type="button" class="ai-chip" data-q="Tell me about student & IT luggage relocation rates">🎒 Luggage Shifting</button>'
+      + '<button type="button" class="ai-chip" data-q="What are your courier rates and pricing?">💰 Rates</button>'
+      + '<button type="button" class="ai-chip" data-q="What are your store hours and opening timings?">🕒 Timings</button>'
+      + '<button type="button" class="ai-chip" data-q="How can I book a doorstep parcel pickup?">📦 Pickup</button>'
+      + '<button type="button" class="ai-chip" data-q="Where is your branch located and how do I reach?">📍 Location</button>'
+      + '<button type="button" class="ai-chip" data-q="Tell me about B2B corporate monthly billing">🏢 B2B Account</button>'
+      + '<button type="button" class="ai-chip" data-q="What are your student luggage relocation rates?">🎒 Luggage</button>'
       + '</div>'
-      + '<div style="display:flex;gap:6px;padding:10px;border-top:1px solid #e2e8f0;background:#fff;"><input id="ai-input" type="text" maxlength="1000" placeholder="Ask about timings, tracking, pickup..." style="flex:1;padding:9px 12px;border:1.5px solid #cbd5e1;border-radius:8px;font-size:14px;"><button type="button" id="ai-send" style="background:#e31837;color:#fff;border:0;border-radius:8px;padding:0 14px;cursor:pointer;font-weight:700;">Send</button></div>';
+      + '<div style="display:flex;gap:6px;padding:10px;border-top:1px solid #e2e8f0;background:#fff;"><input id="ai-input" type="text" maxlength="1000" placeholder="Ask about booking, rates..." style="flex:1;padding:9px 10px;border:1.5px solid #cbd5e1;border-radius:8px;font-size:14px;"><button type="button" id="ai-send" style="background:#e31837;color:#fff;border:0;border-radius:8px;padding:0 14px;cursor:pointer;font-weight:600;">Send</button></div>';
     
     document.body.appendChild(panel);
     document.body.appendChild(btn);
@@ -722,51 +823,28 @@ function renderChrome() {
     const msgsEl = panel.querySelector('#ai-msgs');
     const input = panel.querySelector('#ai-input');
     const history = [];
-
-    function formatAgentMessage(rawText) {
-      if (!rawText) return '';
-      let str = rawText
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-      str = str.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-      str = str.replace(/`([^`]+)`/g, '<code style="background:#e2e8f0;padding:2px 5px;border-radius:4px;font-size:12px;color:#0f172a;">$1</code>');
-      str = str.replace(/(https:\/\/wa\.me\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:5px;background:#25D366;color:#fff;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;margin-top:6px;box-shadow:0 2px 6px rgba(37,211,102,0.35);"><span>💬</span> Open WhatsApp Dispatch &rarr;</a>');
-      str = str.replace(/(https:\/\/www\.dtdc\.com\/track-your-shipment\/[^\s<]*)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:5px;background:#0C2340;color:#fff;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;margin-top:6px;box-shadow:0 2px 6px rgba(12,35,64,0.35);"><span>🔍</span> Live DTDC Tracking &rarr;</a>');
-      str = str.replace(/(https:\/\/maps\.app\.goo\.gl\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:5px;background:#0284C7;color:#fff;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;margin-top:6px;"><span>📍</span> Open Google Maps &rarr;</a>');
-      str = str.replace(/(tel:\+91[0-9]+)/g, '<a href="$1" style="display:inline-flex;align-items:center;gap:5px;background:#E31837;color:#fff;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;margin-top:6px;"><span>📞</span> Call Helpline</a>');
-      str = str.replace(/(\/(?:b2b|relocation|reviews|contact)\.html)/g, '<a href="$1" style="color:#0284c7;font-weight:700;text-decoration:underline;">$1</a>');
-      return str;
-    }
-
     function addMsg(text, who) {
       const d = document.createElement('div');
-      if (who === 'bot') {
-        d.innerHTML = formatAgentMessage(text);
-      } else {
-        d.textContent = text;
-      }
-      d.style.cssText = 'max-width:88%;padding:10px 13px;border-radius:12px;font-size:13.5px;line-height:1.45;white-space:pre-wrap;word-break:break-word;' +
-        (who === 'user' ? 'align-self:flex-end;background:#e31837;color:#fff;border-bottom-right-radius:3px;' : 'align-self:flex-start;background:#fff;color:#1e293b;border:1px solid #cbd5e1;border-bottom-left-radius:3px;box-shadow:0 2px 8px rgba(0,0,0,0.04);');
+      d.textContent = text;
+      d.style.cssText = 'max-width:85%;padding:8px 11px;border-radius:12px;font-size:14px;line-height:1.4;white-space:pre-wrap;word-break:break-word;' +
+        (who === 'user' ? 'align-self:flex-end;background:#d71920;color:#fff;' : 'align-self:flex-start;background:#fff;color:#222;border:1px solid #e5e5e5;');
       msgsEl.appendChild(d);
       msgsEl.scrollTop = msgsEl.scrollHeight;
       return d;
     }
-
-    addMsg('⚡ **DK Courier AI Assistant Online**\n\nHello! I am your AI support assistant for DK Enterprise Kudlu Gate. I can help you with:\n\n• 🔍 **Live Tracking:** Paste your tracking ID or waybill\n• 📦 **Doorstep Rider:** Schedule free pickup in Kudlu Gate\n• 🕒 **Store Timings & Location:** Bren Palms, Kudlu Main Road\n• 💰 **Official Rates:** Direct 100% accurate DTDC counter quotes via WhatsApp\n• 🎒 **Luggage Relocation & B2B GST accounts**\n\nWhat would you like to know today?', 'bot');
-
+    addMsg('Hi! I\u2019m the DK Enterprise AI assistant. Ask me about booking, rates or services.', 'bot');
     let busy = false;
     async function send() {
       const text = input.value.trim();
       if (!text || busy) return;
       busy = true; input.value = '';
       addMsg(text, 'user'); history.push({ role: 'user', content: text });
-      const typing = addMsg('AI Assistant processing\u2026', 'bot');
+      const typing = addMsg('Typing\u2026', 'bot');
       try {
         const res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: history }) });
         const data = await res.json().catch(() => ({}));
         if (!res.ok) throw new Error(data.error || 'Something went wrong.');
-        typing.innerHTML = formatAgentMessage(data.reply);
+        typing.textContent = data.reply;
         history.push({ role: 'assistant', content: data.reply });
       } catch (e) {
         typing.textContent = e.message;
