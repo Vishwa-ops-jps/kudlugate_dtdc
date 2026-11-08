@@ -56,7 +56,7 @@ AGENT OPERATIONAL GUIDELINES:
 =======================================================
 - Format replies cleanly using bullet points, emojis, bold highlights, and direct action links.
 - When tracking numbers are provided, format a tracking action card.
-- When weights/cities are provided, compute an estimated rate breakdown.
+- IMPORTANT PRICING RULE: NEVER invent, speculate, or quote arbitrary rupee amounts (like ₹120, ₹250, etc.). Official DTDC franchise rates vary strictly by exact destination pincode, actual vs volumetric weight, and service zone. Direct all price inquiries to WhatsApp (+91 63661 18850) or counter phone (+91 63661 18850) for the 100% accurate official tariff.
 - Support English, Kannada, and Hindi fluently.`;
 
 /**
@@ -96,49 +96,28 @@ function runAgentActionEngine(userText) {
       `📞 Or call branch helpline: +91 63661 18850`;
   }
 
-  // 3. TOOL: RATE & PRICING CALCULATOR ACTION
+  // 3. TOOL: RATE & PRICING VERIFICATION ACTION
   const weightMatch = userText.match(/(\d+(?:\.\d+)?)\s*(kg|kilos?|gm?|grams?)/i);
   if (weightMatch || q.includes('rate') || q.includes('cost') || q.includes('price') || q.includes('charge') || q.includes('how much') || q.includes('quote') || q.includes('per kg')) {
     let weightVal = weightMatch ? parseFloat(weightMatch[1]) : 0;
     if (weightMatch && weightMatch[2].toLowerCase().startsWith('g')) weightVal = weightVal / 1000;
 
-    let calcNote = '';
-    if (weightVal > 0) {
-      if (weightVal <= 0.5) {
-        calcNote = `\n• **Estimated Weight:** ~${weightVal} kg (Document / Mini Packet)\n` +
-          `• **Local Karnataka:** ₹40 – ₹70\n` +
-          `• **Metro Express Air:** ₹110 – ₹160 (1–2 days delivery)`;
-      } else if (weightVal <= 2) {
-        calcNote = `\n• **Estimated Weight:** ~${weightVal} kg\n` +
-          `• **South Metros (Chennai, Hyderabad):** Air ₹160–₹240 | Surface ₹90–₹140\n` +
-          `• **Major Metros (Delhi, Mumbai, Kolkata):** Air ₹220–₹340 | Surface ₹130–₹200`;
-      } else if (weightVal > 10) {
-        calcNote = `\n• **Estimated Weight:** ~${weightVal} kg (Heavy / Luggage Relocation)\n` +
-          `• **Special Bulk Surface Cargo:** Economical per-kg bulk rates available!\n` +
-          `• **Includes:** Free waterproof shrink wrapping & PG/flat collection.`;
-      } else {
-        calcNote = `\n• **Estimated Weight:** ~${weightVal} kg\n` +
-          `• **Express Air (1-2 days):** Standard metro rate per kg\n` +
-          `• **Surface Cargo (3-5 days):** Economical freight slab`;
-      }
-    }
-
-    return `💰 **DK Freight Rate Calculator Engine**${calcNote}\n\n` +
-      `📌 **How Rates are Computed:**\n` +
-      `1. **Actual vs Volumetric Weight:** Charged on whichever is higher: $(L \\times W \\times H \\text{ cm}) / 5000$\n` +
-      `2. **Speed Mode:** Express Air (1–2 Days) vs Surface Cargo (3–5 Days)\n\n` +
-      `👉 **Get an Exact Pincode-Specific Quote:**\n` +
-      `https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise, please provide exact rate quote for my parcel weight: ' + (weightVal ? weightVal + 'kg' : '') + ' to destination pincode: ')}`;
+    return `💰 **Official Franchise Rate Quotation**\n\n` +
+      `Official DTDC rates depend strictly on your **Destination PIN code**, **Actual vs Volumetric Weight** $(L \\times W \\times H / 5000)$, and speed mode (Air Express vs Surface Ground).\n\n` +
+      `📌 To avoid any incorrect estimates, our Kudlu counter team calculates the **100% exact official tariff** directly on our DTDC billing system!\n\n` +
+      `👉 **Tap to Get Exact Instant Rate on WhatsApp:**\n` +
+      `https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise, please provide the exact official DTDC rate quote for my parcel' + (weightVal ? ' (Weight: ' + weightVal + 'kg)' : '') + ' to destination PIN code: ')}\n` +
+      `📞 Or call counter desk directly: +91 63661 18850`;
   }
 
   // 4. KANNADA MULTILINGUAL RESOLVER
   if (/[\u0C80-\u0CFF]/.test(q)) {
     if (q.includes('ದರ') || q.includes('ಬೆಲೆ') || q.includes('ಖರ್ಚು') || q.includes('ಎಷ್ಟು')) {
-      return `💰 **ಡಿಕೆ ಎಂಟರ್‌ಪ್ರೈಸ್ ಕೊರಿಯರ್ ದರಗಳು:**\n\n` +
-        `• ಸ್ಥಳೀಯ ಡಾಕ್ಯುಮೆಂಟ್ ಕೊರಿಯರ್ ಕನಿಷ್ಠ ದರದಿಂದ ಪ್ರಾರಂಭವಾಗುತ್ತದೆ.\n` +
-        `• ಮೆಟ್ರೋ ನಗರಗಳಿಗೆ (ದೆಹಲಿ, ಮುಂಬೈ, ಚೆನ್ನೈ) ಎಕ್ಸ್‌ಪ್ರೆಸ್ ಏರ್ ಮತ್ತು ಸರ್ಫೇಸ್ ಕಾರ್ಗೋ ಲಭ್ಯವಿದೆ.\n` +
-        `• ನಿಖರ ದರಕ್ಕಾಗಿ ನಿಮ್ಮ ಪಾರ್ಸೆಲ್ ತೂಕ ಮತ್ತು ಡೆಸ್ಟಿನೇಶನ್ ಪಿನ್‌ಕೋಡ್ ಕಳುಹಿಸಿ:\n` +
-        `👉 ವಾಟ್ಸಾಪ್: https://wa.me/916366118850`;
+      return `💰 **ಅಧಿಕೃತ ಡಿಟಿಸಿ ಕೊರಿಯರ್ ದರಗಳು:**\n\n` +
+        `• ಡಿಟಿಸಿ ಅಧಿಕೃತ ದರಗಳು ಡೆಸ್ಟಿನೇಶನ್ ಪಿನ್‌ಕೋಡ್, ತೂಕ ಮತ್ತು ಆಯಾಮಗಳ ಮೇಲೆ ಆಧಾರಿತವಾಗಿರುತ್ತವೆ.\n` +
+        `• ನಿಖರ ಮತ್ತು ಸರಿಯಾದ ದರ ತಿಳಿಯಲು, ನಿಮ್ಮ ಪಾರ್ಸೆಲ್ ವಿವರಗಳನ್ನು ನಮ್ಮ ವಾಟ್ಸಾಪ್ ಕೌಂಟರ್‌ಗೆ ಕಳುಹಿಸಿ:\n` +
+        `👉 ವಾಟ್ಸಾಪ್: https://wa.me/916366118850\n` +
+        `📞 ಕರೆ ಮಾಡಿ: +91 63661 18850`;
     }
     if (q.includes('ಪಿಕಪ್') || q.includes('ಮನೆ')) {
       return `📦 **ಮನೆ ಬಾಗಿಲ ಪಿಕಪ್ ಸೇವೆ:**\n\n` +
@@ -162,11 +141,11 @@ function runAgentActionEngine(userText) {
   // 5. HINDI MULTILINGUAL RESOLVER
   if (/[\u0900-\u097F]/.test(q)) {
     if (q.includes('रेट') || q.includes('दाम') || q.includes('कीमत') || q.includes('कितना') || q.includes('खर्च')) {
-      return `💰 **डीके एंटरप्राइज कूरियर रेट्स:**\n\n` +
-        `• लोकल डॉक्यूमेंट कूरियर कम से कम बेस रेट से शुरू होता है।\n` +
-        `• एयर एक्सप्रेस (1-2 दिन) और सरफेस कार्गो (3-5 दिन) दोनों उपलब्ध हैं।\n` +
-        `• सटीक कोटेशन के लिए पार्सल का वजन और पिनकोड भेजें:\n` +
-        `👉 व्हाट्सएप: https://wa.me/916366118850`;
+      return `💰 **डीके एंटरप्राइज आधिकारिक कूरियर रेट्स:**\n\n` +
+        `• डीटीडीसी के आधिकारिक रेट्स गंतव्य पिनकोड, पार्सल के वजन और साइज़ पर निर्भर करते हैं।\n` +
+        `• 100% सटीक और सही रेट जानने के लिए अपने पार्सल का वजन और पिनकोड हमारे काउंटर पर भेजें:\n` +
+        `👉 व्हाट्सएप: https://wa.me/916366118850\n` +
+        `📞 कॉल करें: +91 63661 18850`;
     }
     if (q.includes('पिकअप') || q.includes('घर')) {
       return `📦 **डोरस्टेप पिकअप सेवा:**\n\n` +

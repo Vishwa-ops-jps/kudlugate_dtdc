@@ -700,7 +700,7 @@ function renderChrome() {
       + '<div id="ai-msgs" style="flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;background:#f8fafc;"></div>'
       + '<div class="ai-quick-chips">'
       + '<button type="button" class="ai-chip" data-q="Track my shipment consignment">🔍 Track Parcel</button>'
-      + '<button type="button" class="ai-chip" data-q="Calculate courier rate for my parcel">💰 Rate Calculator</button>'
+      + '<button type="button" class="ai-chip" data-q="Get official rate quote for my parcel">💰 Official Rates</button>'
       + '<button type="button" class="ai-chip" data-q="Schedule doorstep parcel pickup in Kudlu">📦 Schedule Pickup</button>'
       + '<button type="button" class="ai-chip" data-q="What are your counter timings and working hours?">🕒 Store Hours</button>'
       + '<button type="button" class="ai-chip" data-q="Tell me about student & IT luggage relocation rates">🎒 Luggage Shifting</button>'
@@ -753,7 +753,7 @@ function renderChrome() {
       return d;
     }
 
-    addMsg('⚡ **DK Courier AI Agent Online**\n\nHello! I am your autonomous AI logistics agent for DK Enterprise Kudlu Gate. I can execute actions directly:\n\n• 🔍 **Live Tracking:** Paste your tracking ID or waybill\n• 💰 **Rate Calculator:** Enter parcel weight & destination\n• 📦 **Doorstep Rider:** Schedule free pickup in Kudlu\n• 🎒 **Luggage Relocation & B2B GST accounts**\n\nWhat would you like to do right now?', 'bot');
+    addMsg('⚡ **DK Courier AI Agent Online**\n\nHello! I am your logistics support agent for DK Enterprise Kudlu Gate. I can execute actions directly:\n\n• 🔍 **Live Tracking:** Paste your tracking ID or waybill\n• 💰 **Official Rates:** Direct 100% accurate DTDC tariff quote via WhatsApp/phone\n• 📦 **Doorstep Rider:** Schedule free pickup in Kudlu\n• 🎒 **Luggage Relocation & B2B GST accounts**\n\nWhat would you like to do right now?', 'bot');
 
     let busy = false;
     async function send() {
