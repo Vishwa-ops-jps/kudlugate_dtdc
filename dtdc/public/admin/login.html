@@ -37,12 +37,23 @@
   </div>
 </section>
 
-<script src="/js/api.js"></script>
+<script src="/js/api.js?v=72"></script>
 <script>
 (function checkLoggedIn() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const msgEl = document.getElementById('msg');
+  if (urlParams.get('expired') === '1') {
+    Session.clear();
+    if (msgEl) {
+      msgEl.innerHTML = `<div class="msg err" style="margin-top:10px;">
+        Your session has expired. Please enter your email and password to log in again.
+      </div>`;
+    }
+    return;
+  }
   const current = Session.getUser();
-  if (current) {
-    const msgEl = document.getElementById('msg');
+  const token = localStorage.getItem('token');
+  if (current && token) {
     if (msgEl) {
       msgEl.innerHTML = `<div class="msg ok" style="margin-top:10px;">
         Logged in as <strong>${escapeHtml(current.name || current.email)}</strong> (${current.role}).<br>

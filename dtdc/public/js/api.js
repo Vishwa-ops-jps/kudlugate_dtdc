@@ -13,7 +13,16 @@ const API = {
       body: body ? JSON.stringify(body) : undefined
     });
     const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error(data.error || 'Something went wrong.');
+    if (!res.ok) {
+      if (res.status === 401 && auth) {
+        Session.clear();
+        if (window.location.pathname.startsWith('/admin') && !window.location.pathname.includes('login.html')) {
+          window.location.href = '/admin/login.html?expired=1';
+          return;
+        }
+      }
+      throw new Error(data.error || 'Something went wrong.');
+    }
     return data;
   }
 };

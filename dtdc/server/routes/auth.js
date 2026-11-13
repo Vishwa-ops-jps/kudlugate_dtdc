@@ -10,6 +10,7 @@ const { sendPasswordResetEmail } = require('../utils/email');
 
 const router = express.Router();
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+const JWT_SECRET = process.env.JWT_SECRET || 'a0eee855f995485bfe728a410c598dc41d9be868d4847e6da484433c2a689';
 
 function isGoogleClientId(value) {
   return typeof value === 'string' && value.trim().endsWith('.apps.googleusercontent.com');
@@ -18,8 +19,8 @@ function isGoogleClientId(value) {
 function signToken(user) {
   return jwt.sign(
     { id: user._id, role: user.role, branch: user.branch, name: user.name },
-    process.env.JWT_SECRET,
-    { expiresIn: '7d' }
+    JWT_SECRET,
+    { expiresIn: '30d' }
   );
 }
 
