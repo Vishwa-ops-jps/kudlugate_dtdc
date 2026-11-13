@@ -502,6 +502,7 @@ function renderChrome() {
           <div class="nav-links" data-nav-links>
             <a href="/">Home</a>
             <a href="https://www.dtdc.com/track-your-shipment/" target="_blank" rel="noopener noreferrer">Track</a>
+            <a href="/international.html">International</a>
             <a href="/reviews.html">Reviews</a>
             <a class="whatsapp-contact" href="https://wa.me/916366118850?text=${encodeURIComponent('Hello DK Enterprise Kudlu New Franchise, I need help with a courier.')}" target="_blank" rel="noopener noreferrer"><span class="whatsapp-dot" aria-hidden="true"></span>WhatsApp</a>
             
@@ -524,6 +525,23 @@ function renderChrome() {
 
   // Update any Store Hours card with the live status badge
   try {
+    const heroBadge = document.getElementById('hero-live-badge');
+    const heroText = document.getElementById('hero-live-status-text');
+    if (heroBadge && heroText) {
+      const dot = heroBadge.querySelector('.status-pulse-dot');
+      if (shop.isOpen) {
+        heroBadge.style.background = 'rgba(34, 197, 94, 0.22)';
+        heroBadge.style.borderColor = 'rgba(34, 197, 94, 0.55)';
+        if (dot) dot.style.background = '#22c55e';
+        heroText.textContent = `Store Open Now · ${shop.detail}`;
+      } else {
+        heroBadge.style.background = 'rgba(239, 68, 68, 0.22)';
+        heroBadge.style.borderColor = 'rgba(239, 68, 68, 0.55)';
+        if (dot) dot.style.background = '#ef4444';
+        heroText.textContent = `Counter Closed · ${shop.detail} (WhatsApp Open)`;
+      }
+    }
+
     document.querySelectorAll('.contact-item-card').forEach(card => {
       const label = card.querySelector('.contact-label');
       if (label && label.textContent.trim().toLowerCase().includes('store hours')) {
@@ -556,6 +574,7 @@ function renderChrome() {
               <h4>Services</h4>
               <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;">
                 <a href="https://www.dtdc.com/track-your-shipment/" target="_blank" rel="noopener noreferrer">Track a parcel</a>
+                <a href="/international.html">International Courier &amp; Cargo</a>
                 <a href="/b2b.html">B2B &amp; Corporate Courier</a>
                 <a href="/relocation.html">Student &amp; IT Relocation</a>
                 <a href="/reviews.html">Customer reviews</a>
@@ -803,6 +822,7 @@ function renderChrome() {
       + '<button type="button" class="ai-chip" data-q="What are your courier rates and pricing?">💰 Rates</button>'
       + '<button type="button" class="ai-chip" data-q="What are your store hours and opening timings?">🕒 Timings</button>'
       + '<button type="button" class="ai-chip" data-q="How can I book a doorstep parcel pickup?">📦 Pickup</button>'
+      + '<button type="button" class="ai-chip" data-q="Tell me about international courier and medicine delivery abroad">🌍 International</button>'
       + '<button type="button" class="ai-chip" data-q="Where is your branch located and how do I reach?">📍 Location</button>'
       + '<button type="button" class="ai-chip" data-q="Tell me about B2B corporate monthly billing">🏢 B2B Account</button>'
       + '<button type="button" class="ai-chip" data-q="What are your student luggage relocation rates?">🎒 Luggage</button>'

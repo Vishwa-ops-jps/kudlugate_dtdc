@@ -80,7 +80,7 @@
 }
 </script>
 
-<link rel="stylesheet" href="/css/style.css?v=70">
+<link rel="stylesheet" href="/css/style.css?v=71">
 <script>
   (function() {
     var params = new URLSearchParams(window.location.search);
@@ -144,7 +144,13 @@
   <canvas id="hero-canvas" aria-hidden="true"></canvas>
   <div class="wrap">
     <div>
-      <span class="eyebrow" style="color:#ffffff;">Kudlu · Bengaluru</span>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap;">
+        <span class="eyebrow" style="color:#ffffff;margin-bottom:0;">Kudlu · Bengaluru</span>
+        <div class="hero-live-pill notranslate" id="hero-live-badge" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.14);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.28);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;color:#fff;">
+          <span class="status-pulse-dot" style="background:#22c55e;"></span>
+          <span id="hero-live-status-text">Store Open · Mon–Sat 9:30 AM–8:30 PM</span>
+        </div>
+      </div>
       <h1>DK Enterprise<br><span style="color:var(--amber);">Kudlu New Franchise</span></h1>
       <p class="lead">Domestic &amp; national courier services — fast, safe, and fully tracked from booking to doorstep.</p>
       <div class="trust-badges">
@@ -222,6 +228,19 @@
     <h2>Our Services</h2>
   </div>
   <div class="services-list">
+      <a href="/international.html" class="service-bullet-item" style="text-decoration:none;color:inherit;">
+        <div class="bullet-icon icon-international" style="background:#EEF2FF;color:#4F46E5;">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </div>
+        <div class="bullet-content">
+          <h4>International Delivery</h4>
+        </div>
+      </a>
+
       <div class="service-bullet-item">
         <div class="bullet-icon icon-domestic">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -351,7 +370,173 @@
         </div>
         <a href="/relocation.html" class="btn block" style="background:#E31837;color:#fff;text-align:center;font-weight:600;font-size:13.5px;padding:11px 16px;border-radius:8px;text-decoration:none;">Book Luggage Pickup →</a>
       </div>
+
+      <!-- International Card -->
+      <div class="specialized-card-intl" style="border:1.5px solid #2563EB;border-radius:16px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 4px 16px rgba(37,99,235,0.08);transition:all 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+        <div>
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
+            <div style="width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);box-shadow:0 4px 14px rgba(37,99,235,0.45);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <div>
+              <h4 style="margin:0;font-size:17.5px;">Worldwide International Courier</h4>
+              <span style="font-size:12px;color:#2563EB;font-weight:700;">USA, UK, Canada, UAE &amp; 220+ Countries</span>
+            </div>
+          </div>
+          <p style="font-size:13.5px;line-height:1.55;margin:0 0 20px;">Send doctor-prescribed medicines, homemade sweets &amp; snacks, university documents, and commercial export cargo with complete customs paperwork clearance.</p>
+        </div>
+        <a href="/international.html" class="btn block" style="background:#0C2340;color:#fff;text-align:center;font-weight:600;font-size:13.5px;padding:11px 16px;border-radius:8px;text-decoration:none;">International Services &rarr;</a>
+      </div>
     </div>
+  </div>
+</section>
+
+<!-- Local Kudlu Gate Branch & Professional Packaging Showcase -->
+<section class="wrap scroll-reveal" style="padding-top:16px;padding-bottom:28px;">
+  <div style="border:1.5px solid #E2E8F0;border-radius:18px;padding:34px 28px;background:#F8FAFC;box-shadow:0 4px 20px rgba(0,0,0,0.04);">
+    <div style="text-align:center;max-width:760px;margin:0 auto 28px;">
+      <span class="eyebrow" style="color:#E31837;font-weight:700;letter-spacing:0.1em;">NEIGHBORHOOD COURIER HUB</span>
+      <h3 style="font-size:clamp(22px,2.6vw,30px);margin:6px 0 10px;">Visit Our Kudlu Gate Counter &amp; Packing Station</h3>
+      <p style="font-size:14.5px;margin:0;color:#475569;">
+        Located on Kudlu Main Road directly inside <strong>BREN PALMS (1st Floor, Shop No. 3, above MedPlus)</strong>. Drop off parcels directly or relax while our staff professionally pack your shipments.
+      </p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:18px;margin-bottom:28px;">
+      <div class="card" style="padding:20px;background:#fff;border-radius:14px;border:1px solid #E2E8F0;">
+        <div style="font-size:28px;margin-bottom:10px;">📦</div>
+        <h4 style="margin:0 0 8px;font-size:16px;">Heavy-Duty Packaging Counter</h4>
+        <p style="font-size:13px;line-height:1.55;color:#64748B;margin:0;">Multi-layer bubble wrap, moisture-proof shrink film, corner cushioning, and heavy corrugated cartons for laptops, monitors, documents &amp; fragile items.</p>
+      </div>
+
+      <div class="card" style="padding:20px;background:#fff;border-radius:14px;border:1px solid #E2E8F0;">
+        <div style="font-size:28px;margin-bottom:10px;">⚖️</div>
+        <h4 style="margin:0 0 8px;font-size:16px;">Certified Digital Weighing</h4>
+        <p style="font-size:13px;line-height:1.55;color:#64748B;margin:0;">100% transparent counter weighing scales and volumetric checks. Official DTDC computer billing receipt generated instantly on the spot.</p>
+      </div>
+
+      <div class="card" style="padding:20px;background:#fff;border-radius:14px;border:1px solid #E2E8F0;">
+        <div style="font-size:28px;margin-bottom:10px;">🚐</div>
+        <h4 style="margin:0 0 8px;font-size:16px;">Daily 8:00 PM Express Van Dispatch</h4>
+        <p style="font-size:13px;line-height:1.55;color:#64748B;margin:0;">Every parcel booked before 8:00 PM departs on our daily dedicated courier van to the main Bengaluru airport air transshipment cargo hub.</p>
+      </div>
+
+      <div class="card" style="padding:20px;background:#fff;border-radius:14px;border:1px solid #E2E8F0;">
+        <div style="font-size:28px;margin-bottom:10px;">🛵</div>
+        <h4 style="margin:0 0 8px;font-size:16px;">Fast Doorstep Rider Pickup</h4>
+        <p style="font-size:13px;line-height:1.55;color:#64748B;margin:0;">Can't step out? Our rider visits your apartment, flat, PG, or office across Kudlu Gate and nearby localities to collect your parcel.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;">
+      <a href="https://maps.app.goo.gl/Bp4kTUK2omVuxT347?g_st=awb" target="_blank" rel="noopener noreferrer" class="btn" style="background:#0C2340;color:#fff;padding:11px 22px;border-radius:8px;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+        <span>📍</span> Directions on Google Maps
+      </a>
+      <a href="https://wa.me/916366118850?text=Hello%20DK%20Enterprise%20Kudlu%2C%20I%20want%20to%20visit%20the%20counter%20or%20book%20a%20parcel." target="_blank" rel="noopener noreferrer" class="btn" style="background:#25D366;color:#fff;padding:11px 22px;border-radius:8px;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+        <span>💬</span> WhatsApp Counter Desk
+      </a>
+      <a href="tel:+916366118850" class="btn outline" style="padding:11px 22px;border-radius:8px;font-size:14px;text-decoration:none;">
+        📞 +91 63661 18850
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Local Community Coverage & Tech Park Guide -->
+<section class="wrap scroll-reveal" style="padding-top:10px;padding-bottom:28px;">
+  <div style="border:1.5px solid #E2E8F0;border-radius:18px;padding:30px 24px;background:#fff;box-shadow:0 4px 16px rgba(0,0,0,0.03);">
+    <div style="text-align:center;max-width:760px;margin:0 auto 20px;">
+      <span class="eyebrow" style="color:#0284C7;font-weight:700;letter-spacing:0.1em;">DOORSTEP SERVICE REACH</span>
+      <h3 style="font-size:clamp(20px,2.4vw,26px);margin:6px 0 8px;">Dedicated Coverage for Kudlu Gate, E-City &amp; HSR</h3>
+      <p style="font-size:14px;margin:0;color:#64748B;">Our riders provide fast doorstep parcel pickup and delivery across these prime residential communities &amp; tech parks:</p>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
+      <span style="background:#F1F5F9;color:#0F172A;font-weight:600;padding:7px 16px;border-radius:24px;font-size:13px;border:1px solid #E2E8F0;">🏢 Novel Tech Park</span>
+      <span style="background:#F1F5F9;color:#0F172A;font-weight:600;padding:7px 16px;border-radius:24px;font-size:13px;border:1px solid #E2E8F0;">🏢 Ozone Manay Technology Park</span>
+      <span style="background:#F1F5F9;color:#0F172A;font-weight:600;padding:7px 16px;border-radius:24px;font-size:13px;border:1px solid #E2E8F0;">🏢 AMR Tech Park</span>
+      <span style="background:#F1F5F9;color:#0F172A;font-weight:600;padding:7px 16px;border-radius:24px;font-size:13px;border:1px solid #E2E8F0;">🏢 Electronic City Phase 1 &amp; 2</span>
+      <span style="background:#F1F5F9;color:#0F172A;font-weight:600;padding:7px 16px;border-radius:24px;font-size:13px;border:1px solid #E2E8F0;">🏡 Bren Palms Apartments</span>
+      <span style="background:#F1F5F9;color:#0F172A;font-weight:600;padding:7px 16px;border-radius:24px;font-size:13px;border:1px solid #E2E8F0;">🏡 Bren Woods</span>
+      <span style="background:#F1F5F9;color:#0F172A;font-weight:600;padding:7px 16px;border-radius:24px;font-size:13px;border:1px solid #E2E8F0;">🏡 Salarpuria Sattva Cadenza</span>
+      <span style="background:#F1F5F9;color:#0F172A;font-weight:600;padding:7px 16px;border-radius:24px;font-size:13px;border:1px solid #E2E8F0;">🏡 Suncity Gloria</span>
+      <span style="background:#F1F5F9;color:#0F172A;font-weight:600;padding:7px 16px;border-radius:24px;font-size:13px;border:1px solid #E2E8F0;">🏡 Concorde Silicon Valley</span>
+      <span style="background:#F1F5F9;color:#0F172A;font-weight:600;padding:7px 16px;border-radius:24px;font-size:13px;border:1px solid #E2E8F0;">📍 Kudlu Main Road &amp; AECS Layout</span>
+      <span style="background:#F1F5F9;color:#0F172A;font-weight:600;padding:7px 16px;border-radius:24px;font-size:13px;border:1px solid #E2E8F0;">📍 Singasandra &amp; Hosur Road</span>
+      <span style="background:#F1F5F9;color:#0F172A;font-weight:600;padding:7px 16px;border-radius:24px;font-size:13px;border:1px solid #E2E8F0;">📍 HSR Layout Sector 2 &amp; Haralur</span>
+    </div>
+  </div>
+</section>
+
+<!-- Verified Google 5-Star Reviews Showcase -->
+<section class="wrap scroll-reveal" style="padding-top:10px;padding-bottom:30px;">
+  <div class="section-head" style="text-align:center;max-width:760px;margin:0 auto 24px;">
+    <span class="eyebrow" style="color:#F59E0B;font-weight:700;letter-spacing:0.1em;">CUSTOMER SATISFACTION</span>
+    <h3 style="font-size:clamp(22px,2.6vw,30px);margin:6px 0 8px;">Top-Rated Courier Counter in Kudlu</h3>
+    <p style="font-size:14.5px;margin:0;color:#64748B;">Read what residents and business owners say about our customer care and delivery speed.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:18px;margin-bottom:22px;">
+    <!-- Review 1 -->
+    <div class="card" style="padding:22px;border-radius:14px;border:1px solid #E2E8F0;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,0.03);display:flex;flex-direction:column;justify-content:space-between;">
+      <div>
+        <div style="color:#F59E0B;font-size:16px;margin-bottom:10px;">★★★★★</div>
+        <p style="font-size:13.5px;line-height:1.6;color:#334155;margin:0 0 16px;">
+          “Super fast doorstep pickup from my flat in Bren Palms. The staff packed my laptop and clothes securely with multi-layer bubble wrap. Reached Delhi within 2 days with real-time tracking updates.”
+        </p>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;border-top:1px solid #F1F5F9;padding-top:12px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:#0C2340;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;">AK</div>
+        <div>
+          <div style="font-size:13.5px;font-weight:700;color:#0F172A;">Anand Kumar</div>
+          <div style="font-size:11.5px;color:#64748B;">Bren Palms Resident · Verified Customer</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Review 2 -->
+    <div class="card" style="padding:22px;border-radius:14px;border:1px solid #E2E8F0;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,0.03);display:flex;flex-direction:column;justify-content:space-between;">
+      <div>
+        <div style="color:#F59E0B;font-size:16px;margin-bottom:10px;">★★★★★</div>
+        <p style="font-size:13.5px;line-height:1.6;color:#334155;margin:0 0 16px;">
+          “Very courteous counter staff at Bren Palms 1st floor. Sent urgent documents to Mumbai and they departed on the 8 PM evening dispatch the same night. Delivered by 1 PM next day. Highly recommended!”
+        </p>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;border-top:1px solid #F1F5F9;padding-top:12px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:#E31837;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;">PR</div>
+        <div>
+          <div style="font-size:13.5px;font-weight:700;color:#0F172A;">Priya Raman</div>
+          <div style="font-size:11.5px;color:#64748B;">Electronic City Phase 1 · Verified Customer</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Review 3 -->
+    <div class="card" style="padding:22px;border-radius:14px;border:1px solid #E2E8F0;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,0.03);display:flex;flex-direction:column;justify-content:space-between;">
+      <div>
+        <div style="color:#F59E0B;font-size:16px;margin-bottom:10px;">★★★★★</div>
+        <p style="font-size:13.5px;line-height:1.6;color:#334155;margin:0 0 16px;">
+          “We use DK Enterprise for our e-commerce business dispatches every evening. The monthly GST invoicing and scheduled 8 PM van pickup make daily dispatch effortless. Very cooperative management.”
+        </p>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;border-top:1px solid #F1F5F9;padding-top:12px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:#2563EB;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;">VS</div>
+        <div>
+          <div style="font-size:13.5px;font-weight:700;color:#0F172A;">Vikas Sharma</div>
+          <div style="font-size:11.5px;color:#64748B;">E-Commerce Merchant · Kudlu Gate</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;">
+    <a href="/reviews.html" class="btn outline small" style="padding:10px 20px;font-size:13.5px;display:inline-flex;align-items:center;gap:6px;">
+      <span>⭐</span> Read All Reviews &amp; Submit Feedback &rarr;
+    </a>
   </div>
 </section>
 
@@ -502,7 +687,7 @@
 </div>
 
 <script src="/js/api.js?v=2"></script>
-<script src="/js/chrome.js?v=62"></script>
+<script src="/js/chrome.js?v=71"></script>
 
 <script>
 /* ── Hero Canvas Background Animation ── */

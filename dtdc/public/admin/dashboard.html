@@ -22,6 +22,49 @@
 </nav>
 
 <section class="wrap" style="padding-top:36px;">
+  <!-- Quick Stats Bar -->
+  <div class="card" style="margin-bottom:18px;padding:16px 20px;background:#fff;border:1px solid #E2E8F0;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;">
+      <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:20px;">📦</span>
+          <div>
+            <div style="font-size:11px;color:var(--grey);text-transform:uppercase;font-weight:600;">Total Parcels</div>
+            <div style="font-size:17px;font-weight:700;" id="stat-total-parcels">—</div>
+          </div>
+        </div>
+        <div style="width:1px;height:28px;background:#E2E8F0;"></div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:20px;">🚚</span>
+          <div>
+            <div style="font-size:11px;color:var(--grey);text-transform:uppercase;font-weight:600;">In Transit</div>
+            <div style="font-size:17px;font-weight:700;color:#2563EB;" id="stat-transit-parcels">—</div>
+          </div>
+        </div>
+        <div style="width:1px;height:28px;background:#E2E8F0;"></div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:20px;">⏳</span>
+          <div>
+            <div style="font-size:11px;color:var(--grey);text-transform:uppercase;font-weight:600;">Pending / Booked</div>
+            <div style="font-size:17px;font-weight:700;color:#D97706;" id="stat-booked-parcels">—</div>
+          </div>
+        </div>
+        <div style="width:1px;height:28px;background:#E2E8F0;"></div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:20px;">✅</span>
+          <div>
+            <div style="font-size:11px;color:var(--grey);text-transform:uppercase;font-weight:600;">Delivered</div>
+            <div style="font-size:17px;font-weight:700;color:#16A34A;" id="stat-delivered-parcels">—</div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span id="last-sync-time" style="font-size:12px;color:var(--grey);">Synced just now</span>
+        <button class="btn small outline" id="quick-refresh-btn" type="button" style="padding:6px 12px;font-size:12.5px;">🔄 Refresh Data</button>
+      </div>
+    </div>
+  </div>
+
   <div class="tabs" id="tabs">
     <button data-tab="parcels" class="active">Parcels</button>
     <button data-tab="book">Book Parcel</button>
@@ -36,15 +79,20 @@
   <div class="tab-panel" id="panel-parcels">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
       <h3 style="margin:0;">Parcels</h3>
-      <select id="status-filter" style="width:auto;">
-        <option value="">All statuses</option>
-        <option>Booked</option>
-        <option>Picked Up</option>
-        <option>In Transit</option>
-        <option>Out for Delivery</option>
-        <option>Delivered</option>
-        <option>Cancelled</option>
-      </select>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <select id="status-filter" style="width:auto;margin:0;">
+          <option value="">All statuses</option>
+          <option>Booked</option>
+          <option>Picked Up</option>
+          <option>In Transit</option>
+          <option>Out for Delivery</option>
+          <option>Delivered</option>
+          <option>Cancelled</option>
+        </select>
+        <button class="btn small" id="export-parcels-btn" type="button" style="background:#0C2340;color:#fff;display:inline-flex;align-items:center;gap:5px;">
+          <span>📥</span> Export to CSV / Excel
+        </button>
+      </div>
     </div>
     <div class="table-wrap card" id="parcels-table"><p style="color:var(--grey);">Loading…</p></div>
   </div>
@@ -106,7 +154,12 @@
 
   <!-- ===== ENQUIRIES TAB ===== -->
   <div class="tab-panel" id="panel-enquiries" style="display:none;">
-    <h3>Contact Form Enquiries</h3>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+      <h3 style="margin:0;">Contact Form Enquiries</h3>
+      <button class="btn small" id="export-enquiries-btn" type="button" style="background:#0C2340;color:#fff;display:inline-flex;align-items:center;gap:5px;">
+        <span>📥</span> Export Enquiries (CSV)
+      </button>
+    </div>
     <div class="table-wrap card" id="enquiries-table"><p style="color:var(--grey);">Loading…</p></div>
   </div>
 
@@ -229,6 +282,129 @@ function loadTab(tab) {
 }
 loadTab('parcels');
 
+let latestParcels = [];
+let latestEnquiries = [];
+
+function updateQuickStats(parcels) {
+  if (!parcels) return;
+  const total = parcels.length;
+  const inTransit = parcels.filter(p => p.status === 'In Transit' || p.status === 'Picked Up' || p.status === 'Out for Delivery').length;
+  const booked = parcels.filter(p => p.status === 'Booked').length;
+  const delivered = parcels.filter(p => p.status === 'Delivered').length;
+
+  const elTotal = document.getElementById('stat-total-parcels');
+  const elTransit = document.getElementById('stat-transit-parcels');
+  const elBooked = document.getElementById('stat-booked-parcels');
+  const elDelivered = document.getElementById('stat-delivered-parcels');
+  const elSync = document.getElementById('last-sync-time');
+
+  if (elTotal) elTotal.textContent = total;
+  if (elTransit) elTransit.textContent = inTransit;
+  if (elBooked) elBooked.textContent = booked;
+  if (elDelivered) elDelivered.textContent = delivered;
+  if (elSync) {
+    const timeStr = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    elSync.textContent = `Updated at ${timeStr}`;
+  }
+}
+
+function exportParcelsToCSV() {
+  if (!latestParcels || !latestParcels.length) {
+    alert('No parcels available to export!');
+    return;
+  }
+  const headers = [
+    'Tracking ID', 'Booking Date', 'Status',
+    'Sender Name', 'Sender Phone', 'Sender Email', 'Sender Address', 'Sender City', 'Sender State', 'Sender Pincode',
+    'Receiver Name', 'Receiver Phone', 'Receiver Email', 'Receiver Address', 'Receiver City', 'Receiver State', 'Receiver Pincode',
+    'Weight (kg)', 'Service Type', 'Cost (INR)', 'Branch'
+  ];
+  const rows = latestParcels.map(p => [
+    p.trackingId || '',
+    p.createdAt ? new Date(p.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) : '',
+    p.status || '',
+    p.sender?.name || '',
+    p.sender?.phone || '',
+    p.sender?.email || '',
+    p.sender?.address || '',
+    p.sender?.city || '',
+    p.sender?.state || '',
+    p.sender?.pincode || '',
+    p.receiver?.name || '',
+    p.receiver?.phone || '',
+    p.receiver?.email || '',
+    p.receiver?.address || '',
+    p.receiver?.city || '',
+    p.receiver?.state || '',
+    p.receiver?.pincode || '',
+    p.weightKg || '',
+    p.serviceType || '',
+    p.cost || '',
+    p.branch?.name || ''
+  ]);
+
+  const csvContent = '\uFEFF' + [headers, ...rows].map(row => 
+    row.map(val => `"${String(val).replace(/"/g, '""')}"`).join(',')
+  ).join('\r\n');
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const dateStr = new Date().toISOString().split('T')[0];
+  a.href = url;
+  a.download = `dtdc_parcels_export_${dateStr}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function exportEnquiriesToCSV() {
+  if (!latestEnquiries || !latestEnquiries.length) {
+    alert('No enquiries available to export!');
+    return;
+  }
+  const headers = ['Date', 'Name', 'Phone', 'Email', 'Subject', 'Message', 'Status'];
+  const rows = latestEnquiries.map(e => [
+    e.createdAt ? new Date(e.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) : '',
+    e.name || '',
+    e.phone || '',
+    e.email || '',
+    e.subject || '',
+    e.message || '',
+    e.resolved ? 'Resolved' : 'Open'
+  ]);
+
+  const csvContent = '\uFEFF' + [headers, ...rows].map(row => 
+    row.map(val => `"${String(val).replace(/"/g, '""')}"`).join(',')
+  ).join('\r\n');
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const dateStr = new Date().toISOString().split('T')[0];
+  a.href = url;
+  a.download = `dtdc_enquiries_export_${dateStr}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+const btnExportP = document.getElementById('export-parcels-btn');
+if (btnExportP) btnExportP.addEventListener('click', exportParcelsToCSV);
+
+const btnExportE = document.getElementById('export-enquiries-btn');
+if (btnExportE) btnExportE.addEventListener('click', exportEnquiriesToCSV);
+
+const btnRefresh = document.getElementById('quick-refresh-btn');
+if (btnRefresh) {
+  btnRefresh.addEventListener('click', () => {
+    const activeTab = document.querySelector('#tabs button.active')?.dataset.tab || 'parcels';
+    loadTab(activeTab);
+  });
+}
+
 // ---------- Parcels ----------
 document.getElementById('status-filter').addEventListener('change', loadParcels);
 
@@ -238,6 +414,8 @@ async function loadParcels() {
   try {
     const status = document.getElementById('status-filter').value;
     const { parcels } = await API.request('/parcels' + (status ? '?status=' + encodeURIComponent(status) : ''));
+    latestParcels = parcels || [];
+    updateQuickStats(latestParcels);
     if (!parcels.length) { el.innerHTML = '<div class="empty-state"><div class="icon">📭</div><p>No parcels found.</p></div>'; return; }
     el.innerHTML = `<table>
       <thead><tr><th>Tracking ID</th><th>Route</th><th>Weight</th><th>Cost</th><th>Branch</th><th>Status</th><th>Update</th></tr></thead>
@@ -379,6 +557,7 @@ async function loadEnquiries() {
   el.innerHTML = '<p style="color:var(--grey);">Loading…</p>';
   try {
     const { enquiries } = await API.request('/enquiries');
+    latestEnquiries = enquiries || [];
     if (!enquiries.length) { el.innerHTML = '<div class="empty-state"><div class="icon">📬</div><p>No enquiries yet.</p></div>'; return; }
     el.innerHTML = `<table>
       <thead><tr><th>Name</th><th>Phone</th><th>Subject</th><th>Message</th><th>Status</th><th></th></tr></thead>

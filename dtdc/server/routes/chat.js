@@ -153,9 +153,9 @@ function getSmartFallbackReply(userText) {
     return 'You can track your shipment live 24/7 on our tracking portal: https://www.dtdc.com/track-your-shipment/ . Simply enter the tracking ID printed on your booking receipt.';
   }
 
-  // 9. International / Abroad / USA / UK / UAE / Canada
-  if (q.includes('international') || q.includes('abroad') || q.includes('foreign') || q.includes('usa') || q.includes('uk') || q.includes('dubai') || q.includes('uae') || q.includes('canada') || q.includes('europe') || q.includes('australia')) {
-    return 'Yes, we provide worldwide international courier services to 200+ countries including USA, UK, Canada, Australia, and UAE. Basic invoice and KYC (Aadhaar or Passport) are required. Please WhatsApp +91 63661 18850 for international rates and guidelines.';
+  // 9. International / Abroad / USA / UK / UAE / Canada / Medicines
+  if (q.includes('international') || q.includes('abroad') || q.includes('foreign') || q.includes('usa') || q.includes('uk') || q.includes('dubai') || q.includes('uae') || q.includes('canada') || q.includes('europe') || q.includes('australia') || q.includes('medicine')) {
+    return 'Yes! We provide worldwide international express courier services to 220+ countries including USA, UK, Canada, Australia, UAE, and Europe. We handle doctor-prescribed medicines, homemade food/sweets, university applications, and commercial samples. Required KYC: Aadhaar or Passport. Visit our dedicated guide at /international.html or message our counter on WhatsApp (+91 63661 18850) for exact country rate quotes!';
   }
 
   // 10. Documents / Certificates / Passport
